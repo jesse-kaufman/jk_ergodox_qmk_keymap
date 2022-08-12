@@ -22,7 +22,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		KC_EXLM,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												_______,		KC_AMPR,		KC_SCOLON,		_LBRACKET,		KC_RBRACKET,	KC_PIPE,		_______,
 		_______,		XXXXXXX,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_TILD,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		_______,
 		_______,		_UP_DIR,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		_SEMICOLON,		_LTEQ,			_GTEQ,			KC_SLASH,		_______,
-		XXXXXXX,   		_______,		_______,		_______,		OSL(_CODE),																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
+		XXXXXXX, 		_______,		_______,		_______,		OSL(_CODE),																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		_MEH_LBRKT,		_MEH_RBRKT,		XXXXXXX,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,																				XXXXXXX,		XXXXXXX,		MEH(KC_LPRN),	XXXXXXX,		XXXXXXX,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,        _______,		_______,		_______,		TO(_SYM),																												TO(_BASE),		_______,		_______,		_______,		_______,
+		_______,		_______,		_______,		_______,		TO(_SYM),																												TO(_BASE),		_______,		_______,		_______,		_______,
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_FN] = LAYOUT_ergodox_pretty(
 		RESET,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		RGB_HUD,		RGB_HUI,		XXXXXXX,		_LAYER_LEDS,	XXXXXXX,		_______,
 		_______,		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		KC_ESCAPE,		XXXXXXX,		_______,												_FORWARD,		LALT(KC_UP),	KC_PGUP,		KC_UP,			KC_HOME,		LALT(KC_DOWN),	_______,
-		_______,		LSFT(KC_TAB),   KC_TAB,			XXXXXXX,		_OSM_CMD,		XXXXXXX,																LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	KC_HOME,
+		_______,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		_OSM_CMD,		XXXXXXX,																LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	KC_HOME,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		TO(_BASE),												_BACK,			XXXXXXX,		KC_PGDOWN,		XXXXXXX,		KC_END,			XXXXXXX,		KC_END,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_PREV,			_NEXT,
@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// MOUSE layer
 	[_MOUSE] = LAYOUT_ergodox_pretty(
 		XXXXXXX,		XXXXXXX,		XXXXXXX,		KC_MS_BTN3,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		KC_MS_WH_LEFT,  KC_MS_WH_DOWN,	KC_MS_UP,		KC_MS_WH_UP,	_PREV,			_______,												_FORWARD,		_______,		_______,		_______,		_______,		_______,		_______,
+		_______,		KC_MS_WH_LEFT,	KC_MS_WH_DOWN,	KC_MS_UP,		KC_MS_WH_UP,	_PREV,			_______,												_FORWARD,		_______,		_______,		_______,		_______,		_______,		_______,
 		_______,		KC_MS_BTN2,		KC_MS_LEFT,		KC_MS_DOWN,		KC_MS_RIGHT,	KC_MS_BTN1,																				_______,		_______,		_______,		_______,		_______,		_______,
 		_______,		_SHFT_WHDN,		XXXXXXX,		XXXXXXX,		KC_MS_WH_DOWN,	_SHFT_WHUP,		_______,												_BACK,			_______,		_______,		_______,		_______,		_______,		_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
