@@ -1,3 +1,5 @@
+#pragma once
+
 // LAYER TAP KEYCODES
 #define _F_FN LT(_FN,KC_F)
 
@@ -13,6 +15,9 @@
 #define _OSM_ALT OSM(MOD_LALT)
 #define _OSM_CTR OSM(MOD_LCTL)
 #define _OSM_CMDALT OSM(MOD_LGUI | MOD_LALT)
+
+// PROGRAMMING SHORTCUTS
+// #define _UP_DIR SEND_STRING('../')
 
 // MOUSE KEYCODE
 #define _SHFT_WHDN LSFT(KC_MS_WH_DOWN)
@@ -37,3 +42,8 @@
 #define _PREV KC_MEDIA_PREV_TRACK
 #define _NEXT KC_MEDIA_NEXT_TRACK
 #define _VOL_UP KC_AUDIO_VOL_UP
+
+// CUSTOM KEYCODES
+enum custom_keycodes {
+    _UP_DIR = SAFE_RANGE,
+};
