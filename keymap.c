@@ -19,8 +19,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // SYM layer
   [_SYM] = LAYOUT_ergodox_pretty(
 	_______,	XXXXXXX,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-	_______,	KC_EXLM,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												_______,		KC_AMPR,		_LBRACKET,		KC_SCOLON,		KC_RBRACKET,	KC_PIPE,		_______,
-	_______,	XXXXXXX,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_TILD,		_LPRN,			KC_COLON,		KC_RPRN,		_DQUOTE,		_______,
+	_______,	KC_EXLM,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												_______,		KC_AMPR,		KC_SCOLON,		_LBRACKET,		KC_RBRACKET,	KC_PIPE,		_______,
+	_______,	XXXXXXX,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_TILD,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		_______,
 	_______,	_UP_DIR,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		OSL(_CODE),												KC_BSLASH,		KC_BSLASH,		_SEMICOLON,		_LTEQ,			_GTEQ,			KC_SLASH,		_______,
 				XXXXXXX,    	_______,		_______,		_______,		_______,																				TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																								_______,		_______,				_______,		KC_APP,
@@ -30,8 +30,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // CODE layer
   [_CODE] = LAYOUT_ergodox_pretty(
   _______,      _______,		_______,		_______,		_______,		_______,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
-  _______,      _______,		_______,		_______,		_______,		_______,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
-  _______,      _______,		_______,		_______,		_______,		_______,																				_______,		_______,		_______,		_______,		_______,		_______,
+  _______,      _______,		_______,		_______,		_______,		_______,		_______,												_______,		_______,		_______,		MEH(KC_LBRACKET),	_______,		_______,		_______,
+  _______,      _______,		_______,		_______,		_______,		_______,																				_______,		_______,		MEH(KC_LPRN),	_______,		_______,		_______,
   _______,      _______,		_______,		_______,		_______,		_______,		TO(_SYM),												_______,		_______,		_______,		_______,		_______,		_______,		_______,
                 _______,        _______,		_______,		_______,		_______,																				TO(_BASE),		_______,		_______,		_______,		_______,
                                                                                                 _______,		_______,				_______,		_______,
