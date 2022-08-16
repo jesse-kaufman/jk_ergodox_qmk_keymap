@@ -40,21 +40,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 				break;
 
-		case _KC_SW_LANG:
-			if (record->event.pressed) {
-				// check which layer is the current default
-				if(eeconfig_read_default_layer() == _BASE) {
-					// eeconfig_update_default_layer(_COLEMAK);
-					default_layer_set(_COLEMAK);
-					layer_move(_COLEMAK);
-				}
-				else {
-					// eeconfig_update_default_layer(_BASE);
-					default_layer_set(_BASE);
-					layer_move(_BASE);
-				}
-				return false;
-			}
+		// case _KC_SW_LANG:
+		// 	if (record->event.pressed) {
+		// 		// check which layer is the current default
+		// 		if(eeconfig_read_default_layer() == _BASE) {
+		// 			// eeconfig_update_default_layer(_COLEMAK);
+		// 			default_layer_set(_COLEMAK);
+		// 			layer_move(_COLEMAK);
+		// 		}
+		// 		else {
+		// 			// eeconfig_update_default_layer(_BASE);
+		// 			default_layer_set(_BASE);
+		// 			layer_move(_BASE);
+		// 		}
+		// 		return false;
+		// 	}
 	}
 
 	return true;

@@ -44,6 +44,10 @@
 #define _NEXT KC_MEDIA_NEXT_TRACK
 #define _VOL_UP KC_AUDIO_VOL_UP
 
+#define _KC_COLEMAK DF(_COLEMAK)
+#define _KC_QWERTY DF(_BASE)
+
+
 // CUSTOM KEYCODES
 enum custom_keycodes {
     _KC_UP_DIR = SAFE_RANGE,

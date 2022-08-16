@@ -3,6 +3,7 @@
 #include "../definitions/layers.h"
 #include "../definitions/keycodes.h"
 #include "lighting.h"
+#include "leader.h"
 
 /**
  * TAP DANCE CODES
@@ -36,6 +37,9 @@ enum tap_dance_codes {
 	DANCE_S,
 	DANCE_R,
 	DANCE_T,
+
+	// leave this for knowing the end of the hold for command key range
+	END_HOLD_FOR_COMMAND_RANGE,
 
 	// leave this for initializing dance_state in tapdance.h
 	NUM_DANCE_CODES,

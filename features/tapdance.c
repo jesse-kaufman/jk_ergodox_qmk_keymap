@@ -78,11 +78,13 @@ void my_lgui_hold_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 		case DOUBLE_TAP:
 			tap_code16(pair->kc1);
-			tap_code16(pair->kc1);
+			register_code16(pair->kc1);
 			break;
 
 		case SINGLE_TAP:
-			tap_code16(pair->kc1);
+			if (!leading) {
+				register_code16(pair->kc1);
+			}
 			break;
 
 		case DOUBLE_HOLD:
@@ -127,8 +129,14 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case _SHFT_SPACE:
 		case _F_FN:
-		case _KC_C ... _KC_T:
-			// Do not select the hold action when another key is pressed.
+		case _KC_C:
+		case _KC_V:
+		case _KC_X:
+		case _KC_A:
+		case _KC_S:
+		case _KC_R:
+		case _KC_T:
+					// Do not select the hold action when another key is pressed.
 			return false;
 
 		default:
@@ -146,12 +154,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _LBRACKET:
 			return TAPPING_TERM;
 
-		case _KC_C:
-		case _KC_V:
-		case _KC_X:
-		case _KC_A:
-		case _KC_S:
-		case _KC_R:
+			case _KC_C:
+			case _KC_V:
+			case _KC_X:
+			case _KC_A:
+			case _KC_S:
+			case _KC_R:
+			case _KC_T:
 			return HOLD_FOR_COMMAND_TIMEOUT;
 
 		case _F_FN:
@@ -174,6 +183,7 @@ bool caps_word_press_user(uint16_t keycode) {
 		case _KC_A:
 		case _KC_S:
 		case _KC_R:
+		case _KC_T:
 		case KC_MINS:
 			add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
 			return true;
@@ -556,7 +566,9 @@ void dance_quote_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_QUOTE].step = dance_step(state);
 	switch (dance_state[DANCE_QUOTE].step) {
 		case SINGLE_TAP:
-			register_code16(KC_QUOTE);
+			if (!leading) {
+				register_code16(KC_QUOTE);
+			}
 			break;
 
 		case SINGLE_HOLD:
@@ -1146,7 +1158,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 	[DANCE_GTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_gteq, dance_gteq_finished, dance_gteq_reset),
 	[DANCE_LTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_lteq, dance_lteq_finished, dance_lteq_reset),
 	[DANCE_C] = MY_LGUI_ON_HOLD(KC_C),
- 	[DANCE_V] = MY_LGUI_ON_HOLD(KC_V),
+	[DANCE_V] = MY_LGUI_ON_HOLD(KC_V),
 	[DANCE_X] = MY_LGUI_ON_HOLD(KC_X),
 	[DANCE_A] = MY_LGUI_ON_HOLD(KC_A),
 	[DANCE_S] = MY_LGUI_ON_HOLD(KC_S),
