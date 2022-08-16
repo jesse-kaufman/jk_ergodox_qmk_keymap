@@ -59,8 +59,15 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case _SHFT_SPACE:
 		case _F_FN:
+		case _KC_C:
+		case _KC_V:
+		case _KC_X:
+		case _KC_A:
+		case _KC_S:
+
 			// Immediately select the hold action when another key is tapped.
 			return false;
+
 		default:
 			// Do not select the hold action when another key is tapped.
 			return true;
@@ -72,8 +79,17 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case _SHFT_SPACE:
 		case _F_FN:
+		case _KC_C:
+		case _KC_V:
+		case _KC_X:
+		case _KC_A:
+		case _KC_S:
+		case _KC_R:
+
+
 			// Immediately select the hold action when another key is pressed.
 			return false;
+
 		default:
 			// Do not select the hold action when another key is pressed.
 			return true;
@@ -88,15 +104,50 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _QUOTE:
 		case _LBRACKET:
 			return TAPPING_TERM;
+
+		case _KC_C:
+		case _KC_V:
+		case _KC_X:
+		case _KC_A:
+		case _KC_S:
+		case _KC_R:
+			return HOLD_FOR_COMMAND_TIMEOUT;
+
 		case _F_FN:
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
+
 		default:
 			return TAPPING_TERM-100;
 	}
 }
 
+// customize which key codes disengage caps word
+bool caps_word_press_user(uint16_t keycode) {
+	switch (keycode) {
+		// Keycodes that continue Caps Word, with shift applied.
+		case KC_A ... KC_Z:
+		case _KC_C:
+		case _KC_V:
+		case _KC_X:
+		case _KC_A:
+		case _KC_S:
+		case _KC_R:
+		case KC_MINS:
+			add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+			return true;
 
+		// Keycodes that continue Caps Word, without shifting.
+		case KC_1 ... KC_0:
+		case KC_BSPC:
+		case KC_DEL:
+		case KC_UNDS:
+			return true;
+
+		default:
+			return false;  // Deactivate Caps Word.
+	}
+}
 
 
 /***											***/
@@ -197,52 +248,58 @@ void dance_tab_mgmt_reset(qk_tap_dance_state_t *state, void *user_data) {
  * C / CMD+C
  */
 
-/*void on_dance_c(qk_tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(KC_C);
-        tap_code16(KC_C);
-        tap_code16(KC_C);
-    }
-    if(state->count > 3) {
-        tap_code16(KC_C);
-    }
-   }
-   void dance_c_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state[DANCE_C].step = dance_step(state);
-    switch (dance_state[DANCE_C].step) {
-    case SINGLE_TAP:
-        tap_code(KC_C);
-        break;
-    case DOUBLE_HOLD:
-        tap_code16(LGUI(KC_C));
-        ergodox_led_all_on();
-        _delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
-        ergodox_led_all_off();
-        break;
-    case SINGLE_HOLD:
-        break;
-    case DOUBLE_SINGLE_TAP:
-        register_code16(KC_C);
-        break;
-    case DOUBLE_TAP:
-        tap_code16(KC_C);
-        register_code16(KC_C);
-        break;
-    }
-   }
-   void dance_c_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (dance_state[DANCE_C].step) {
-        case SINGLE_TAP:
-            break;
-        case DOUBLE_TAP:
-        case SINGLE_HOLD:
-            unregister_code16(KC_C);
-            break;
-        case DOUBLE_HOLD:
-            break;
-    }
-    dance_state[DANCE_C].step = 0;
-   }*/
+void on_dance_c(qk_tap_dance_state_t *state, void *user_data) {
+	if(state->count == 3) {
+		tap_code16(KC_C);
+		tap_code16(KC_C);
+		tap_code16(KC_C);
+	}
+	if(state->count > 3) {
+		tap_code16(KC_C);
+	}
+}
+void dance_c_finished(qk_tap_dance_state_t *state, void *user_data) {
+	dance_state[DANCE_C].step = dance_step(state);
+	switch (dance_state[DANCE_C].step) {
+		case SINGLE_TAP:
+			tap_code(KC_C);
+			break;
+
+		case DOUBLE_HOLD:
+			break;
+
+		case SINGLE_HOLD:
+			tap_code16(LGUI(KC_C));
+			ergodox_led_all_on();
+			_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
+			ergodox_led_all_off();
+			break;
+
+		case DOUBLE_SINGLE_TAP:
+			register_code16(KC_C);
+			break;
+
+		case DOUBLE_TAP:
+			tap_code16(KC_C);
+			register_code16(KC_C);
+			break;
+	}
+}
+void dance_c_reset(qk_tap_dance_state_t *state, void *user_data) {
+	switch (dance_state[DANCE_C].step) {
+		case SINGLE_TAP:
+			break;
+
+		case DOUBLE_TAP:
+		case SINGLE_HOLD:
+			unregister_code16(KC_C);
+			break;
+
+		case DOUBLE_HOLD:
+			break;
+	}
+	dance_state[DANCE_C].step = 0;
+}
 
 
 
@@ -1106,5 +1163,5 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 	[DANCE_18] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_18, dance_18_finished, dance_18_reset),
 	[DANCE_GTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_gteq, dance_gteq_finished, dance_gteq_reset),
 	[DANCE_LTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_lteq, dance_lteq_finished, dance_lteq_reset),
-//	[DANCE_C] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_c, dance_c_finished, dance_c_reset),
+	[DANCE_C] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_c, dance_c_finished, dance_c_reset),
 };

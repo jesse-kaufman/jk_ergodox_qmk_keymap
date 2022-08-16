@@ -27,7 +27,7 @@ enum tap_dance_codes {
 	DANCE_GTEQ,
 	DANCE_LTEQ,
 	DANCE_DESKTOP,
-	// DANCE_C,
+	DANCE_C,
 
 	// leave this for initializing dance_state in tapdance.h
 	NUM_DANCE_CODES,
