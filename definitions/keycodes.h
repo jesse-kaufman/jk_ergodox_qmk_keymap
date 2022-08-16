@@ -44,9 +44,6 @@
 #define _NEXT KC_MEDIA_NEXT_TRACK
 #define _VOL_UP KC_AUDIO_VOL_UP
 
-#define _KC_C TD(DANCE_C)
-
-
 // CUSTOM KEYCODES
 enum custom_keycodes {
     _KC_UP_DIR = SAFE_RANGE,
