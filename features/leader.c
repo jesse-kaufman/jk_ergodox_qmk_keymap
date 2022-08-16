@@ -14,7 +14,7 @@ void my_leader_matrix_scan_user(void) {
 			did_leader_succeed = true;
 		} else
 			// Safari
-			SEQ_ONE_KEY(KC_S) {
+			SEQ_ONE_KEY(_KC_S) {
 				tap_code16(HYPR(KC_S));
 				did_leader_succeed = true;
 			}else
