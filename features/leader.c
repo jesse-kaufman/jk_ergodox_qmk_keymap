@@ -74,7 +74,7 @@ void my_leader_matrix_scan_user(void) {
 }
 
 void leader_start(void) {
-	ergodox_led_all_set(LED_BRIGHTNESS_HI);
+	ergodox_led_all_set(LED_BRIGHTNESS_LO);
 	ergodox_led_all_on();
 }
 
@@ -83,14 +83,7 @@ void leader_end(void) {
 		// If any sequence was matched, did_leader_succeed will have
 		// been set to true up in the matrix_scan_user function.
 		// Put your code for a matched leader key sequence here.
-		ergodox_led_all_off();
-		_delay_ms(LEADER_BLINK_OFF_TIMEOUT);
-		ergodox_led_all_on();
-		_delay_ms(LEADER_BLINK_ON_TIMEOUT);
-		ergodox_led_all_off();
-		_delay_ms(LEADER_BLINK_OFF_TIMEOUT);
-		ergodox_led_all_on();
-		_delay_ms(LEADER_BLINK_ON_TIMEOUT);
+		my_indicate_success();
 	} else {
 		// If no sequence was matched, did_leader_succeed will not
 		// have been set to true anywhere, so we'll end up here.
