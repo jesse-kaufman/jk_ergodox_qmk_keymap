@@ -44,14 +44,12 @@
 #define _NEXT KC_MEDIA_NEXT_TRACK
 #define _VOL_UP KC_AUDIO_VOL_UP
 
+#define _KC_C TD(DANCE_C)
+
+
 // CUSTOM KEYCODES
 enum custom_keycodes {
-	_KC_C = LT(8, KC_C),
-	_KC_V = LT(8, KC_V),
-	_KC_X = LT(8, KC_X),
-	_KC_A = LT(8, KC_A),
-	_KC_S = LT(8, KC_S),
-	_KC_R = LT(8, KC_R),
-
-    _UP_DIR = SAFE_RANGE,
+    _KC_UP_DIR = SAFE_RANGE,
+	_KC_SW_LANG,
+	_KC_COMMENT,
 };

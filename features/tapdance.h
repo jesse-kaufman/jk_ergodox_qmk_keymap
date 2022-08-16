@@ -1,6 +1,8 @@
+#pragma once
 #include QMK_KEYBOARD_H
 #include "../definitions/layers.h"
 #include "../definitions/keycodes.h"
+#include "lighting.h"
 
 /**
  * TAP DANCE CODES
@@ -28,6 +30,12 @@ enum tap_dance_codes {
 	DANCE_LTEQ,
 	DANCE_DESKTOP,
 	DANCE_C,
+	DANCE_V,
+	DANCE_X,
+	DANCE_A,
+	DANCE_S,
+	DANCE_R,
+	DANCE_T,
 
 	// leave this for initializing dance_state in tapdance.h
 	NUM_DANCE_CODES,
@@ -55,7 +63,14 @@ enum tap_dance_codes {
 #define _GTEQ TD(DANCE_GTEQ)
 #define _LTEQ TD(DANCE_LTEQ)
 #define _HYPHEN TD(DANCE_14)
-//#define _KC_C TD(DANCE_C)
+#define _KC_C TD(DANCE_C)
+#define _KC_V TD(DANCE_V)
+#define _KC_X TD(DANCE_X)
+#define _KC_A TD(DANCE_A)
+#define _KC_S TD(DANCE_S)
+#define _KC_R TD(DANCE_R)
+#define _KC_T TD(DANCE_T)
+
 
 
 typedef struct {
@@ -74,3 +89,7 @@ enum {
 
 
 uint8_t dance_step(qk_tap_dance_state_t *state);
+
+
+#define MY_LGUI_ON_HOLD(kc) \
+	{ .fn = {my_lgui_hold_each_tap, my_lgui_hold_finished, my_lgui_hold_reset}, .user_data = (void *)&((qk_tap_dance_pair_t) { kc, 0 }), }

@@ -13,9 +13,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
 		KC_F16,			KC_1,			KC_2,			KC_3,			KC_4,			KC_5,			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
-		KC_F17,			KC_Q,			KC_W,			KC_E,			_KC_R,			KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			KC_I,			KC_O,			KC_P,			KC_F21,
+		KC_F17,			KC_Q,			KC_W,			KC_E,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			KC_I,			KC_O,			KC_P,			KC_F21,
 		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			KC_G,																					KC_H,			KC_J,			KC_K,			KC_L,			_QUOTE,			_PGUP_HOME,
 		KC_F19,			KC_Z,			_KC_X,			_KC_C,			_KC_V,			KC_B,			TT(_FN),												XXXXXXX,		KC_N,			KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
+		_UNDO,			_REDO,			_OSM_CTR,		OSL(_CODE),		_OSM_CMD,																												OSL(_SYM),		_OSM_CMD,		KC_DOWN,		KC_UP,			TT(_FN),
+																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
+																														_OSM_SHIFT,				_PLAY,
+																						_SHFT_SPACE,	KC_TAB,			_OSM_ALT,				CAPS_WORD,		KC_BSPACE,		_SHFT_ENTER
+	),
+	// COLEMAK BASE layer (TARMAK1a)
+	[_COLEMAK] = LAYOUT_ergodox_pretty(
+		KC_F16,			KC_1,			KC_2,			KC_3,			KC_4,			KC_5,			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
+		KC_F17,			KC_Q,			KC_W,			KC_J,			_KC_R,			KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			KC_I,			KC_O,			KC_P,			KC_F21,
+		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			KC_G,																					KC_H,			KC_N,			KC_E,			KC_L,			_QUOTE,			_PGUP_HOME,
+		KC_F19,			KC_Z,			_KC_X,			_KC_C,			_KC_V,			KC_B,			TT(_FN),												XXXXXXX,		KC_K,			KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
 		_UNDO,			_REDO,			_OSM_CTR,		OSL(_CODE),		_OSM_CMD,																												OSL(_SYM),		_OSM_CMD,		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														_OSM_SHIFT,				_PLAY,
@@ -25,9 +36,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_SYM] = LAYOUT_ergodox_pretty(
 		_______,		XXXXXXX,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
 		_______,		KC_EXLM,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												_______,		KC_AMPR,		KC_SCOLON,		_LBRACKET,		KC_RBRACKET,	KC_PIPE,		_______,
-		_______,		XXXXXXX,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_TILD,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		_______,
-		_______,		_UP_DIR,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		_SEMICOLON,		_LTEQ,			_GTEQ,			KC_SLASH,		_______,
-		XXXXXXX, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
+		_______,		_KC_COMMENT,	KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_TILD,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		_______,
+		_______,		_KC_UP_DIR,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		_SEMICOLON,		_LTEQ,			_GTEQ,			KC_SLASH,		_______,
+		_______, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -48,8 +59,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		RESET,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		RGB_HUD,		RGB_HUI,		XXXXXXX,		_LAYER_LEDS,	XXXXXXX,		_______,
 		_______,		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												_FORWARD,		LALT(KC_UP),	KC_PGUP,		KC_UP,			KC_HOME,		LALT(KC_DOWN),	_______,
 		_______,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		_OSM_CMD,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	KC_HOME,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		TO(_BASE),												_BACK,			XXXXXXX,		KC_PGDOWN,		XXXXXXX,		KC_END,			XXXXXXX,		KC_END,
-		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
+		_KC_SW_LANG,	XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		TO(_BASE),												_BACK,			XXXXXXX,		KC_PGDOWN,		XXXXXXX,		KC_END,			XXXXXXX,		KC_END,
+		_______,	_______,		_______,		_______,		_______,																													TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -73,6 +84,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
 	[_BASE] = {
+				// RIGHT HAND SIDE
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+
+				// LEFT HAND SIDE (MIRRORED)
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0}
+	},
+	[_COLEMAK] = {
 				// RIGHT HAND SIDE
 				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
 				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
