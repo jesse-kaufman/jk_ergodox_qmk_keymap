@@ -21,7 +21,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 																														_OSM_SHIFT,				_PLAY,
 																						_SHFT_SPACE,	KC_TAB,			_OSM_ALT,				CAPS_WORD,		KC_BSPACE,		_SHFT_ENTER
 	),
-	// COLEMAK BASE layer (TARMAK1a)
+	// COLEMAK-DH BASE layer (TARMAK-1)
 	[_COLEMAK] = LAYOUT_ergodox_pretty(
 		KC_F16,			KC_1,			KC_2,			KC_3,			KC_4,			KC_5,			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
 		KC_F17,			KC_Q,			KC_W,			KC_J,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			KC_I,			KC_O,			KC_P,			_KC_QWERTY,
