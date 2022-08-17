@@ -177,18 +177,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _SEMICOLON:
 		case _QUOTE:
 		case _LBRACKET:
-		case _KC_C:
-		case _KC_V:
-		case _KC_X:
-		case _KC_A:
-		case _KC_S:
-		case _KC_R:
-		case _KC_T:
-			,
+		// case _KC_C:
+		// case _KC_V:
+		// case _KC_X:
+		// case _KC_A:
+		// case _KC_S:
+		// case _KC_R:
+		// case _KC_T:
+		case _F_FN:
+
 			return TAPPING_TERM;
 
 
-		case _F_FN:
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
 
