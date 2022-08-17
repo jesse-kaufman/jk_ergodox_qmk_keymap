@@ -72,13 +72,17 @@ void my_lgui_hold_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 	switch (step) {
 		case SINGLE_HOLD:
-			tap_code16(LGUI(pair->kc1));
-			my_indicate_success();
+			register_code16(pair->kc1);
 			break;
 
 		case DOUBLE_TAP:
 			tap_code16(pair->kc1);
 			register_code16(pair->kc1);
+			break;
+
+		case DOUBLE_SINGLE_TAP:
+			tap_code16(pair->kc1);
+			tap_code16(pair->kc1);
 			break;
 
 		case SINGLE_TAP:
@@ -88,7 +92,8 @@ void my_lgui_hold_finished(qk_tap_dance_state_t *state, void *user_data) {
 			break;
 
 		case DOUBLE_HOLD:
-			register_code16(pair->kc1);
+			tap_code16(LGUI(pair->kc1));
+			my_indicate_success();
 			break;
 	}
 }
@@ -163,8 +168,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _KC_S:
 		case _KC_R:
 		case _KC_T:
-			return HOLD_FOR_COMMAND_TIMEOUT;
-
 		case _F_FN:
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
