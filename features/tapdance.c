@@ -160,10 +160,10 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 		case _KC_S:
 		case _KC_R:
 		case _KC_T:
+		case _F_FN:
 			// Do not select the hold action when another key is pressed.
 			return false;
 
-		case _F_FN:
 		default:
 			// Immediately select the hold action when another key is pressed.
 			return true;
@@ -184,10 +184,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		// case _KC_S:
 		// case _KC_R:
 		// case _KC_T:
-		case _F_FN:
 
 			return TAPPING_TERM;
 
+			case _F_FN:
 
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
