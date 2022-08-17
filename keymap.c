@@ -59,8 +59,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		RESET,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		RGB_HUD,		RGB_HUI,		XXXXXXX,		_LAYER_LEDS,	XXXXXXX,		_______,
 		_______,		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												_FORWARD,		LALT(KC_UP),	KC_PGUP,		KC_UP,			KC_HOME,		LALT(KC_DOWN),	_______,
 		_______,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		_OSM_CMD,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	KC_HOME,
-		_______,	XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		TO(_BASE),												_BACK,			XXXXXXX,		KC_PGDOWN,		XXXXXXX,		KC_END,			XXXXXXX,		KC_END,
-		_______,	_______,		_______,		_______,		_______,																													TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		TO(_BASE),												_BACK,			XXXXXXX,		KC_PGDOWN,		XXXXXXX,		KC_END,			XXXXXXX,		KC_END,
+		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
