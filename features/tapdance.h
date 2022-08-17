@@ -6,6 +6,12 @@
 #include "leader.h"
 
 /**
+ * TAP DANCE HELPERS
+ */
+#define MY_DUAL_ACTION_LGUI(kc) { .fn = {my_dual_action_lgui_each_tap, my_dual_action_lgui_finished, my_dual_action_lgui_reset}, .user_data = (void *)&((qk_tap_dance_pair_t) { kc, 0 }), }
+
+
+/**
  * TAP DANCE CODES
  */
 enum tap_dance_codes {
@@ -30,7 +36,7 @@ enum tap_dance_codes {
 	DANCE_GTEQ,
 	DANCE_LTEQ,
 	DANCE_DESKTOP,
-	DANCE_C,
+ 	DANCE_C,
 	DANCE_V,
 	DANCE_X,
 	DANCE_A,
@@ -67,6 +73,8 @@ enum tap_dance_codes {
 #define _GTEQ TD(DANCE_GTEQ)
 #define _LTEQ TD(DANCE_LTEQ)
 #define _HYPHEN TD(DANCE_14)
+
+// DOUBLE-TAP FOR COMMAND
 #define _KC_C TD(DANCE_C)
 #define _KC_V TD(DANCE_V)
 #define _KC_X TD(DANCE_X)
@@ -74,6 +82,12 @@ enum tap_dance_codes {
 #define _KC_S TD(DANCE_S)
 #define _KC_R TD(DANCE_R)
 #define _KC_T TD(DANCE_T)
+// #define _KC_V ACTION_TAP_DANCE_DOUBLE(KC_V, LGUI(KC_V))
+// #define _KC_X ACTION_TAP_DANCE_DOUBLE(KC_X, LGUI(KC_X))
+// #define _KC_A ACTION_TAP_DANCE_DOUBLE(KC_A, LGUI(KC_A))
+// #define _KC_S ACTION_TAP_DANCE_DOUBLE(KC_S, LGUI(KC_S))
+// #define _KC_R ACTION_TAP_DANCE_DOUBLE(KC_R, LGUI(KC_R))
+// #define _KC_T ACTION_TAP_DANCE_DOUBLE(KC_T, LGUI(KC_T))
 
 
 
@@ -93,7 +107,3 @@ enum {
 
 
 uint8_t dance_step(qk_tap_dance_state_t *state);
-
-
-#define MY_LGUI_ON_HOLD(kc) \
-	{ .fn = {my_lgui_hold_each_tap, my_lgui_hold_finished, my_lgui_hold_reset}, .user_data = (void *)&((qk_tap_dance_pair_t) { kc, 0 }), }

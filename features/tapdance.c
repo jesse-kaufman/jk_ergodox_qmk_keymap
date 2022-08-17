@@ -53,7 +53,9 @@ uint8_t dance_step(qk_tap_dance_state_t *state) {
 	}
 }
 
-void my_lgui_hold_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+
+
+void my_dual_action_lgui_each_tap(qk_tap_dance_state_t *state, void *user_data) {
 	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
 
 	if(state->count == 3) {
@@ -66,42 +68,53 @@ void my_lgui_hold_each_tap(qk_tap_dance_state_t *state, void *user_data) {
 	}
 }
 
-void my_lgui_hold_finished(qk_tap_dance_state_t *state, void *user_data) {
+void my_dual_action_lgui_finished(qk_tap_dance_state_t *state, void *user_data) {
 	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
 	uint8_t step = dance_step(state);
 
-	switch (step) {
-		case SINGLE_HOLD:
-			register_code16(pair->kc1);
-			break;
+	if (!leading) {
+		switch (step) {
 
-		case DOUBLE_TAP:
-			tap_code16(pair->kc1);
-			register_code16(pair->kc1);
-			break;
 
-		case DOUBLE_SINGLE_TAP:
-			tap_code16(pair->kc1);
-			tap_code16(pair->kc1);
-			break;
-
-		case SINGLE_TAP:
-			if (!leading) {
+			case DOUBLE_TAP:
+				tap_code16(pair->kc1);
 				register_code16(pair->kc1);
-			}
-			break;
+				break;
 
-		case DOUBLE_HOLD:
-			tap_code16(LGUI(pair->kc1));
-			my_indicate_success();
-			break;
+			case DOUBLE_SINGLE_TAP:
+			case SINGLE_TAP:
+				register_code16(pair->kc1);
+				break;
+
+			case DOUBLE_HOLD:
+				tap_code16(LGUI(pair->kc1));
+				my_indicate_success();
+				break;
+
+			default:
+			case SINGLE_HOLD:
+				register_code16(pair->kc1);
+				break;
+		}
 	}
 }
 
-void my_lgui_hold_reset(qk_tap_dance_state_t *state, void *user_data) {
+void my_dual_action_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
+	uint8_t step = dance_step(state);
 
-	unregister_code16(pair->kc1);
+
+	if (!leading) {
+		switch (step) {
+			case DOUBLE_HOLD:
+				break;
+
+			default:
+
+				unregister_code16(pair->kc1);
+				break;
+		}
+	}
 }
 
 
@@ -135,7 +148,6 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case _SHFT_SPACE:
-		case _F_FN:
 		case _KC_C:
 		case _KC_V:
 		case _KC_X:
@@ -146,6 +158,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 			// Do not select the hold action when another key is pressed.
 			return false;
 
+		case _F_FN:
 		default:
 			// Immediately select the hold action when another key is pressed.
 			return true;
@@ -159,8 +172,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _SEMICOLON:
 		case _QUOTE:
 		case _LBRACKET:
-			return TAPPING_TERM;
-
 		case _KC_C:
 		case _KC_V:
 		case _KC_X:
@@ -168,6 +179,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _KC_S:
 		case _KC_R:
 		case _KC_T:
+			return TAPPING_TERM;
+
+
 		case _F_FN:
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
@@ -1163,11 +1177,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 	[DANCE_18] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_18, dance_18_finished, dance_18_reset),
 	[DANCE_GTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_gteq, dance_gteq_finished, dance_gteq_reset),
 	[DANCE_LTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_lteq, dance_lteq_finished, dance_lteq_reset),
-	[DANCE_C] = MY_LGUI_ON_HOLD(KC_C),
-	[DANCE_V] = MY_LGUI_ON_HOLD(KC_V),
-	[DANCE_X] = MY_LGUI_ON_HOLD(KC_X),
-	[DANCE_A] = MY_LGUI_ON_HOLD(KC_A),
-	[DANCE_S] = MY_LGUI_ON_HOLD(KC_S),
-	[DANCE_R] = MY_LGUI_ON_HOLD(KC_R),
-	[DANCE_T] = MY_LGUI_ON_HOLD(KC_T),
+	[DANCE_C] = MY_DUAL_ACTION_LGUI(KC_C),
+	[DANCE_V] = MY_DUAL_ACTION_LGUI(KC_V),
+	[DANCE_X] = MY_DUAL_ACTION_LGUI(KC_X),
+	[DANCE_A] = MY_DUAL_ACTION_LGUI(KC_A),
+	[DANCE_S] = MY_DUAL_ACTION_LGUI(KC_S),
+	[DANCE_R] = MY_DUAL_ACTION_LGUI(KC_R),
+	[DANCE_T] = MY_DUAL_ACTION_LGUI(KC_T),
 };
