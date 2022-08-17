@@ -53,4 +53,5 @@ enum custom_keycodes {
     _KC_UP_DIR = SAFE_RANGE,
 	_KC_SW_LANG,
 	_KC_COMMENT,
+	_KC_NIX_HOME,
 };
