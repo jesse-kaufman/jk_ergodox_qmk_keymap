@@ -82,12 +82,6 @@ enum tap_dance_codes {
 #define _KC_S TD(DANCE_S)
 #define _KC_R TD(DANCE_R)
 #define _KC_T TD(DANCE_T)
-// #define _KC_V ACTION_TAP_DANCE_DOUBLE(KC_V, LGUI(KC_V))
-// #define _KC_X ACTION_TAP_DANCE_DOUBLE(KC_X, LGUI(KC_X))
-// #define _KC_A ACTION_TAP_DANCE_DOUBLE(KC_A, LGUI(KC_A))
-// #define _KC_S ACTION_TAP_DANCE_DOUBLE(KC_S, LGUI(KC_S))
-// #define _KC_R ACTION_TAP_DANCE_DOUBLE(KC_R, LGUI(KC_R))
-// #define _KC_T ACTION_TAP_DANCE_DOUBLE(KC_T, LGUI(KC_T))
 
 
 
