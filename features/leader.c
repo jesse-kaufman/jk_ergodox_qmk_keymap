@@ -29,12 +29,12 @@ void my_leader_matrix_scan_user(void) {
 				did_leader_succeed = true;
 			}else
 			// Finder
-			SEQ_ONE_KEY(KC_F) {
+			SEQ_ONE_KEY(_F_FN) {
 				tap_code16(HYPR(KC_D));
 				did_leader_succeed = true;
 			}else
 			// Messenger (FB)
-			SEQ_TWO_KEYS(KC_F, KC_B) {
+			SEQ_TWO_KEYS(_F_FN, KC_B) {
 				tap_code16(HYPR(KC_F));
 				did_leader_succeed = true;
 			}else
