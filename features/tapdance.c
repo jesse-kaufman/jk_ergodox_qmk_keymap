@@ -82,6 +82,10 @@ void my_dual_action_lgui_finished(qk_tap_dance_state_t *state, void *user_data) 
 				break;
 
 			case DOUBLE_SINGLE_TAP:
+				tap_code16(pair->kc1);
+				tap_code16(pair->kc1);
+				break;
+
 			case SINGLE_TAP:
 				register_code16(pair->kc1);
 				break;
@@ -107,6 +111,7 @@ void my_dual_action_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 	if (!leading) {
 		switch (step) {
 			case DOUBLE_HOLD:
+			case DOUBLE_SINGLE_TAP:
 				break;
 
 			default:
@@ -179,6 +184,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _KC_S:
 		case _KC_R:
 		case _KC_T:
+			,
 			return TAPPING_TERM;
 
 
