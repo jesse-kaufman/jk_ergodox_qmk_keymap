@@ -115,6 +115,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 		case _KC_X:
 		case _KC_A:
 		case _KC_S:
+		case _KC_R:
+		case _KC_T:
 			// Do not select the hold action when another key is tapped.
 			return false;
 
@@ -136,7 +138,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 		case _KC_S:
 		case _KC_R:
 		case _KC_T:
-					// Do not select the hold action when another key is pressed.
+			// Do not select the hold action when another key is pressed.
 			return false;
 
 		default:
@@ -154,13 +156,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _LBRACKET:
 			return TAPPING_TERM;
 
-			case _KC_C:
-			case _KC_V:
-			case _KC_X:
-			case _KC_A:
-			case _KC_S:
-			case _KC_R:
-			case _KC_T:
+		case _KC_C:
+		case _KC_V:
+		case _KC_X:
+		case _KC_A:
+		case _KC_S:
+		case _KC_R:
+		case _KC_T:
 			return HOLD_FOR_COMMAND_TIMEOUT;
 
 		case _F_FN:
@@ -184,6 +186,7 @@ bool caps_word_press_user(uint16_t keycode) {
 		case _KC_S:
 		case _KC_R:
 		case _KC_T:
+		case _F_FN:
 		case KC_MINS:
 			add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
 			return true;
