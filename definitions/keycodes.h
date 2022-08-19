@@ -12,7 +12,7 @@
 // ONE-SHOT MODIFIERS
 #define _OSM_CMD OSM(MOD_LGUI)
 #define _OSM_SHIFT OSM(MOD_LSFT)
-#define _OSM_ALT OSM(MOD_LALT)
+#define _OSM_OPT OSM(MOD_LALT)
 #define _OSM_CTR OSM(MOD_LCTL)
 #define _OSM_CMDALT OSM(MOD_LGUI | MOD_LALT)
 
@@ -50,8 +50,7 @@
 
 // CUSTOM KEYCODES
 enum custom_keycodes {
-    _KC_UP_DIR = SAFE_RANGE,
-	_KC_SW_LANG,
-	_KC_COMMENT,
+    _KC_COMMENT = SAFE_RANGE,
 	_KC_NIX_HOME,
+	_KC_SW_LANG,
 };

@@ -24,14 +24,6 @@ bool my_process_hold_for_command_key(uint16_t keycode, keyrecord_t *record,uint1
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 	switch (keycode) {
-		case _KC_UP_DIR:
-			if (record->event.pressed) {
-				// keycode _UP_DIR is pressed
-				SEND_STRING("../");
-				return false;
-			}
-			break;
-
 		case _KC_COMMENT:
 			if (record->event.pressed) {
 				// keycode _UP_DIR is pressed
