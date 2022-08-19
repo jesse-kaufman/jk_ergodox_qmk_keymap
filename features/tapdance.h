@@ -36,6 +36,7 @@ enum tap_dance_codes {
 	DANCE_GTEQ,
 	DANCE_LTEQ,
 	DANCE_DESKTOP,
+	DANCE_UP_DIR,
  	DANCE_C,
 	DANCE_V,
 	DANCE_X,
@@ -43,9 +44,15 @@ enum tap_dance_codes {
 	DANCE_S,
 	DANCE_R,
 	DANCE_T,
-
-	// leave this for knowing the end of the hold for command key range
-	END_HOLD_FOR_COMMAND_RANGE,
+	DANCE_W,
+	DANCE_Q,
+	DANCE_O,
+	DANCE_I,
+	DANCE_H,
+	DANCE_N,
+	DANCE_M,
+	DANCE_B,
+	DANCE_G,
 
 	// leave this for initializing dance_state in tapdance.h
 	NUM_DANCE_CODES,
@@ -72,6 +79,7 @@ enum tap_dance_codes {
 #define _LPRN TD(DANCE_18)
 #define _GTEQ TD(DANCE_GTEQ)
 #define _LTEQ TD(DANCE_LTEQ)
+#define _KC_UP_DIR TD(DANCE_UP_DIR)
 #define _HYPHEN TD(DANCE_14)
 
 // DOUBLE-TAP FOR COMMAND
@@ -82,6 +90,23 @@ enum tap_dance_codes {
 #define _KC_S TD(DANCE_S)
 #define _KC_R TD(DANCE_R)
 #define _KC_T TD(DANCE_T)
+#define _KC_W TD(DANCE_W)
+#define _KC_Q TD(DANCE_Q)
+#define _KC_O TD(DANCE_O)
+#define _KC_I TD(DANCE_I)
+#define _KC_H TD(DANCE_H)
+#define _KC_N TD(DANCE_N)
+#define _KC_M TD(DANCE_M)
+#define _KC_B TD(DANCE_B)
+#define _KC_G TD(DANCE_G)
+
+
+
+
+
+
+
+
 
 
 
