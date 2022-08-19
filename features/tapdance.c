@@ -93,18 +93,8 @@ void my_dual_action_lgui_finished(qk_tap_dance_state_t *state, void *user_data) 
 				my_indicate_success();
 				break;
 
-			default:
 			case SINGLE_HOLD:
-				switch (pair->kc1) {
-					case KC_N:
-						if (_COLEMAK == biton32(default_layer_state)) {
-							register_code16(KC_RCTL);
-						}
-						break;
-
-					default:
-						register_code16(pair->kc1);
-				}
+				register_code16(pair->kc1);
 				break;
 		}
 	}
@@ -122,16 +112,7 @@ void my_dual_action_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 				break;
 
 			case SINGLE_HOLD:
-				switch (pair->kc1) {
-					case KC_N:
-						if (_COLEMAK == biton32(default_layer_state)) {
-							unregister_code16(KC_RCTL);
-						}
-						break;
-
-					default:
-						unregister_code16(pair->kc1);
-				}
+				unregister_code16(pair->kc1);
 				break;
 
 			default:
