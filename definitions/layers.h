@@ -6,6 +6,7 @@ enum {
 	_COLEMAK,
 	_SYM,
 	_CODE,
+	_NUM,
 	_FN,
 	_MOUSE,
 };
