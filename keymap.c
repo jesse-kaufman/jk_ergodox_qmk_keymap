@@ -12,22 +12,22 @@ void matrix_scan_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
-		KC_F17,			KC_1,			KC_2,			KC_3,			KC_4,			KC_5,			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
+		KC_F17,			KC_1,			KC_2,			KC_3,			SCMD(KC_4),			SCMD(KC_5),			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
 		KC_F16,			_KC_Q,			_KC_W,			KC_E,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			_KC_I,			_KC_O,			KC_P,			XXXXXXX,
 		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_H,			KC_J,			KC_K,			KC_L,			_QUOTE,			_PGUP_HOME,
-		_KC_COLEMAK,	KC_Z,			_KC_X,			_KC_C,			_KC_V,			_KC_B,			TT(_FN),												_OSM_CMDALT, 	_KC_N,			_KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
-		_UNDO,			_REDO,			_OSM_CTR,		OSL(_NUM),		_OSM_CMD,																												OSL(_SYM),		_OSM_CMD,		KC_DOWN,		KC_UP,			TT(_FN),
+		_KC_COLEMAK,	KC_Z,			_KC_X,			_KC_C,			_KC_V,			_KC_B,			TT(_FN),												CAPS_WORD, 		_KC_N,			_KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
+		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		TT(_NUM),		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														_OSM_SHIFT,				_PLAY,
-																						_SHFT_SPACE,	KC_TAB,			_OSM_OPT,				CAPS_WORD,		KC_BSPACE,		_SHFT_ENTER
+																						_SHFT_SPACE,	KC_TAB,			KC_LEAD,				CAPS_WORD,		KC_BSPACE,		_SHFT_ENTER
 	),
 	// COLEMAK-DH BASE layer (TARMAK-1)
 	[_COLEMAK] = LAYOUT_ergodox_pretty(
 		KC_F17,			KC_1,			KC_2,			KC_3,			KC_4,			KC_5,			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
 		KC_F16,			_KC_Q,			_KC_W,			KC_J,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			_KC_I,			_KC_O,			KC_P,			XXXXXXX,
 		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_M,			_KC_N,			KC_E,			KC_L,			_QUOTE,			_PGUP_HOME,
-		_KC_QWERTY,		KC_Z,			_KC_X,			_KC_C,			_KC_V,			_KC_B,			TT(_FN),												_______,		KC_K,			_KC_H,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
-		_UNDO,			_REDO,			_OSM_CTR,		OSL(_NUM),		_OSM_CMD,																												OSL(_SYM),		_OSM_CMD,		KC_DOWN,		KC_UP,			TT(_FN),
+		_KC_QWERTY,		KC_Z,			_KC_X,			_KC_C,			_KC_V,			_KC_B,			TT(_FN),												CAPS_WORD,		KC_K,			_KC_H,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
+		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		TT(_NUM),		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														_OSM_SHIFT,				_PLAY,
 																						_SHFT_SPACE,	KC_TAB,			_OSM_OPT,				CAPS_WORD,		KC_BSPACE,		_SHFT_ENTER
@@ -37,8 +37,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		XXXXXXX,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
 		_______,		_KC_NIX_HOME,	KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												_______,		KC_AMPR,		KC_PIPE,		_LBRACKET,		KC_RBRACKET,	XXXXXXX,		_______,
 		_______,		_KC_COMMENT,	KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_SCOLON,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		_______,
-		_______,		_KC_UP_DIR,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		KC_TILD,		_LTEQ,			_GTEQ,			KC_SLASH,		_______,
-		_______, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
+		_______,		_KC_UP_DIR,		KC_SLASH,		_______,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		KC_TILD,		_LTEQ,			_GTEQ,			KC_SLASH,		_______,
+		_______, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		TO(_BASE),		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -48,8 +48,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		_MEH_LBRKT,		XXXXXXX,		XXXXXXX,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,																				XXXXXXX,		XXXXXXX,		MEH(KC_LPRN),	_MEH_RBRKT,		XXXXXXX,		_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		KC_LCBR,		KC_RCBR,		XXXXXXX,		_______,
+		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		TO(_BASE),		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -57,10 +57,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// NUM layer
 	[_NUM] = LAYOUT_ergodox_pretty(
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_1,			KC_2,			KC_3,			XXXXXXX,		_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,																				KC_0,			KC_4,			KC_5,			KC_6,			XXXXXXX,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_7,			KC_8,			KC_9,			XXXXXXX,		_______,
-		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
+		_______,		XXXXXXX,		KC_ASTR,		KC_MINUS,		KC_EQUAL,		XXXXXXX,																				KC_0,			KC_4,			KC_5,			KC_6,			XXXXXXX,		_______,
+		_______,		XXXXXXX,		KC_SLASH,		KC_PLUS,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_1,			KC_2,			KC_3,			KC_DOT,			_______,
+		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		TO(_BASE),		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												_FORWARD,		LALT(KC_UP),	KC_PGUP,		KC_UP,			KC_HOME,		LALT(KC_DOWN),	_______,
 		_______,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		_OSM_CMD,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	KC_HOME,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		TO(_BASE),												_BACK,			XXXXXXX,		KC_PGDOWN,		XXXXXXX,		KC_END,			XXXXXXX,		KC_END,
-		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
+		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		TO(_BASE),		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -90,112 +90,119 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
+
+#define _C_BASE {174,255,0}
+#define _C_SYM {0,200,255}
+#define _C_NUM {1,152,5}
+#define _C_FN {255,0,251}
+#define _C_OFF {0,0,0}
+
 /**
  * RGB MATRIX LAYOUT
  */
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
 	[_BASE] = {
 				// RIGHT HAND SIDE
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
 
 				// LEFT HAND SIDE (MIRRORED)
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0}
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE
 	},
 	[_COLEMAK] = {
 				// RIGHT HAND SIDE
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{255,230,0},	{255,230,0},	{255,230,0},	{255,230,0},
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
 
 				// LEFT HAND SIDE (MIRRORED)
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0},
-				{174,255,0},	{174,255,0},	{174,255,0},	{174,255,0}
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE,
+				_C_BASE,		_C_BASE,		_C_BASE,		_C_BASE
 	},
 	[_SYM] = {
 				// RIGHT HAND SIDE
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
 
 				// LEFT HAND SIDE (MIRRORED)
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255}
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
 	},
 	[_CODE] = {
 				// RIGHT HAND SIDE
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{255,0,251},	{0,200,255},	{0,200,255},	{0,200,255},
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				{255,0,251},	_C_SYM,			_C_SYM,			_C_SYM,
 
 				// LEFT HAND SIDE (MIRRORED)
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255}
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM
 	},
 	[_NUM] = {
 				// RIGHT HAND SIDE
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{255,0,251},	{0,200,255},	{0,200,255},	{0,200,255},
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
 
 				// LEFT HAND SIDE (MIRRORED)
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255},
-				{0,200,255},	{0,200,255},	{0,200,255},	{0,200,255}
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM
 	},
 	[_FN] = {
 				// RIGHT HAND SIDE
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,
 
 				// LEFT HAND SIDE (MIRRORED)
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251},
-				{255,0,251},	{255,0,251},	{255,0,251},	{255,0,251}
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
+				_C_FN,			_C_FN,			_C_FN,			_C_FN
 	},
 	[_MOUSE] = {
 				// RIGHT HAND SIDE
-				{0,0,0},		{0,0,0},		{0,0,0},		{0,0,0},		{0,0,0},
-				{0,0,0},		{255,238,0},	{144,0,255},	{255,238,0},	{0,0,0},
+				_C_OFF,			_C_OFF,			_C_OFF,			_C_OFF,			_C_OFF,
+				_C_OFF,			{255,238,0},	{144,0,255},	{255,238,0},	_C_OFF,
 				{0,208,255},	{144,0,255},	{144,0,255},	{144,0,255},	{0,208,255},
-				{0,0,0},		{255,238,0},	{0,0,0},		{255,238,0},	{0,0,0},
-				{40, 1, 145},	{0,0,0},		{0,0,0},		{0,0,0},
+				_C_OFF,			{255,238,0},	_C_OFF,			{255,238,0},	_C_OFF,
+				{40, 1, 145},	_C_OFF,			_C_OFF,			_C_OFF,
 
 				// LEFT HAND SIDE (MIRRORED)
-				{0,0,0},		{0,0,0},		{255,157,0},	{0,0,0},		{0,0,0},
+				_C_OFF,			_C_OFF,			{255,157,0},	_C_OFF,			_C_OFF,
 				{0,208,255},	{0,208,255},	{144,0,255},	{0,208,255},	{0,208,255},
 				{255,238,0},	{144,0,255},	{144,0,255},	{144,0,255},	{0,255,238},
-				{0,0,0},		{0,208,255},	{0,0,0},		{0,208,255},	{0,0,0},
-				{40, 1, 145},	{0,0,0},		{0,0,0},		{0,0,0} },
+				_C_OFF,			{0,208,255},	_C_OFF,			{0,208,255},	_C_OFF,
+				{40, 1, 145},	_C_OFF,			_C_OFF,			_C_OFF },
 };
