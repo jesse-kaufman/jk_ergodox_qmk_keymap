@@ -93,7 +93,18 @@ void my_dual_action_lgui_finished(qk_tap_dance_state_t *state, void *user_data) 
 				break;
 
 			case SINGLE_HOLD:
-				register_code16(pair->kc1);
+				switch (pair->kc1) {
+					case KC_A:
+						register_code16(KC_LALT);
+						break;
+
+					case KC_S:
+						register_code16(KC_LSFT);
+						break;
+
+					default:
+						register_code16(pair->kc1);
+				}
 				break;
 		}
 	}
@@ -108,7 +119,18 @@ void my_dual_action_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 				break;
 
 			case SINGLE_HOLD:
-				unregister_code16(pair->kc1);
+				switch (pair->kc1) {
+					case KC_A:
+						unregister_code16(KC_LALT);
+						break;
+
+					case KC_S:
+						unregister_code16(KC_LSFT);
+						break;
+
+					default:
+						unregister_code16(pair->kc1);
+				}
 				break;
 
 			default:
