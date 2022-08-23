@@ -512,6 +512,10 @@ void dance_tab_last_app_finished(qk_tap_dance_state_t *state, void *user_data) {
 		case SINGLE_HOLD:
 			tap_code16(LGUI(KC_TAB));
 			break;
+
+		case DOUBLE_HOLD:
+			tap_code16(LCTL(KC_DOWN));
+			break;
 	}
 }
 void dance_tab_last_app_reset(qk_tap_dance_state_t *state, void *user_data) {
@@ -1218,6 +1222,7 @@ void on_dance_up_dir(qk_tap_dance_state_t *state, void *user_data) {
 		case DOUBLE_SINGLE_TAP:
 			tap_code16(KC_LABK);
 			register_code16(KC_LABK);
+			break;
 	}
 }
 
