@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		TT(_NUM),		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														_OSM_SHIFT,				_PLAY,
-																						_SHFT_SPACE,	KC_TAB,			_OSM_OPT,				CAPS_WORD,		KC_BSPACE,		_SHFT_ENTER
+																						_SHFT_SPACE,	KC_TAB,			KC_LEAD,				CAPS_WORD,		KC_BSPACE,		_SHFT_ENTER
 	),
 	// SYM layer
 	[_SYM] = LAYOUT_ergodox_pretty(
