@@ -485,6 +485,16 @@ void dance_zoom_out_reset(qk_tap_dance_state_t *state, void *user_data) {
  * TAB / LAST APP
  */
 
+void on_dance_tab_last_app(qk_tap_dance_state_t *state, void *user_data) {
+	if(state->count == 3) {
+		tap_code16(KC_TAB);
+		tap_code16(KC_TAB);
+		tap_code16(KC_TAB);
+	}
+	if(state->count > 3) {
+		tap_code16(KC_TAB);
+	}
+}
 void dance_tab_last_app_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_TAB_LAST_APP].step = dance_step(state);
 	switch (dance_state[DANCE_TAB_LAST_APP].step) {
