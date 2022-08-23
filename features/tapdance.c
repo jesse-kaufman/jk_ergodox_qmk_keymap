@@ -331,16 +331,6 @@ void dance_spotlight_reset(qk_tap_dance_state_t *state, void *user_data) {
  */
 
 void on_dance_tab_mgmt(qk_tap_dance_state_t *state, void *user_data) {
-	if(state->count == 3) {
-		tap_code16(LGUI(KC_T));
-		tap_code16(LGUI(KC_T));
-		tap_code16(LGUI(KC_T));
-	}
-	if(state->count > 3) {
-		tap_code16(LGUI(KC_T));
-	}
-}
-void dance_tab_mgmt_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_TAB_MGMT].step = dance_step(state);
 	switch (dance_state[DANCE_TAB_MGMT].step) {
 		case SINGLE_TAP:
@@ -355,9 +345,6 @@ void dance_tab_mgmt_finished(qk_tap_dance_state_t *state, void *user_data) {
 			tap_code16(LGUI(KC_W));
 			break;
 	}
-}
-void dance_tab_mgmt_reset(qk_tap_dance_state_t *state, void *user_data) {
-	dance_state[DANCE_TAB_MGMT].step = 0;
 }
 
 
@@ -1217,16 +1204,6 @@ void dance_lteq_reset(qk_tap_dance_state_t *state, void *user_data) {
  */
 
 void on_dance_up_dir(qk_tap_dance_state_t *state, void *user_data) {
-	if(state->count == 3) {
-		tap_code16(KC_LABK);
-		tap_code16(KC_LABK);
-		tap_code16(KC_LABK);
-	}
-	if(state->count > 3) {
-		tap_code16(KC_LABK);
-	}
-}
-void dance_up_dir_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_UP_DIR].step = dance_step(state);
 	switch (dance_state[DANCE_UP_DIR].step) {
 		case SINGLE_TAP:
@@ -1243,19 +1220,16 @@ void dance_up_dir_finished(qk_tap_dance_state_t *state, void *user_data) {
 			register_code16(KC_LABK);
 	}
 }
-void dance_up_dir_reset(qk_tap_dance_state_t *state, void *user_data) {
-
-}
 
 
 qk_tap_dance_action_t tap_dance_actions[] = {
 	[DANCE_SPOTLIGHT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_spotlight_finished, dance_spotlight_reset),
 	[DANCE_DESKTOP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_desktop_finished, dance_desktop_reset),
-	[DANCE_TAB_MGMT] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_tab_mgmt, dance_tab_mgmt_finished, dance_tab_mgmt_reset),
+	[DANCE_TAB_MGMT] = ACTION_TAP_DANCE_FN(on_dance_tab_mgmt),
 	[DANCE_PGUP_HOME] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_pgup_home, dance_pgup_home_finished, dance_pgup_home_reset),
 	[DANCE_PGDN_END] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_pgdn_end, dance_pgdn_end_finished, dance_pgdn_end_reset),
 	[DANCE_ZOOM_OUT] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_zoom_out, dance_zoom_out_finished, dance_zoom_out_reset),
-	[DANCE_TAB_LAST_APP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_tab_last_app_finished, dance_tab_last_app_reset),
+	[DANCE_TAB_LAST_APP] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_tab_last_app, dance_tab_last_app_finished, dance_tab_last_app_reset),
 	[DANCE_SEMICOLON] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_semicolon, dance_semicolon_finished, dance_semicolon_reset),
 	[DANCE_SLASH_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_slash_colon, dance_slash_colon_finished, dance_slash_colon_reset),
 	[DANCE_QUOTE] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_quote, dance_quote_finished, dance_quote_reset),
@@ -1269,7 +1243,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 	[DANCE_18] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_18, dance_18_finished, dance_18_reset),
 	[DANCE_GTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_gteq, dance_gteq_finished, dance_gteq_reset),
 	[DANCE_LTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_lteq, dance_lteq_finished, dance_lteq_reset),
-	[DANCE_UP_DIR] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_up_dir, dance_up_dir_finished, dance_up_dir_reset),
+	[DANCE_UP_DIR] = ACTION_TAP_DANCE_FN(on_dance_up_dir),
 	[DANCE_C] = MY_DUAL_ACTION_LGUI(KC_C),
 	[DANCE_V] = MY_DUAL_ACTION_LGUI(KC_V),
 	[DANCE_X] = MY_DUAL_ACTION_LGUI(KC_X),
