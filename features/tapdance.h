@@ -101,15 +101,7 @@ enum tap_dance_codes {
 #define _KC_G TD(DANCE_G)
 
 
-
-
-
-
-
-
-
-
-
+// STUFF FOR TAP DANCE
 typedef struct {
 	bool is_press_action;
 	uint8_t step;
@@ -123,6 +115,5 @@ enum {
 	DOUBLE_SINGLE_TAP,
 	MORE_TAPS
 };
-
 
 uint8_t dance_step(qk_tap_dance_state_t *state);
