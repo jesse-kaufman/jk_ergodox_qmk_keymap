@@ -19,12 +19,12 @@ void my_leader_matrix_scan_user(void) {
 				did_leader_succeed = true;
 			}else
 			// Notes
-			SEQ_TWO_KEYS(KC_N, KC_O) {
+			SEQ_TWO_KEYS(_KC_N, _KC_O) {
 				tap_code16(HYPR(KC_N));
 				did_leader_succeed = true;
 			}else
 			// Mail
-			SEQ_TWO_KEYS(KC_M, KC_A) {
+			SEQ_TWO_KEYS(_KC_M, _KC_A) {
 				tap_code16(HYPR(KC_M));
 				did_leader_succeed = true;
 			}else
@@ -34,12 +34,12 @@ void my_leader_matrix_scan_user(void) {
 				did_leader_succeed = true;
 			}else
 			// Messenger (FB)
-			SEQ_TWO_KEYS(_F_FN, KC_B) {
+			SEQ_TWO_KEYS(_F_FN, _KC_B) {
 				tap_code16(HYPR(KC_F));
 				did_leader_succeed = true;
 			}else
 			// Messages
-			SEQ_TWO_KEYS(_KC_S, KC_M) {
+			SEQ_TWO_KEYS(_KC_S, _KC_M) {
 				tap_code16(HYPR(KC_B));
 				did_leader_succeed = true;
 			}else
@@ -49,7 +49,7 @@ void my_leader_matrix_scan_user(void) {
 				did_leader_succeed = true;
 			}else
 			// Chrome
-			SEQ_TWO_KEYS(_KC_C, KC_H) {
+			SEQ_TWO_KEYS(_KC_C, _KC_H) {
 				tap_code16(HYPR(KC_G));
 				did_leader_succeed = true;
 			}else
@@ -64,7 +64,7 @@ void my_leader_matrix_scan_user(void) {
 				did_leader_succeed = true;
 			}else
 			// Reminders
-			SEQ_ONE_KEY(KC_MEDIA_PLAY_PAUSE) {
+			SEQ_ONE_KEY(_PLAY) {
 				tap_code16(HYPR(KC_R));
 				did_leader_succeed = true;
 			}
