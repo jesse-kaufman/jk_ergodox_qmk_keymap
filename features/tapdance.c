@@ -67,13 +67,12 @@ void my_dual_action_lgui_each_tap(qk_tap_dance_state_t *state, void *user_data) 
 		tap_code16(pair->kc1);
 	}
 }
-
 void my_dual_action_lgui_finished(qk_tap_dance_state_t *state, void *user_data) {
 	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
-	uint8_t step = dance_step(state);
+	dance_state[pair->kc1].step = dance_step(state);
 
 	if (!leading) {
-		switch (step) {
+		switch (dance_state[pair->kc1].step) {
 			case DOUBLE_TAP:
 				tap_code16(pair->kc1);
 				register_code16(pair->kc1);
@@ -99,14 +98,11 @@ void my_dual_action_lgui_finished(qk_tap_dance_state_t *state, void *user_data) 
 		}
 	}
 }
-
 void my_dual_action_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
-	uint8_t step = dance_step(state);
-
 
 	if (!leading) {
-		switch (step) {
+		switch (dance_state[pair->kc1].step) {
 			case DOUBLE_HOLD:
 			case DOUBLE_SINGLE_TAP:
 				break;
@@ -120,6 +116,7 @@ void my_dual_action_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 				break;
 		}
 	}
+	dance_state[pair->kc1].step = 0;
 }
 
 
