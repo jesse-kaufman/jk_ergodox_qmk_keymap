@@ -28,16 +28,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			if (record->event.pressed) {
 				// keycode _UP_DIR is pressed
 				SEND_STRING("// ");
-				return false;
 			}
+			return false;
 			break;
 
 		case _KC_NIX_HOME:
 			if (record->event.pressed) {
 				// keycode _UP_DIR is pressed
 				SEND_STRING("~/");
-				return false;
 			}
+			return false;
 			break;
 	}
 
