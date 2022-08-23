@@ -12,7 +12,7 @@ void matrix_scan_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
-		KC_F17,			KC_1,			KC_2,			KC_3,			SCMD(KC_4),			SCMD(KC_5),			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
+		KC_F17,			XXXXXXX,		XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		_SPOTLIGHT,												_DESKTOP,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_TAB_MGMT,
 		KC_F16,			_KC_Q,			_KC_W,			KC_E,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			_KC_I,			_KC_O,			KC_P,			XXXXXXX,
 		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_H,			KC_J,			KC_K,			KC_L,			_QUOTE,			_PGUP_HOME,
 		_KC_COLEMAK,	KC_Z,			_KC_X,			_KC_C,			_KC_V,			_KC_B,			TT(_FN),												CAPS_WORD, 		_KC_N,			_KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
@@ -23,7 +23,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 	// COLEMAK-DH BASE layer (TARMAK-1)
 	[_COLEMAK] = LAYOUT_ergodox_pretty(
-		KC_F17,			KC_1,			KC_2,			KC_3,			KC_4,			KC_5,			_SPOTLIGHT,												_DESKTOP,		KC_6,			KC_7,			KC_8,			KC_9,			KC_0,			_TAB_MGMT,
+		KC_F17,			XXXXXXX,		XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		_SPOTLIGHT,												_DESKTOP,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_TAB_MGMT,
 		KC_F16,			_KC_Q,			_KC_W,			KC_J,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			_KC_I,			_KC_O,			KC_P,			XXXXXXX,
 		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_M,			_KC_N,			KC_E,			KC_L,			_QUOTE,			_PGUP_HOME,
 		_KC_QWERTY,		KC_Z,			_KC_X,			_KC_C,			_KC_V,			_KC_B,			TT(_FN),												CAPS_WORD,		KC_K,			_KC_H,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
