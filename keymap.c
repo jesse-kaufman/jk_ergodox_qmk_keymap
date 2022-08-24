@@ -17,6 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_H,			KC_J,			KC_K,			KC_L,			_QUOTE,			_PGUP_HOME,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		TT(_NUM),		KC_DOWN,		KC_UP,			TT(_FN),
 		_KC_COLEMAK,	KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,			TT(_FN),												KC_ENTER, 		KC_N,			KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
+		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		_OSM_CMD,		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														_OSM_SHIFT,				_PLAY,
 																						_SHFT_SPACE,	KC_TAB,			KC_LEAD,				CAPS_WORD,		KC_BSPACE,		_OSM_SHIFT
@@ -28,6 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_M,			_KC_N,			KC_E,			KC_L,			_QUOTE,			_PGUP_HOME,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		TT(_NUM),		KC_DOWN,		KC_UP,			TT(_FN),
 		_KC_QWERTY,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,			TT(_FN),												KC_ENTER,		KC_K,			KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
+		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		_______,		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														_OSM_SHIFT,				_PLAY,
 																						_SHFT_SPACE,	KC_TAB,			KC_LEAD,				CAPS_WORD,		KC_BSPACE,		_OSM_SHIFT
@@ -38,10 +40,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		_KC_NIX_HOME,	KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												_______,		KC_AMPR,		KC_PIPE,		_LBRACKET,		KC_RBRACKET,	XXXXXXX,		_______,
 		_______,		_KC_COMMENT,	KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_SCOLON,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		_______,
 		_______,		_KC_UP_DIR,		KC_SLASH,		_______,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		KC_TILD,		_LTEQ,			_GTEQ,			KC_SLASH,		_______,
-		_______, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		TO(_BASE),		_______,		_______,		TO(_BASE),
+		_______, 		_______,		_______,		_______,		_______,																												TO(_NUM),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
-																						_______,		_______,		_______,				_______,		_______,		_______
 	),
 	// CODE layer
 	[_CODE] = LAYOUT_ergodox_pretty(
@@ -52,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		TO(_BASE),		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
-																						_______,		_______,		_______,				_______,		_______,		_______
+																						_______,		_______,		_______,				_______,		_______,		TO(_BASE)
 	),
 	// NUM layer
 	[_NUM] = LAYOUT_ergodox_pretty(
@@ -60,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_7,			KC_8,			KC_9,			XXXXXXX,		_______,
 		_______,		XXXXXXX,		KC_ASTR,		KC_MINUS,		KC_EQUAL,		XXXXXXX,																				KC_0,			KC_4,			KC_5,			KC_6,			XXXXXXX,		_______,
 		_______,		XXXXXXX,		KC_SLASH,		KC_PLUS,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_1,			KC_2,			KC_3,			KC_DOT,			_______,
-		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		TO(_BASE),		_______,		_______,		TO(_BASE),
+		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -71,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												_FORWARD,		LALT(KC_UP),	KC_PGUP,		KC_UP,			KC_HOME,		LALT(KC_DOWN),	_______,
 		_______,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		_OSM_CMD,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	KC_HOME,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		TO(_BASE),												_BACK,			XXXXXXX,		KC_PGDOWN,		XXXXXXX,		KC_END,			XXXXXXX,		KC_END,
-		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		TO(_BASE),		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
+		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -82,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		KC_MS_WH_LEFT,	KC_MS_WH_RIGHT,	KC_MS_UP,		KC_MS_WH_UP,	XXXXXXX,		_______,												_FORWARD,		_______,		_______,		_______,		_______,		_______,		_______,
 		_______,		KC_MS_BTN2,		KC_MS_LEFT,		KC_MS_DOWN,		KC_MS_RIGHT,	KC_MS_BTN1,																				_______,		_______,		_______,		_______,		_______,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		_SHFT_WHDN,		KC_MS_WH_DOWN,	_SHFT_WHUP,		_______,												_BACK,			_______,		_______,		_______,		_______,		_______,		_______,
-		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
+		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_FN),
 																									_ZOOM_OUT_100,		_ZOOM_IN,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
