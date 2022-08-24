@@ -13,9 +13,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
 		KC_F17,			XXXXXXX,		XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		_SPOTLIGHT,												_DESKTOP,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_TAB_MGMT,
-		KC_F16,			_KC_Q,			_KC_W,			KC_E,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			_KC_I,			_KC_O,			KC_P,			XXXXXXX,
-		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_H,			KC_J,			KC_K,			KC_L,			_QUOTE,			_PGUP_HOME,
-		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		TT(_NUM),		KC_DOWN,		KC_UP,			TT(_FN),
+		KC_F16,			KC_Q,			KC_W,			KC_E,			KC_R,			KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			KC_I,			KC_O,			KC_P,			XXXXXXX,
+		_LAST_APP,		_KC_A,			_KC_S,			_KC_D,			_KC_F,			KC_G,																					KC_H,			KC_J,			KC_K,			KC_L,			_QUOTE,			_PGUP_HOME,
 		_KC_COLEMAK,	KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,			TT(_FN),												KC_ENTER, 		KC_N,			KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		_OSM_CMD,		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
