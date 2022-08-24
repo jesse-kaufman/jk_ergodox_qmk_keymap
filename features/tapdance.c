@@ -55,125 +55,7 @@ uint8_t dance_step(qk_tap_dance_state_t *state) {
 
 
 
-void my_dual_action_lgui_each_tap(qk_tap_dance_state_t *state, void *user_data) {
-	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
 
-	if(state->count == 3) {
-		tap_code16(pair->kc1);
-		tap_code16(pair->kc1);
-		tap_code16(pair->kc1);
-	}
-	if(state->count > 3) {
-		tap_code16(pair->kc1);
-	}
-}
-void my_dual_action_lgui_finished(qk_tap_dance_state_t *state, void *user_data) {
-	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
-	dance_state[pair->kc1].step = dance_step(state);
-
-	if (!leading) {
-		switch (dance_state[pair->kc1].step) {
-			case DOUBLE_TAP:
-				tap_code16(pair->kc1);
-				register_code16(pair->kc1);
-				break;
-
-			case DOUBLE_SINGLE_TAP:
-				tap_code16(pair->kc1);
-				tap_code16(pair->kc1);
-				break;
-
-			case SINGLE_TAP:
-				register_code16(pair->kc1);
-				break;
-
-			case DOUBLE_HOLD:
-				tap_code16(LGUI(pair->kc1));
-				my_indicate_success();
-				break;
-
-			case SINGLE_HOLD:
-				if (_COLEMAK == biton32(default_layer_state)) {
-					switch (pair->kc1) {
-						case KC_A:
-							register_code16(KC_LALT);
-							break;
-
-						case KC_S:
-							register_code16(KC_LSFT);
-							break;
-
-						default:
-							register_code16(pair->kc1);
-					}
-				}
-				else {
-					switch (pair->kc1) {
-						case KC_A:
-							register_code16(KC_LALT);
-							break;
-
-						case KC_S:
-							register_code16(KC_LSFT);
-							break;
-
-						default:
-							register_code16(pair->kc1);
-					}
-				}
-
-				break;
-		}
-	}
-}
-void my_dual_action_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
-	qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
-
-	if (!leading) {
-		switch (dance_state[pair->kc1].step) {
-			case DOUBLE_HOLD:
-			case DOUBLE_SINGLE_TAP:
-				break;
-
-			case SINGLE_HOLD:
-			if (_COLEMAK == biton32(default_layer_state)) {
-				switch (pair->kc1) {
-					case KC_A:
-						unregister_code16(KC_LALT);
-						break;
-
-					case KC_S:
-						unregister_code16(KC_LSFT);
-						break;
-
-					default:
-						unregister_code16(pair->kc1);
-				}
-				break;
-			}
-			else {
-				switch (pair->kc1) {
-					case KC_A:
-						unregister_code16(KC_LALT);
-						break;
-
-					case KC_S:
-						unregister_code16(KC_LSFT);
-						break;
-
-					default:
-						unregister_code16(pair->kc1);
-				}
-				break;
-			}
-			default:
-				unregister_code16(pair->kc1);
-				break;
-
-		}
-	}
-	dance_state[pair->kc1].step = 0;
-}
 
 
 
@@ -206,6 +88,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 		case _KC_D:
 		case _KC_S:
 		case _KC_F:
+		case _KC_T:
 			// Do not select the hold action when another key is pressed.
 			return false;
 
@@ -228,6 +111,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 			return TAPPING_TERM;
 
 		case _KC_F:
+		case _KC_T:
 		case _KC_A:
 		case _KC_S:
 		case _KC_D:
@@ -248,6 +132,7 @@ bool caps_word_press_user(uint16_t keycode) {
 		case _KC_D:
 		case _KC_S:
 		case _KC_F:
+		case _KC_T:
 		case KC_MINS:
 			add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
 			return true;
@@ -1247,21 +1132,4 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 	[DANCE_GTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_gteq, dance_gteq_finished, dance_gteq_reset),
 	[DANCE_LTEQ] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_lteq, dance_lteq_finished, dance_lteq_reset),
 	[DANCE_UP_DIR] = ACTION_TAP_DANCE_FN(on_dance_up_dir),
-	// [DANCE_C] = MY_DUAL_ACTION_LGUI(KC_C),
-	// [DANCE_V] = MY_DUAL_ACTION_LGUI(KC_V),
-	// [DANCE_X] = MY_DUAL_ACTION_LGUI(KC_X),
-	// [DANCE_A] = MY_DUAL_ACTION_LGUI(KC_A),
-	// [DANCE_S] = MY_DUAL_ACTION_LGUI(KC_S),
-	// [DANCE_R] = MY_DUAL_ACTION_LGUI(KC_R),
-	// [DANCE_T] = MY_DUAL_ACTION_LGUI(KC_T),
-	// [DANCE_O] = MY_DUAL_ACTION_LGUI(KC_O),
-	// [DANCE_H] = MY_DUAL_ACTION_LGUI(KC_H),
-	// [DANCE_M] = MY_DUAL_ACTION_LGUI(KC_M),
-	// [DANCE_N] = MY_DUAL_ACTION_LGUI(KC_N),
-	// [DANCE_B] = MY_DUAL_ACTION_LGUI(KC_B),
-	// [DANCE_W] = MY_DUAL_ACTION_LGUI(KC_W),
-	// [DANCE_Q] = MY_DUAL_ACTION_LGUI(KC_Q),
-	// [DANCE_I] = MY_DUAL_ACTION_LGUI(KC_I),
-	// [DANCE_G] = MY_DUAL_ACTION_LGUI(KC_G),
-
 };
