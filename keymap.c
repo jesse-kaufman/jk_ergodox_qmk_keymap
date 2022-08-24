@@ -21,12 +21,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 																														_OSM_SHIFT,				_PLAY,
 																						_SHFT_SPACE,	KC_TAB,			KC_LEAD,				CAPS_WORD,		KC_BSPACE,		_OSM_SHIFT
 	),
-	// COLEMAK-DH BASE layer (TARMAK-1)
+	// COLEMAK-DH BASE layer (TARMAK-2)
 	[_COLEMAK] = LAYOUT_ergodox_pretty(
 		KC_F17,			XXXXXXX,		XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		_SPOTLIGHT,												_DESKTOP,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_TAB_MGMT,
-		KC_F16,			_KC_Q,			_KC_W,			KC_J,			_KC_R,			_KC_T,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			_KC_I,			_KC_O,			KC_P,			XXXXXXX,
-		_LAST_APP,		_KC_A,			_KC_S,			KC_D,			_F_FN,			_KC_G,																					_KC_M,			_KC_N,			KC_E,			KC_L,			_QUOTE,			_PGUP_HOME,
-		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		TT(_NUM),		KC_DOWN,		KC_UP,			TT(_FN),
+		KC_F16,			KC_Q,			KC_W,			KC_F,			KC_R,			KC_G,			KC_ESC,													KC_LEAD,		KC_Y,			KC_U,			KC_I,			KC_O,			KC_P,			XXXXXXX,
+		_LAST_APP,		_KC_A,			_KC_S,			_KC_D,			_KC_T,			KC_J,																					KC_H,			KC_N,			KC_E,			KC_L,			_QUOTE,			_PGUP_HOME,
 		_KC_QWERTY,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,			TT(_FN),												KC_ENTER,		KC_K,			KC_M,			KC_COMMA,		_DOT,			KC_QUES,		_PGDN_END,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_CMD,																												OSL(_SYM),		_______,		KC_DOWN,		KC_UP,			TT(_FN),
 																										_ZOOM_OUT_100,	_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
