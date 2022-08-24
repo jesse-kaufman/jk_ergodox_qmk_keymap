@@ -35,6 +35,10 @@
 // MOD TAPS
 #define _SHFT_SPACE MT(MOD_LSFT, KC_SPACE)
 #define _SHFT_ENTER MT(MOD_RSFT, KC_ENTER)
+#define _KC_A MT(MOD_LALT, KC_A)
+#define _KC_S MT(MOD_LSFT, KC_S)
+#define _KC_D LT(_NUM, KC_D)
+
 
 // OTHER KEYCODES
 #define _UNDO LGUI(KC_Z)
