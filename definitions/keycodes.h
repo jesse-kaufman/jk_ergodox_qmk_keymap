@@ -1,7 +1,9 @@
 #pragma once
 
 // LAYER TAP KEYCODES
-#define _F_FN LT(_FN,KC_F)
+#define _KC_F LT(_FN,KC_F)
+#define _KC_T LT(_FN,KC_T)
+
 
 // FANCY QUOTES KEYCODES
 #define _LDFQUO LALT(KC_LBRACKET)
