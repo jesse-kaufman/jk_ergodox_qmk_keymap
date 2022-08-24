@@ -93,7 +93,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #define _C_BASE {174,255,0}
 #define _C_SYM {0,200,255}
-#define _C_NUM {1,152,5}
 #define _C_FN {255,0,251}
 #define _C_OFF {0,0,0}
 
@@ -163,18 +162,18 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
 	},
 	[_NUM] = {
 				// RIGHT HAND SIDE
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				{255,88,0},		_C_SYM,			_C_SYM,			_C_SYM,
 
 				// LEFT HAND SIDE (MIRRORED)
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM,
-				_C_NUM,			_C_NUM,			_C_NUM,			_C_NUM
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM,
+				_C_SYM,			_C_SYM,			_C_SYM,			_C_SYM
 	},
 	[_FN] = {
 				// RIGHT HAND SIDE
