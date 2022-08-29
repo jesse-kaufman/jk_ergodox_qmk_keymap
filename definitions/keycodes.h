@@ -58,5 +58,4 @@
 enum custom_keycodes {
     _KC_COMMENT = EZ_SAFE_RANGE,
 	_KC_NIX_HOME,
-	_KC_SW_LANG,
 };
