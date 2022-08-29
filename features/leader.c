@@ -65,7 +65,7 @@ void my_leader_matrix_scan_user(void) {
 			}else
 			// Reminders
 			SEQ_ONE_KEY(_PLAY) {
-				tap_code16(HYPR(KC_R));
+				tap_code16(HYPR(KC_MEDIA_PLAY_PAUSE));
 				did_leader_succeed = true;
 			}
 
