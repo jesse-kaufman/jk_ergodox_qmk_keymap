@@ -298,6 +298,7 @@ void dance_pgdn_end_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_PGDN_END].step = dance_step(state);
 	switch (dance_state[DANCE_PGDN_END].step) {
 		case SINGLE_TAP:
+		case DOUBLE_HOLD:
 			register_code16(KC_PGDOWN);
 			break;
 
@@ -315,11 +316,9 @@ void dance_pgdn_end_finished(qk_tap_dance_state_t *state, void *user_data) {
 void dance_pgdn_end_reset(qk_tap_dance_state_t *state, void *user_data) {
 	switch (dance_state[DANCE_PGDN_END].step) {
 		case SINGLE_TAP:
-			unregister_code16(KC_PGDOWN);
-			break;
-
 		case DOUBLE_TAP:
 		case DOUBLE_SINGLE_TAP:
+		case DOUBLE_HOLD:
 			unregister_code16(KC_PGDOWN);
 			break;
 	}
