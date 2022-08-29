@@ -66,12 +66,6 @@ void keyboard_post_init_user(void) {
 
 
 void set_layer_color(int layer) {
-	uint8_t default_layer = eeconfig_read_default_layer();
-
-	if (default_layer & (1UL << _COLEMAK)) {
-		layer = _COLEMAK;
-	}
-
 	for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
 		RGB rgb = {
 			.r = pgm_read_byte(&ledmap[layer][i][0]),
