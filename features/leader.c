@@ -12,58 +12,69 @@ void my_leader_matrix_scan_user(void) {
 		SEQ_ONE_KEY(KC_T) {
 			tap_code16(HYPR(KC_T));
 			did_leader_succeed = true;
-		} else
+		}else
+
 			// Safari
 			SEQ_ONE_KEY(_KC_S) {
 				tap_code16(HYPR(KC_S));
 				did_leader_succeed = true;
 			}else
+
 			// Notes
 			SEQ_TWO_KEYS(KC_N, KC_O) {
 				tap_code16(HYPR(KC_N));
 				did_leader_succeed = true;
 			}else
+
 			// Mail
 			SEQ_TWO_KEYS(KC_M, _KC_A) {
 				tap_code16(HYPR(KC_M));
 				did_leader_succeed = true;
 			}else
+
 			// Finder
 			SEQ_ONE_KEY(_KC_F) {
 				tap_code16(HYPR(KC_D));
 				did_leader_succeed = true;
 			}else
+
 			// Messenger (FB)
 			SEQ_TWO_KEYS(_KC_F, KC_B) {
 				tap_code16(HYPR(KC_F));
 				did_leader_succeed = true;
 			}else
+
 			// Messages
 			SEQ_TWO_KEYS(_KC_S, KC_M) {
 				tap_code16(HYPR(KC_B));
 				did_leader_succeed = true;
 			}else
+
 			// Terminal
 			SEQ_TWO_KEYS(KC_T, KC_E) {
 				tap_code16(HYPR(KC_E));
 				did_leader_succeed = true;
 			}else
+
 			// Chrome
 			SEQ_TWO_KEYS(KC_C, KC_H) {
 				tap_code16(HYPR(KC_G));
 				did_leader_succeed = true;
 			}else
+
 			// Lightroom
 			SEQ_TWO_KEYS(KC_L, KC_R) {
 				tap_code16(HYPR(KC_L));
 				did_leader_succeed = true;
 			}else
+
 			// Reminders
 			SEQ_TWO_KEYS(KC_R, KC_E) {
 				tap_code16(HYPR(KC_R));
 				did_leader_succeed = true;
 			}else
-			// Reminders
+
+			// Music
 			SEQ_ONE_KEY(_PLAY) {
 				tap_code16(HYPR(KC_MEDIA_PLAY_PAUSE));
 				did_leader_succeed = true;
