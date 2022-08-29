@@ -106,7 +106,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _QUOTE:
 		case _LBRACKET:
 		case _OSM_OPT:
-		case _OSM_CMD:
+		case _OSM_LCMD:
+		case _OSM_RCMD:
 		case _OSM_CTR:
 			return TAPPING_TERM;
 
