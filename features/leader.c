@@ -15,7 +15,7 @@ void my_leader_matrix_scan_user(void) {
 		}else
 
 			// Safari
-			SEQ_ONE_KEY(_KC_S) {
+			SEQ_ONE_KEY(KC_S) {
 				tap_code16(HYPR(KC_S));
 				did_leader_succeed = true;
 			}else
@@ -33,19 +33,19 @@ void my_leader_matrix_scan_user(void) {
 			}else
 
 			// Finder
-			SEQ_ONE_KEY(_KC_F) {
+			SEQ_ONE_KEY(KC_F) {
 				tap_code16(HYPR(KC_D));
 				did_leader_succeed = true;
 			}else
 
 			// Messenger (FB)
-			SEQ_TWO_KEYS(_KC_F, KC_B) {
+			SEQ_TWO_KEYS(KC_F, KC_B) {
 				tap_code16(HYPR(KC_F));
 				did_leader_succeed = true;
 			}else
 
 			// Messages
-			SEQ_TWO_KEYS(_KC_S, KC_M) {
+			SEQ_TWO_KEYS(KC_S, KC_M) {
 				tap_code16(HYPR(KC_B));
 				did_leader_succeed = true;
 			}else
