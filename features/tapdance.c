@@ -74,8 +74,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 		// case _KC_T:
 		// case _VOL_DOWN:
 		// case _VOL_UP:
-			// Do not select the hold action when another key is tapped.
-			// return false;
+		// Do not select the hold action when another key is tapped.
+		// return false;
 
 		default:
 			// Immediately select the hold action when another key is tapped.
@@ -106,7 +106,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 // set tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
-		case _SHFT_SPACE:
+		case _SPACE:
 		case _SEMICOLON:
 		case _QUOTE:
 		case _LBRACKET:
@@ -118,12 +118,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 		case _PGUP_HOME:
 		case _PGDN_END:
+		case _SHFT_SPACE:
 			return TAPPING_TERM-50;
 
-		// case _KC_A:
-		// case _KC_S:
-		// case _KC_F:
-		// case _KC_R:
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
 
@@ -389,13 +386,13 @@ void on_dance_spc_last_app(qk_tap_dance_state_t *state, void *user_data) {
 void dance_spc_last_app_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_SPACE_LAST_APP].step = dance_step(state);
 	switch (dance_state[DANCE_SPACE_LAST_APP].step) {
-		case SINGLE_TAP:
 		case DOUBLE_HOLD:
-			tap_code16(KC_SPACE);
+		case SINGLE_TAP:
+			register_code16(KC_SPACE);
 			break;
 
 		case SINGLE_HOLD:
-			tap_code16(LGUI(KC_TAB));
+			tap_code16(KC_F17);
 			break;
 
 		case DOUBLE_TAP:
@@ -406,6 +403,16 @@ void dance_spc_last_app_finished(qk_tap_dance_state_t *state, void *user_data) {
 	}
 }
 void dance_spc_last_app_reset(qk_tap_dance_state_t *state, void *user_data) {
+	dance_state[DANCE_SPACE_LAST_APP].step = dance_step(state);
+	switch (dance_state[DANCE_SPACE_LAST_APP].step) {
+		case SINGLE_TAP:
+		case DOUBLE_HOLD:
+		case DOUBLE_TAP:
+		case DOUBLE_SINGLE_TAP:
+			unregister_code16(KC_SPACE);
+			break;
+	}
+
 	dance_state[DANCE_SPACE_LAST_APP].step = 0;
 }
 
