@@ -118,7 +118,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 		case _PGUP_HOME:
 		case _PGDN_END:
-		case _SHFT_SPACE:
 			return TAPPING_TERM-50;
 
 		case _TAB_MGMT:
