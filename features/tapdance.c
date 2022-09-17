@@ -63,50 +63,9 @@ uint8_t dance_step(qk_tap_dance_state_t *state) {
 /***	PER-KEY SETTINGS	***/
 /***						***/
 
-// set permissive hold per key
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) {
-		// case _SHFT_SPACE:
-		// case _KC_A:
-		// case _KC_S:
-		// case _KC_F:
-		// case _KC_R:
-		// case _KC_T:
-		// case _VOL_DOWN:
-		// case _VOL_UP:
-		// Do not select the hold action when another key is tapped.
-		// return false;
-
-		default:
-			// Immediately select the hold action when another key is tapped.
-			return true;
-	}
-}
-
-// set hold on other key press per key
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) {
-		case _SHFT_SPACE:
-		case _KC_A:
-		case _KC_S:
-		case _KC_F:
-		case _KC_R:
-		case _KC_T:
-		case _VOL_DOWN:
-		case _VOL_UP:
-			// Do not select the hold action when another key is pressed.
-			return false;
-
-		default:
-			// Immediately select the hold action when another key is pressed.
-			return true;
-	}
-}
-
 // set tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
-		case _SPACE:
 		case _SEMICOLON:
 		case _QUOTE:
 		case _LBRACKET:
@@ -114,6 +73,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _OSM_LCMD:
 		case _OSM_RCMD:
 		case _OSM_CTR:
+		case _OSL_SYM:
 			return TAPPING_TERM;
 
 		case _PGUP_HOME:
@@ -391,7 +351,7 @@ void dance_spc_last_app_finished(qk_tap_dance_state_t *state, void *user_data) {
 			break;
 
 		case SINGLE_HOLD:
-			tap_code16(KC_F17);
+			tap_code16(LGUI(KC_TAB));
 			break;
 
 		case DOUBLE_TAP:
@@ -1180,7 +1140,7 @@ void dance_app_windows_finished(qk_tap_dance_state_t *state, void *user_data) {
 			break;
 
 		case SINGLE_HOLD:
-			tap_code16(LCTL(KC_UP));
+			tap_code16(KC_F17);
 			break;
 	}
 }

@@ -3,6 +3,8 @@
 // LAYER TAP KEYCODES
 #define _KC_F LT(_FN,KC_F)
 #define _KC_T LT(_FN,KC_T)
+#define _OSL_SYM OSL(_SYM)
+
 
 
 // FANCY QUOTES KEYCODES
