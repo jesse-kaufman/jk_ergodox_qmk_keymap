@@ -15,8 +15,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX,		XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		KC_F17,		_SPOTLIGHT,													_DESKTOP,	 	XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		KC_F12,		_TAB_MGMT,
 		TT(_FN),		KC_Q,			KC_W,			KC_F,			KC_P,			KC_G,		KC_ESC,														TT(_NUM),		KC_J,			KC_U,			KC_I,			KC_Y,			_QUOTE,			XXXXXXX,
 		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_D,																					KC_H,			KC_N,			KC_E,			KC_L,			KC_O,			_PGUP_HOME,
-		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,		_OSM_LSHIFT,												KC_BSPACE, 		KC_K,			KC_M,			_COMMA,			_DOT,			KC_QUES,		_PGDN_END,
-		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_SHFT_TAB,																												OSL(_SYM),		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),
+		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,		_TAB,														KC_BSPACE, 		KC_K,			KC_M,			_COMMA,			_DOT,			KC_QUES,		_PGDN_END,
+		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_LSHIFT,																											OSL(_SYM),		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),
 																									_ZOOM_OUT,		_ZOOM_IN,				_VOL_DOWN,			_VOL_UP,
 																													CAPS_WORD,				_PLAY,
 																						_SPACE,		_OSM_LCMD,		KC_LEAD,				CAPS_WORD,			_OSM_RSHIFT,		_SHFT_ENTER
