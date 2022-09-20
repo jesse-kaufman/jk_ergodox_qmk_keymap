@@ -46,7 +46,8 @@
 #undef HOLD_ON_OTHER_KEY_PRESS
 #define IGNORE_MOD_TAP_INTERRUPT
 
-
+#define COMBO_TERM 20
+#define COMBO_ONLY_FROM_LAYER 0
 
 
 /**
@@ -55,8 +56,8 @@
 #define RGB_TRIGGER_ON_KEYDOWN          // trigger on keydown instead of key up to feel more responsive
 #undef ENABLE_RGB_MATRIX_SOLID_COLOR     // Static single hue, no speed support
 #undef ENABLE_RGB_MATRIX_ALPHAS_MODS        // Static dual hue, speed is hue for secondary hue
-#define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN    // Static gradient top to bottom, speed controls how much gradient changes
-#define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT    // Static gradient left to right, speed controls how much gradient changes
+#undef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN    // Static gradient top to bottom, speed controls how much gradient changes
+#undef ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT    // Static gradient left to right, speed controls how much gradient changes
 #define ENABLE_RGB_MATRIX_BREATHING           // Single hue brightness cycling animation
 #undef ENABLE_RGB_MATRIX_BAND_SAT        // Single hue band fading saturation scrolling left to right
 #undef ENABLE_RGB_MATRIX_BAND_VAL       // Single hue band fading brightness scrolling left to right
@@ -69,7 +70,7 @@
 #undef ENABLE_RGB_MATRIX_CYCLE_UP_DOWN    // Full gradient scrolling top to bottom
 #undef ENABLE_RGB_MATRIX_CYCLE_OUT_IN        // Full gradient scrolling out to in
 #undef ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL   // Full dual gradients scrolling out to in
-#define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON  // Full gradent Chevron shapped scrolling left to right
+#undef ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON  // Full gradent Chevron shapped scrolling left to right
 #undef ENABLE_RGB_MATRIX_CYCLE_PINWHEEL      // Full gradient spinning pinwheel around center of keyboard
 #undef ENABLE_RGB_MATRIX_CYCLE_SPIRAL      // Full gradient spinning spiral around center of keyboard
 #undef ENABLE_RGB_MATRIX_DUAL_BEACON         // Full gradient spinning around center of keyboard
