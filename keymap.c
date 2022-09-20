@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_FN] = LAYOUT_ergodox_pretty(
 		RESET,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
 		TO(_BASE),		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												TO(_NUM),		_FORWARD,		KC_PGUP,		KC_UP,			KC_HOME,		KC_HOME,		_______,
-		_______,		XXXXXXX,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),		_______,
+		_______,		XXXXXXX,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		_BACK,			KC_PGDOWN,		XXXXXXX,		KC_END,			KC_END,			_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
