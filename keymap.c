@@ -35,9 +35,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// NUM layer
 	[_NUM] = LAYOUT_ergodox_pretty(
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												TO(_BASE),		XXXXXXX,		KC_7,			KC_8,			KC_9,			KC_PLUS,		_______,
-		_______,		KC_ASTR,		KC_ASTR,		KC_MINUS,		KC_EQUAL,		KC_EQUAL,																				XXXXXXX,		KC_4,			KC_5,			KC_6,			KC_MINUS,		_______,
-		_______,		KC_SLASH,		KC_SLASH,		KC_PLUS,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_1,			KC_2,			KC_3,			KC_DOT,			_______,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												TO(_BASE),		XXXXXXX,		KC_7,			KC_8,			KC_9,			KC_PLUS,		XXXXXXX,
+		_______,		KC_ASTR,		KC_ASTR,		KC_MINUS,		KC_EQUAL,		KC_EQUAL,																				XXXXXXX,		KC_4,			KC_5,			KC_6,			KC_MINUS,		XXXXXXX,
+		_______,		KC_SLASH,		KC_SLASH,		KC_PLUS,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_1,			KC_2,			KC_3,			KC_DOT,			XXXXXXX,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
