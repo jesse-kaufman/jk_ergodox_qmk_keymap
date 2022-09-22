@@ -46,9 +46,12 @@
 #undef HOLD_ON_OTHER_KEY_PRESS
 #define IGNORE_MOD_TAP_INTERRUPT
 
-#define COMBO_TERM 20
+#define COMBO_TERM 25
+#define COMBO_HOLD_TERM 350
 #define COMBO_ONLY_FROM_LAYER 0
-
+#define COMBO_PROCESS_KEY_RELEASE
+#define EXTRA_SHORT_COMBOS
+#define COMBO_MUST_HOLD_PER_COMBO
 
 /**
  * RGB MATRIX CONFIG
@@ -78,7 +81,7 @@
 #undef ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS   // Full dual gradients spinning two halfs of keyboard
 #undef ENABLE_RGB_MATRIX_RAINDROPS           // Randomly changes a single key's hue
 #undef ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS // Randomly changes a single key's hue and saturation
-#define ENABLE_RGB_MATRIX_HUE_BREATHING       // Hue shifts up a slight ammount at the same time, then shifts back
+#undef ENABLE_RGB_MATRIX_HUE_BREATHING       // Hue shifts up a slight ammount at the same time, then shifts back
 #undef ENABLE_RGB_MATRIX_HUE_PENDULUM        // Hue shifts up a slight ammount in a wave to the right, then back to the left
 #undef ENABLE_RGB_MATRIX_HUE_WAVE      // Hue shifts up a slight ammount and then back down in a wave to the right
 #undef ENABLE_RGB_MATRIX_PIXEL_FRACTAL       // Single hue fractal filled keys pulsing horizontally out to edges

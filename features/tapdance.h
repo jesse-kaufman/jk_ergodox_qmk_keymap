@@ -1,10 +1,4 @@
 #pragma once
-#include QMK_KEYBOARD_H
-#include "../definitions/layers.h"
-#include "../definitions/keycodes.h"
-#include "lighting.h"
-#include "leader.h"
-
 
 /**
  * TAP DANCE CODES
@@ -37,7 +31,7 @@ enum tap_dance_codes {
 	DANCE_APP_WINDOWS,
 	DANCE_APP_TABS,
 
-	// leave this for initializing dance_state in tapdance.h
+	// leave this for initializing dance_state in tapdance.c
 	NUM_DANCE_CODES,
 };
 

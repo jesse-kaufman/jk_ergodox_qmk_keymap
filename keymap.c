@@ -1,5 +1,9 @@
+#include QMK_KEYBOARD_H
+#include "version.h"
+#include "definitions/keycodes.h"
+#include "features/tapdance.h"
+#include "features/leader.h"
 
-#include "keymap.h"
 
 void matrix_scan_user(void) {
 	my_leader_matrix_scan_user();
@@ -25,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_SYM] = LAYOUT_ergodox_pretty(
 		_______,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
 		_______,		_KC_COMMENT,	KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												TO(_NUM),		KC_AMPR,		KC_PIPE,		_LBRACKET,		KC_RBRACKET,	XXXXXXX,		XXXXXXX,
-		_______,		_KC_NIX_HOME,	KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_SCOLON,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		XXXXXXX,
+		_______,		_KC_NIX_HOME,	KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_COLON,		KC_SCOLON,		_LPRN,			KC_RPRN,		_DQUOTE,		XXXXXXX,
 		_______,		_KC_UP_DIR,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		KC_TILD,		_LTEQ,			_GTEQ,			KC_SLASH,		XXXXXXX,
 		_______, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
@@ -57,9 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// FN layer
 	[_FN] = LAYOUT_ergodox_pretty(
 		RESET,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		TO(_BASE),		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												TO(_NUM),		_FORWARD,		KC_PGUP,		KC_UP,			KC_HOME,		KC_HOME,		_______,
-		_______,		XXXXXXX,		LSFT(KC_TAB),	KC_TAB,			XXXXXXX,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		_BACK,			KC_PGDOWN,		XXXXXXX,		KC_END,			KC_END,			_______,
+		TO(_BASE),		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												TO(_NUM),		_FORWARD,		KC_PGUP,		KC_UP,			XXXXXXX,		KC_HOME,		_______,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		_BACK,			KC_PGDOWN,		XXXXXXX,		KC_DOT,			KC_END,			_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
 																														_______,				_______,

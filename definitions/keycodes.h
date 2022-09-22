@@ -1,11 +1,11 @@
 #pragma once
+#include QMK_KEYBOARD_H
+#include "layers.h"
 
-// LAYER TAP KEYCODES
-#define _KC_F LT(_FN,KC_F)
+// LAYER KEYCODES
 #define _KC_T LT(_FN,KC_T)
+#define _KC_S LT(_NUM, KC_S)
 #define _OSL_SYM OSL(_SYM)
-
-
 
 // FANCY QUOTES KEYCODES
 #define _LDFQUO LALT(KC_LBRACKET)
@@ -39,7 +39,6 @@
 // #define _SPACE MT(MOD_LSFT | MOD_LALT, KC_SPACE)
 #define _SHFT_ENTER MT(MOD_RSFT, KC_ENTER)
 #define _KC_A MT(MOD_LALT, KC_A)
-#define _KC_S LT(_NUM, KC_S)
 #define _KC_R MT(MOD_LSFT, KC_R)
 
 // OTHER KEYCODES
@@ -51,9 +50,6 @@
 #define _PREV KC_MEDIA_PREV_TRACK
 #define _NEXT KC_MEDIA_NEXT_TRACK
 #define _VOL_UP KC_AUDIO_VOL_UP
-
-#define _KC_COLEMAK DF(_COLEMAK)
-#define _KC_QWERTY DF(_BASE)
 
 
 // CUSTOM KEYCODES

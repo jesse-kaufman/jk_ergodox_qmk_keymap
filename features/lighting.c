@@ -2,6 +2,8 @@
  * LED CONTROL
  */
 
+#include QMK_KEYBOARD_H
+#include "../definitions/layers.h"
 #include "lighting.h"
 
 void my_indicate_success(void) {

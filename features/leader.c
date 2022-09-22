@@ -1,3 +1,5 @@
+#include "../definitions/keycodes.h"
+#include "lighting.h"
 #include "leader.h"
 
 LEADER_EXTERNS();
