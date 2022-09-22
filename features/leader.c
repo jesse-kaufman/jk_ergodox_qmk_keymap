@@ -16,7 +16,6 @@ void my_leader_matrix_scan_user(void) {
 			did_leader_succeed = true;
 		}
 
-
 		// Terminal
 		SEQ_ONE_KEY(KC_T) {
 			tap_code16(HYPR(KC_T));
@@ -41,15 +40,14 @@ void my_leader_matrix_scan_user(void) {
 			did_leader_succeed = true;
 		}
 
-
-		// Messenger (FB)
+		// FB Messenger
 		SEQ_TWO_KEYS(KC_F, KC_B) {
 			tap_code16(HYPR(KC_F));
 			did_leader_succeed = true;
 		}
 
 		// Messages
-		SEQ_TWO_KEYS(KC_S, KC_M) {
+		SEQ_TWO_KEYS(KC_M, KC_E) {
 			tap_code16(HYPR(KC_B));
 			did_leader_succeed = true;
 		}
@@ -84,6 +82,17 @@ void my_leader_matrix_scan_user(void) {
 			did_leader_succeed = true;
 		}
 
+		// Outlook
+		SEQ_TWO_KEYS(KC_O, KC_U) {
+			tap_code16(HYPR(KC_O));
+			did_leader_succeed = true;
+		}
+
+		// Photos
+		SEQ_THREE_KEYS(KC_P, KC_H, KC_O) {
+			tap_code16(HYPR(KC_P));
+			did_leader_succeed = true;
+		}
 
 		leader_end();
 	}
