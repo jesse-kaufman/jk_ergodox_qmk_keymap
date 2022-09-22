@@ -28,8 +28,8 @@ const uint16_t PROGMEM combo_copy[] = { KC_X, KC_C, COMBO_END };
 const uint16_t PROGMEM combo_paste[] = { KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM combo_select_all[] = { KC_Z, KC_X, KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM combo_squote[] = { KC_E, KC_L, COMBO_END };
-const uint16_t PROGMEM combo_next_desktop[] = { _KC_A, _KC_R, _KC_S, _KC_T, COMBO_END };
-const uint16_t PROGMEM combo_prev_desktop[] = { KC_N, KC_E, KC_L, KC_O, COMBO_END };
+const uint16_t PROGMEM combo_next_desktop[] = { _KC_R, _KC_S, _KC_T, COMBO_END };
+const uint16_t PROGMEM combo_prev_desktop[] = { KC_N, KC_E, KC_L, COMBO_END };
 
 combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_BACKSPACE] = COMBO_ACTION(combo_backspace),
