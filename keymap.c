@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 	// FN layer
 	[_FN] = LAYOUT_ergodox_pretty(
-		RESET,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
+		_______,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
 		TO(_BASE),		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												TO(_NUM),		_FORWARD,		KC_PGUP,		KC_UP,			XXXXXXX,		KC_HOME,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		_BACK,			KC_PGDOWN,		XXXXXXX,		KC_DOT,			KC_END,			_______,
