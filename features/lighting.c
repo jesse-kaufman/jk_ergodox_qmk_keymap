@@ -13,6 +13,20 @@ void my_indicate_success(void) {
 	ergodox_led_all_off();
 }
 
+void my_flash_twice(void) {
+	ergodox_led_all_set(LED_BRIGHTNESS_HI);
+	ergodox_led_all_on();
+	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
+
+	ergodox_led_all_off();
+	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT/2);
+
+	ergodox_led_all_on();
+	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
+
+	ergodox_led_all_off();
+}
+
 void my_indicate_modifier(void) {
 
 	RGB rgb = {
