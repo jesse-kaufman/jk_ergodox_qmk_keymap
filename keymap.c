@@ -14,24 +14,24 @@ void matrix_scan_user(void) {
  * KEYMAP LAYOUT
  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-	// COLEMAK-DH (YO MOD) BASE layer
+	// COLEMAK BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
-		KC_F13,		XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		KC_F17,		_SPOTLIGHT,													_DESKTOP,	 	XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		KC_F12,			_TAB_MGMT,
-		TT(_FN),		KC_Q,			KC_W,			KC_F,			KC_P,			KC_G,		KC_ESC,														TT(_NUM),		KC_J,			KC_U,			KC_I,			KC_Y,			_QUOTE,			XXXXXXX,
-		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_D,																					KC_H,			KC_N,			KC_E,			KC_L,			KC_O,			_PGUP_HOME,
-		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,		KC_LEAD,													CAPS_WORD, 		KC_K,			KC_M,			_COMMA,			_DOT,			KC_QUES,		_PGDN_END,
+		MEH(KC_F13),	XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		KC_F17,		_PREV_DESK,													_DESKTOP,	 	XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_TAB_MGMT,
+		TT(_FN),		KC_Q,			KC_W,			KC_F,			KC_P,			KC_G,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_QUOTE,			XXXXXXX,
+		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_D,																					KC_M,			KC_N,			KC_E,			KC_I,			KC_O,			KC_PGUP,
+		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,		KC_LEAD,													OSL(_CODE),	 	_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_LSHIFT,																											OSL(_SYM),		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),
-																									_ZOOM_OUT,		_ZOOM_IN,				_VOL_DOWN,			_VOL_UP,
-																													CAPS_WORD,				_PLAY,
-																						_SPACE,		_OSM_LCMD,		KC_LEAD,				CAPS_WORD,			_OSM_RSHIFT,		_SHFT_ENTER
+																									_ZOOM_OUT,		_ZOOM_IN,					_VOL_DOWN,		_VOL_UP,
+																													MEH(KC_F19),				_PLAY,
+																						_SPACE,		_OSM_LCMD,		MEH(KC_F20),				KC_LEAD,		_OSM_LSHIFT,	_SHFT_ENTER
 	),
 	// SYM layer
 	[_SYM] = LAYOUT_ergodox_pretty(
 		_______,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		_KC_COMMENT,	KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												TO(_NUM),		KC_AMPR,		KC_PIPE,		_LBRACKET,		KC_RBRACKET,	XXXXXXX,		XXXXXXX,
-		_______,		_KC_NIX_HOME,	KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_TILD,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		XXXXXXX,
-		_______,		_KC_UP_DIR,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		_______,												_______,		KC_BSLASH,		KC_SCOLON,		_LTEQ,			_GTEQ,			KC_SLASH,		XXXXXXX,
-		_______, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
+		_______,		XXXXXXX,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												TO(_NUM),		KC_PIPE,		KC_AMPR,		_LBRACKET,		KC_RBRACKET,	XXXXXXX,		XXXXXXX,
+		_______,		XXXXXXX,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				KC_TILD,		KC_COLON,		_LPRN,			KC_RPRN,		_DQUOTE,		XXXXXXX,
+		_______,		XXXXXXX,		KC_SLASH,		KC_PLUS,		KC_CIRC,		KC_GRAVE,		_______,												TO(_CODE),		KC_BSLASH,		KC_SCOLON,		_LTEQ,			_GTEQ,			KC_SLASH,		XXXXXXX,
+		_______, 		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		TO(_BASE)
@@ -40,8 +40,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NUM] = LAYOUT_ergodox_pretty(
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												TO(_BASE),		XXXXXXX,		KC_7,			KC_8,			KC_9,			KC_PLUS,		XXXXXXX,
-		_______,		KC_ASTR,		KC_ASTR,		KC_MINUS,		KC_EQUAL,		KC_EQUAL,																				XXXXXXX,		KC_4,			KC_5,			KC_6,			KC_MINUS,		XXXXXXX,
-		_______,		KC_SLASH,		KC_SLASH,		KC_PLUS,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		KC_1,			KC_2,			KC_3,			KC_DOT,			XXXXXXX,
+		_______,		XXXXXXX,		KC_ASTR,		KC_MINUS,		KC_EQUAL,		KC_EQUAL,																				XXXXXXX,		KC_4,			KC_5,			KC_6,			KC_MINUS,		XXXXXXX,
+		_______,		XXXXXXX,		KC_SLASH,		KC_PLUS,		XXXXXXX,		XXXXXXX,		_______,												TO(_CODE),		KC_DOT,			KC_1,			KC_2,			KC_3,			KC_DOT,			XXXXXXX,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
@@ -50,9 +50,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// CODE layer
 	[_CODE] = LAYOUT_ergodox_pretty(
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												TO(_NUM),		XXXXXXX,		XXXXXXX,		_MEH_LBRKT,		XXXXXXX,		XXXXXXX,		XXXXXXX,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,																				XXXXXXX,		XXXXXXX,		MEH(KC_LPRN),	_MEH_RBRKT,		XXXXXXX,		XXXXXXX,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		KC_LCBR,		KC_RCBR,		XXXXXXX,		XXXXXXX,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_KC_COMMENT,	XXXXXXX,		_______,												TO(_NUM),		XXXXXXX,		KC_PIPE,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_KC_NIX_HOME,	_KC_CUR_DIR,																			XXXXXXX,		MEH(KC_LPRN),	_MEH_LBRKT,		_MEH_RBRKT,		XXXXXXX,		XXXXXXX,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_KC_UP_DIR,		XXXXXXX,		_______,												TO(_BASE),		XXXXXXX,		XXXXXXX,		KC_LCBR,		KC_RCBR,		XXXXXXX,		XXXXXXX,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
@@ -60,10 +60,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 	// FN layer
 	[_FN] = LAYOUT_ergodox_pretty(
-		_______,			RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		TO(_BASE),		XXXXXXX,		KC_BSPACE,		KC_ESCAPE,		XXXXXXX,		XXXXXXX,		_______,												TO(_NUM),		_FORWARD,		KC_PGUP,		KC_UP,			XXXXXXX,		KC_HOME,		_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
-		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		_BACK,			KC_PGDOWN,		XXXXXXX,		KC_DOT,			KC_END,			_______,
+		_______,		RGB_VAD,		RGB_VAI,		RGB_SPD,		RGB_SPI,		RGB_MOD,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
+		TO(_BASE),		XXXXXXX,		XXXXXXX,		XXXXXXX,		MEH(KC_P),		MEH(KC_5),		_______,												TO(_NUM),		_FORWARD,		KC_PGUP,		KC_UP,			XXXXXXX,		KC_HOME,		_______,
+		_______,		XXXXXXX,		KC_LSFT,		MEH(KC_0),		MEH(KC_U),		MEH(KC_6),																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
+		_______,		XXXXXXX,		MEH(KC_X),		XXXXXXX,		MEH(KC_D),		MEH(KC_E),		_______,												TO(_CODE),		_BACK,			KC_PGDOWN,		XXXXXXX,		KC_DOT,			KC_END,			_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
 																														_______,				_______,
@@ -71,10 +71,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 	// MOUSE layer
 	[_MOUSE] = LAYOUT_ergodox_pretty(
-		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
-		XXXXXXX,		XXXXXXX,		XXXXXXX,		KC_MS_UP,		KC_MS_WH_DOWN,	XXXXXXX,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
-		XXXXXXX,		XXXXXXX,		KC_MS_LEFT,		KC_MS_DOWN,		KC_MS_RIGHT,	KC_MS_BTN3,																				_______,		_______,		_______,		_______,		_______,		_______,
-		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		KC_MS_WH_UP,	KC_MS_BTN2,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
+		_______,		XXXXXXX,		XXXXXXX,		KC_MS_UP,		KC_MS_WH_DOWN,	XXXXXXX,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
+		_______,		XXXXXXX,		KC_MS_LEFT,		KC_MS_DOWN,		KC_MS_RIGHT,	KC_MS_BTN3,																				_______,		_______,		_______,		_______,		_______,		_______,
+		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		KC_MS_WH_UP,	KC_MS_BTN2,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
 		_______,		_______,		_______,		_______,		KC_MS_BTN1,																												_______,		_______,		_______,		_______,		_______,
 																										_ZOOM_OUT,		_ZOOM_IN,				_______,		_______,
 																														_______,				_______,
