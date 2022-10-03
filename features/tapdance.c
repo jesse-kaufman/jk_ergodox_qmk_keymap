@@ -668,56 +668,23 @@ void dance_vol_dn_reset(qk_tap_dance_state_t *state, void *user_data) {
  */
 
 void dance_play(qk_tap_dance_state_t *state, void *user_data) {
-	if(state->count == 3) {
-		tap_code16(KC_MEDIA_PLAY_PAUSE);
-		tap_code16(KC_MEDIA_PLAY_PAUSE);
-		tap_code16(KC_MEDIA_PLAY_PAUSE);
-	}
-	if(state->count > 3) {
-		tap_code16(KC_MEDIA_PLAY_PAUSE);
-	}
-}
-void dance_play_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_PLAY].step = dance_step(state);
 	switch (dance_state[DANCE_PLAY].step) {
 		case SINGLE_TAP:
-			register_code16(KC_MEDIA_PLAY_PAUSE);
+			tap_code16(KC_MEDIA_PLAY_PAUSE);
 			break;
 
-		case SINGLE_HOLD:
-			register_code16(KC_PAUSE);
+		case DOUBLE_HOLD:
+			tap_code16(KC_PAUSE);
 			break;
 
 		case DOUBLE_TAP:
-			register_code16(KC_MEDIA_PLAY_PAUSE);
-			register_code16(KC_MEDIA_PLAY_PAUSE);
-			break;
-
 		case DOUBLE_SINGLE_TAP:
 			tap_code16(KC_MEDIA_PLAY_PAUSE);
-			register_code16(KC_MEDIA_PLAY_PAUSE);
+			tap_code16(KC_MEDIA_PLAY_PAUSE);
 	}
 }
-void dance_play_reset(qk_tap_dance_state_t *state, void *user_data) {
-	switch (dance_state[DANCE_PLAY].step) {
-		case SINGLE_TAP:
-			unregister_code16(KC_MEDIA_PLAY_PAUSE);
-			break;
 
-		case SINGLE_HOLD:
-			unregister_code16(KC_PAUSE);
-			break;
-
-		case DOUBLE_TAP:
-			unregister_code16(KC_MEDIA_PLAY_PAUSE);
-			break;
-
-		case DOUBLE_SINGLE_TAP:
-			unregister_code16(KC_MEDIA_PLAY_PAUSE);
-			break;
-	}
-	dance_state[DANCE_PLAY].step = 0;
-}
 
 
 /*
@@ -1186,7 +1153,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 	[DANCE_COMMA] = ACTION_TAP_DANCE_FN_ADVANCED(dance_comma, dance_comma_finished, dance_comma_reset),
 	[DANCE_DOT] = ACTION_TAP_DANCE_FN_ADVANCED(dance_dot, dance_dot_finished, dance_dot_reset),
 	[DANCE_VOL_DN] = ACTION_TAP_DANCE_FN_ADVANCED(dance_vol_dn, dance_vol_dn_finished, dance_vol_dn_reset),
-	[DANCE_PLAY] = ACTION_TAP_DANCE_FN_ADVANCED(dance_play, dance_play_finished, dance_play_reset),
+	[DANCE_PLAY] = ACTION_TAP_DANCE_FN(dance_play),
 	[DANCE_DASH] = ACTION_TAP_DANCE_FN_ADVANCED(dance_dash, dance_dash_finished, dance_dash_reset),
 	[DANCE_CBRACKET] = ACTION_TAP_DANCE_FN_ADVANCED(dance_cbracket, dance_cbracket_finished, dance_cbracket_reset),
 	[DANCE_BRACKET] = ACTION_TAP_DANCE_FN_ADVANCED(dance_bracket, dance_bracket_finished, dance_bracket_reset),
