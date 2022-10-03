@@ -70,3 +70,71 @@ enum custom_keycodes {
 	_KC_OR,
 };
 
+struct mf_key_event_config {
+	uint16_t keycode;
+	uint16_t interrupt_keycode;
+	bool do_register;
+	void (*fn)(keyrecord_t* record);
+	void (*fn_release)(keyrecord_t* record);
+	bool fn_do_release;
+};
+
+
+typedef struct mf_key_config {
+	struct mf_key_event_config tap;
+	struct mf_key_event_config hold;
+	struct mf_key_event_config double_tap;
+	struct mf_key_event_config double_hold;
+} mf_key_config;
+
+#define MF_NOKEY 0
+#define MF_DEF_REGISTER_TAP true
+#define MF_DEF_REGISTER_HOLD true
+#define MF_DEF_REGISTER_DOUBLE_TAP false
+#define MF_DEF_REGISTER_DOUBLE_HOLD true
+#define MF_NOFN 0
+
+#define MF_TAP_HOLD( tap_kc, hold_kc ) \
+	; MF_KEY_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
+	                  hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY, \
+	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_TAP, MF_NOKEY, \
+	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_HOLD, MF_NOKEY );
+
+#define MF_TAP_HOLD_DOUBLE( tap_kc, hold_kc, double_tap_kc, double_hold_kc ) \
+	; MF_KEY_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
+	                  hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY, \
+	                  double_tap_kc, MF_DEF_REGISTER_DOUBLE_TAP, MF_NOKEY, \
+	                  double_hold_kc, MF_DEF_REGISTER_DOUBLE_HOLD, MF_NOKEY );
+
+#define MF_KEY_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
+	                    hold_kc, hold_do_register, hold_interrupt_kc, \
+	                    double_hold_kc, double_hold_do_register, double_hold_interrupt_kc, \
+	                    double_tap_kc, double_tap_do_register, double_tap_interrupt_kc) \
+	; mf_handle_key_event(record, &(mf_key_config) { \
+		.tap = { .keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register }, \
+		.hold = { .keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register }, \
+		.double_tap = { .keycode = double_tap_kc, .interrupt_keycode = double_tap_interrupt_kc, .do_register = false }, \
+		.double_hold = { .keycode = double_hold_kc, .interrupt_keycode = double_hold_interrupt_kc, .do_register = double_hold_do_register } \
+	});
+
+
+
+#define MF_TAP_HOLD_FN(tap_fn, hold_fn) \
+	; MF_KEY_FN(tap_fn, hold_fn, MF_NOFN, MF_NOFN, \
+	            MF_NOFN, MF_NOFN, MF_NOFN \
+	            );
+
+#define MF_TAP_HOLD_DOUBLE_FN(tap_fn, hold_fn, double_tap_fn, double_hold_fn) \
+	; MF_KEY_FN(tap_fn, hold_fn, double_tap_fn, double_hold_fn, \
+	            MF_NOFN, MF_NOFN, MF_NOFN \
+	            );
+
+#define MF_KEY_FN(tap_fn, hold_fn, double_tap_fn, double_hold_fn, \
+	              tap_release_fn, hold_release_fn, double_hold_release_fn \
+	              ) \
+	; mf_handle_key_event(record,&(mf_key_config) { \
+		.tap = { .fn = tap_fn, .fn_release = tap_release_fn }, \
+		.hold = { .fn = hold_fn, .fn_release = hold_release_fn }, \
+		.double_tap = { .fn = double_tap_fn }, \
+		.double_hold = { .fn = double_hold_fn, .fn_release = double_hold_release_fn } \
+	});
