@@ -4,20 +4,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 	switch (keycode) {
 		case _KC_COMMENT:
+			caps_word_off();
 			if (record->event.pressed) {
-				// keycode _KC_COMMENT is pressed
 				SEND_STRING("// ");
 			}
 			return false;
-			break;
+
 
 		case _KC_NIX_HOME:
+			caps_word_off();
 			if (record->event.pressed) {
-				// keycode _KC_NIX_HOME is pressed
 				SEND_STRING("~/");
 			}
 			return false;
-			break;
+					SEND_STRING("../");
 	}
 
 	return true;
