@@ -112,9 +112,6 @@ void rgb_matrix_indicators_user(void) {
 		ergodox_right_led_3_set(LED_BRIGHTNESS_HI);
 		ergodox_right_led_3_on();
 	}
-	if (is_caps_word_on() || host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) {
-
-	}
 
 	if (mods) {
 		if (mods & MOD_MASK_SHIFT )  {
@@ -145,19 +142,23 @@ void oneshot_mods_changed_user(uint8_t mods) {
 	uint8_t one_shot = get_oneshot_mods();
 
 	if ((mods | one_shot) & MOD_MASK_SHIFT) {
+		ergodox_right_led_2_set(LED_BRIGHTNESS_LO);
 		ergodox_right_led_2_on();
 	}
 	if ((mods | one_shot) & MOD_MASK_GUI) {
+		ergodox_right_led_2_set(LED_BRIGHTNESS_LO);
 		ergodox_right_led_2_on();
 	}
 	if ((mods | one_shot) & MOD_MASK_CTRL) {
+		ergodox_right_led_2_set(LED_BRIGHTNESS_LO);
 		ergodox_right_led_2_on();
 	}
 	if ((mods | one_shot) & MOD_MASK_ALT) {
+		ergodox_right_led_2_set(LED_BRIGHTNESS_LO);
 		ergodox_right_led_2_on();
 	}
 
-	if (!(mods| one_shot) ) {
+	if (!(mods | one_shot && !is_oneshot_layer_active())) {
 		ergodox_right_led_2_off();
 	}
 }
@@ -166,13 +167,14 @@ void oneshot_mods_changed_user(uint8_t mods) {
 uint8_t layer_state_set_user(uint8_t state) {
 
 	uint8_t layer = biton32(state);
-	//uint8_t mods = get_oneshot_mods() | get_mods();
 
 	ergodox_right_led_1_off();
 
 	if ( layer ) {
 		if (is_oneshot_layer_active()) {
 			ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
+			ergodox_right_led_2_set(LED_BRIGHTNESS_LO);
+			ergodox_right_led_2_on();
 		}
 		else {
 			ergodox_right_led_1_set(LED_BRIGHTNESS_HI);
@@ -181,6 +183,9 @@ uint8_t layer_state_set_user(uint8_t state) {
 	}
 	else {
 		ergodox_right_led_1_off();
+		if (!get_oneshot_mods()) {
+			ergodox_right_led_2_off();
+		}
 	}
 
 	return state;
