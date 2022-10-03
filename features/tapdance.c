@@ -157,14 +157,13 @@ void dance_desktop(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 
-
 /*
  * SPOTLIGHT / PREVIOUS DESKTOP
  */
 
-void dance_spotlight(qk_tap_dance_state_t *state, void *user_data) {
-	dance_state[DANCE_SPOTLIGHT].step = dance_step(state);
-	switch (dance_state[DANCE_SPOTLIGHT].step) {
+void dance_prev_desk(qk_tap_dance_state_t *state, void *user_data) {
+	dance_state[DANCE_PREV_DESK].step = dance_step(state);
+	switch (dance_state[DANCE_PREV_DESK].step) {
 		case SINGLE_TAP:
 			tap_code16(LGUI(KC_SPACE));
 			break;
@@ -1175,7 +1174,7 @@ void dance_up_dir_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-	[DANCE_SPOTLIGHT] = ACTION_TAP_DANCE_FN(dance_spotlight),
+	[DANCE_PREV_DESK] = ACTION_TAP_DANCE_FN(dance_prev_desk),
 	[DANCE_DESKTOP] = ACTION_TAP_DANCE_FN(dance_desktop),
 	[DANCE_TAB_MGMT] = ACTION_TAP_DANCE_FN(dance_tab_mgmt),
 	[DANCE_PGUP_HOME] = ACTION_TAP_DANCE_FN_ADVANCED(dance_pgup_home, dance_pgup_home_finished, dance_pgup_home_reset),

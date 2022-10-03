@@ -5,6 +5,7 @@
 // LAYER KEYCODES
 #define _KC_T LT(_FN,KC_T)
 #define _KC_S LT(_NUM, KC_S)
+#define _KC_K LT(_CODE, KC_K)
 #define _OSL_SYM OSL(_SYM)
 
 // FANCY QUOTES KEYCODES
@@ -32,6 +33,7 @@
 
 // GLOBAL HOTKEYS
 #define _ZOOM_IN HYPR(KC_EQUAL)
+#define _ZOOM_OUT HYPR(KC_MINUS)
 #define _FORWARD MEH(KC_UP)
 #define _BACK MEH(KC_DOWN)
 
@@ -50,10 +52,21 @@
 #define _PREV KC_MEDIA_PREV_TRACK
 #define _NEXT KC_MEDIA_NEXT_TRACK
 #define _VOL_UP KC_AUDIO_VOL_UP
+#define _VOL_DOWN KC_AUDIO_VOL_DOWN
+
+// custom tap dances
+#define _KC_UP_DIR  LT(0, KC_0)
+#define _SPACE LT(0, KC_SPACE)
+#define _DOT LT(0, KC_DOT)
+#define _COMMA LT(0, KC_COMMA)
 
 
 // CUSTOM KEYCODES
 enum custom_keycodes {
-    _KC_COMMENT = EZ_SAFE_RANGE,
+	_KC_COMMENT = EZ_SAFE_RANGE,
+	_KC_CUR_DIR,
 	_KC_NIX_HOME,
+	_KC_AND,
+	_KC_OR,
 };
+
