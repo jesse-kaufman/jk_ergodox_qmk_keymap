@@ -16,10 +16,10 @@ void matrix_scan_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// COLEMAK BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
-		MEH(KC_F13),	XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		KC_F17,		_PREV_DESK,													_DESKTOP,	 	XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_TAB_MGMT,
-		TT(_FN),		KC_Q,			KC_W,			KC_F,			KC_P,			KC_G,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_QUOTE,			LGUI(KC_M),
-		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_D,																					KC_M,			KC_N,			KC_E,			KC_I,			KC_O,			KC_PGUP,
-		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,		KC_LEAD,													OSL(_CODE),	 	_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
+		MEH(KC_F13),	XXXXXXX,		XXXXXXX,		SCMD(KC_4),		SCMD(KC_5),		XXXXXXX,	_PREV_DESK,													_DESKTOP,	 	XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_TAB_MGMT,
+		_APP_TABS,		KC_Q,			KC_W,			KC_F,			KC_P,			KC_G,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_QUOTE,			LGUI(KC_M),
+		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_D,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
+		TT(_FN),		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,		KC_LEAD,													OSL(_CODE),	 	_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_LSHIFT,																											OSL(_SYM),		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),
 																									_ZOOM_OUT,		_ZOOM_IN,					_VOL_DOWN,		_VOL_UP,
 																													MEH(KC_F19),				_PLAY,
@@ -28,8 +28,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// SYM layer
 	[_SYM] = LAYOUT_ergodox_pretty(
 		_______,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		XXXXXXX,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												TO(_NUM),		XXXXXXX,		_LBRACKET,		KC_AMPR,		KC_RBRACKET,	XXXXXXX,		XXXXXXX,
-		_______,		XXXXXXX,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				XXXXXXX,		_LPRN,			XXXXXXX,		KC_RPRN,		_DQUOTE,		XXXXXXX,
+		_______,		XXXXXXX,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												TO(_NUM),		XXXXXXX,		XXXXXXX,		KC_AMPR,		XXXXXXX,		XXXXXXX,		XXXXXXX,
+		_______,		XXXXXXX,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_UNDS,																				XXXXXXX,		_LPRN,			_LBRACKET,		_LCURLBR,		_DQUOTE,		XXXXXXX,
 		_______,		XXXXXXX,		KC_SLASH,		KC_PLUS,		KC_CIRC,		XXXXXXX,		_______,												TO(_CODE),		XXXXXXX,		_LTEQ,			_KC_SCOLN,		_GTEQ,			KC_SLASH,		XXXXXXX,
 		_______, 		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// CODE layer
 	[_CODE] = LAYOUT_ergodox_pretty(
 		_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,												_______,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		XXXXXXX,		_______,
-		_______,		XXXXXXX,		XXXXXXX,		_KC_COMMENT,	_KC_ML_COMMENT,	XXXXXXX,		_______,												TO(_NUM),		XXXXXXX,		KC_LCBR,		KC_PIPE,		KC_RCBR,		XXXXXXX,		XXXXXXX,
+		_______,		XXXXXXX,		XXXXXXX,		_KC_COMMENT,	_KC_ML_COMMENT,	XXXXXXX,		_______,												TO(_NUM),		XXXXXXX,		XXXXXXX,		KC_PIPE,		XXXXXXX,		XXXXXXX,		XXXXXXX,
 		_______,		XXXXXXX,		KC_ASTR,		_KC_NIX_HOME,	XXXXXXX,		KC_UNDS,																				KC_TILD,		_MEH_LPRN,		_MEH_LBRKT,		_MEH_RBRKT,		XXXXXXX,		XXXXXXX,
 		_______,		XXXXXXX,		KC_SLASH,		_KC_UP_DIR,		XXXXXXX,		XXXXXXX,		_______,												TO(_BASE),		KC_BSLASH,		XXXXXXX,		KC_GRAVE,		XXXXXXX,		XXXXXXX,		XXXXXXX,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
