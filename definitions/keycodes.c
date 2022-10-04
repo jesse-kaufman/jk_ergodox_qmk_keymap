@@ -1,105 +1,70 @@
 #include "keycodes.h"
 #include "../features/tapdance.h"
+#include "string.h"
 
 void mf_handle_key_event(keyrecord_t* record, mf_key_config* key);
 void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_release(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_handle_caps_word(uint16_t keycode);
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
 
 	switch (keycode) {
-		case _KC_COMMENT:
-			caps_word_off();
-			if (record->event.pressed) {
-				SEND_STRING("// ");
-			}
+		case _KC_UP_DIR:
+			MF_STR_TAP_HOLD("../", "./");
 			return false;
-
 
 		case _KC_NIX_HOME:
-			caps_word_off();
-			if (record->event.pressed) {
-				SEND_STRING("~/");
-			}
+			MF_STR_TAP("~/");
 			return false;
 
+		case _KC_COMMENT:
+			MF_STR_TAP("// ");
+			return false;
 
-		case _KC_UP_DIR:
-			caps_word_off();
-			if (record->tap.count > 0) {
-				// Key is being tapped.
-				if (record->event.pressed) {
-					// Handle tap press event...
-					SEND_STRING("../");
-				}
+		case _KC_ML_COMMENT:
+			if ( mods & MOD_MASK_GUI) {
+				MF_STR_TAP("/**" SS_TAP(X_ENTER) " *"SS_TAP (X_ENTER)"*/"SS_TAP (X_UP));
 			}
 			else {
-				// Key is being held.
-				if (record->event.pressed) {
-					// Handle hold press event...
-					SEND_STRING("./");
-				}
+				MF_STR_TAP_HOLD("/*", "*/");
 			}
 			return false;
 
+		case _LTEQ:
+			MF_TAP_HOLD_MIXED(KC_LABK, "", MF_NOKEY, "<=" );
+			return false;
+
+		case _GTEQ:
+			MF_TAP_HOLD_MIXED(KC_RABK, "", MF_NOKEY, ">=" );
+			return false;
+
+		case _APP_WINDOWS:
+			MF_TAP_HOLD(LCMD(KC_GRAVE), LCTL(KC_DOWN));
+			return false;
+
+		case _APP_TABS:
+			MF_TAP_HOLD(LCTL(KC_TAB), LCMD(LSFT(KC_UP)));
+			return false;
 
 		case _SPACE:
-			caps_word_off();
-			if (record->event.pressed ) {
-				if (record->tap.count > 0 ) {
-					// Key is being tapped.
-					register_code(KC_SPACE);
-				}
-				else {
-					// Key is being held.
-					if (!record->tap.interrupted) {
-						// Handle hold press event...
-						tap_code16(LGUI(KC_TAB));
-					}
-					else {
-						register_code(KC_SPACE);
-					}
-				}
-			}
-			else {
-				// key was released
-				if (record->tap.count > 0 ) {
-					unregister_code(KC_SPACE);
-				}
-			}
+			MF_TAP_HOLD_ADVANCED(KC_SPACE, true, KC_SPACE, LGUI(KC_TAB), false, KC_SPACE);
 			return false;
-
-		// case _OSM_RSHIFT:
-		// 	MF_TAP_HOLD_FN(&hi, &ho);
-		// 	return false;
 
 		case _DOT:
-			caps_word_off();
-			if (record->tap.count > 0) {
-				// Key is being tapped.
-				if (record->event.pressed) {
-					// Handle tap press event...
-					register_code(KC_DOT);
-				}
-				else {
-					// Handle tap release event...
-					unregister_code(KC_DOT);
-				}
-			}
-			else {
-				// Key is being held.
-				if (record->event.pressed) {
-					// Handle hold press event...
-					tap_code16(KC_EXLM);
-				}
-			}
+			MF_TAP_HOLD(KC_DOT, KC_EXLM);
 			return false;
-
 
 		case _COMMA:
 			MF_TAP_HOLD(KC_COMMA, KC_QUOTE);
+			return false;
+
+		case _KC_SCOLN:
+			MF_TAP_HOLD(KC_SCOLON, KC_COLON);
 			return false;
 	}
 
@@ -115,8 +80,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // function to handle multi-function keys
 void mf_handle_key_event(keyrecord_t* record, mf_key_config* key) {
 	/*
-	   if ((key->double_hold.keycode || key->double_tap.keycode) && record->tap.count == 2 ) {
-	    // key has a double-tap action and was double-tapped/double-held
+	   if ((key->double_hold.keycode || key->double_tap.keycode || key->double_hold.fn || key->double_tap.fn) && record->tap.count == 2) {
+	    // key was tapped twice
 
 	    if (record->tap.interrupted) {
 	        // This check is to distinguish between typing "pepper", and actually wanting a double tap
@@ -125,74 +90,29 @@ void mf_handle_key_event(keyrecord_t* record, mf_key_config* key) {
 
 	        if (!record->event.pressed) {
 	            // Double-tap has been interrupted
-	            if (&key->double_tap.keycode) {
-	                mf_do_interrupt(&key->double_tap);
-	                return;
-	            }
+	            mf_do_interrupt(record,&key->double_tap);
+	            return;
 	        }
 	        else {
 	            // Double-hold has been interrupted
-	            if (&key->double_hold.keycode) {
-	                mf_do_interrupt(&key->double_hold);
-	                return;
-	            }
+	            mf_do_interrupt(record,&key->double_hold);
+	            return;
 	        }
 	    }
 	    else if (record->event.pressed) {
 	        // tapped, then pressed and held
+	        mf_do_press(record,&key->double_hold);
+	        return;
 
-	        if (&key->double_hold.keycode) {
-	            // double hold keycode is set, so send it and exit the handler
-	            tap_code16(key->double_hold.keycode);
-	            return;
-	        }
 	    }
 	    else {
 	        // clean double-tap with no interrupt, do the double-tap action instead of typing 'pp' in 'pepper'
 	        // @see double single tap for pepper analogy
-
-	        if (&key->double_tap.keycode) {
-	            // double tap keycode is set, so send it and exit the handler
-	            tap_code16(key->double_tap.keycode);
-	            return;
-	        }
+	        mf_do_press(record,&key->double_tap);
+	        return;
 	    }
 	   }
 	 */
-
-
-	if ((key->double_hold.keycode || key->double_tap.keycode || key->double_hold.fn || key->double_tap.fn) && record->tap.count == 2) {
-		// key was tapped twice
-
-		if (record->tap.interrupted) {
-			// This check is to distinguish between typing "pepper", and actually wanting a double tap
-			// action when hitting 'pp'. Suggested use case for this is when you want to send two
-			// keystrokes of the key, and not the 'double tap' action/macro.
-
-			if (!record->event.pressed) {
-				// Double-tap has been interrupted
-				mf_do_interrupt(record,&key->double_tap);
-				return;
-			}
-			else {
-				// Double-hold has been interrupted
-				mf_do_interrupt(record,&key->double_hold);
-				return;
-			}
-		}
-		else if (record->event.pressed) {
-			// tapped, then pressed and held
-			mf_do_press(record,&key->double_hold);
-			return;
-
-		}
-		else {
-			// clean double-tap with no interrupt, do the double-tap action instead of typing 'pp' in 'pepper'
-			// @see double single tap for pepper analogy
-			mf_do_press(record,&key->double_tap);
-			return;
-		}
-	}
 
 	if (record->tap.count > 0) {
 		// key was tapped one or more times
@@ -227,7 +147,17 @@ void mf_handle_key_event(keyrecord_t* record, mf_key_config* key) {
 		}
 		else if (record->event.pressed) {
 			// single hold down
-			mf_do_press(record,&key->hold);
+
+			// if hold string is not set and tap string or keycode is set, send that
+			if ( (key->hold.string && 0 == strcmp(key->hold.string, ""))
+			     && (0 != strcmp(key->tap.string, "") || key->tap.keycode)) {
+
+				// key is a string key and hold string is not defined; send tap string
+				mf_do_press(record,&key->tap);
+			}
+			else {
+				mf_do_press(record,&key->hold);
+			}
 		}
 	}
 }
@@ -237,7 +167,7 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event) {
 	if (event->fn) {
 		event->fn(record);
 	}
-	else {
+	else if (event->keycode) {
 		// handle caps word
 		mf_handle_caps_word(event->keycode);
 
@@ -250,6 +180,11 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event) {
 			tap_code16(event->keycode);
 		}
 	}
+	else if (event->string && 0 != strcmp(event->string, "")) {
+		clear_mods();
+		clear_oneshot_mods();
+		send_string(event->string);
+	}
 }
 
 
@@ -261,7 +196,7 @@ void mf_handle_caps_word(uint16_t keycode) {
 
 
 void mf_do_release(keyrecord_t* record, struct mf_key_event_config* event) {
-	if (event->do_register) {
+	if (event->do_register && event->keycode) {
 		// unregister the keycode
 		unregister_code16(event->keycode);
 	}
@@ -281,6 +216,14 @@ void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event) {
 		else {
 			tap_code16(event->keycode);
 		}
+	}
+	else if (event->string && 0 != strcmp(event->string, "")) {
+		clear_mods();
+		clear_oneshot_mods();
+		send_string(event->string);
+		clear_mods();
+		clear_oneshot_mods();
+
 	}
 }
 
@@ -302,7 +245,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _OSL_SYM:
 			return TAPPING_TERM-100;
 
-		case _SEMICOLON:
 		case _QUOTE:
 		case _LBRACKET:
 		case _KC_R:
