@@ -189,7 +189,7 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event) {
 
 
 void mf_handle_caps_word(uint16_t keycode) {
-	if (!caps_word_press_user(keycode)) {
+	if (is_caps_word_on() && !caps_word_press_user(keycode)) {
 		caps_word_off();
 	}
 }
