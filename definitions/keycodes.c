@@ -118,8 +118,8 @@ void mf_handle_key_event(keyrecord_t* record, mf_key_config* key) {
 		// key was tapped one or more times
 
 		if (record->tap.interrupted) {
-			if (!record->event.pressed) {
-				// interrupt tap and send tap key
+			if (record->event.pressed) {
+				// interrupt tap when key is pressed and still down
 				mf_do_interrupt(record,&key->tap);
 			}
 		}
