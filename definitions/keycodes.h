@@ -54,6 +54,7 @@
 #define _NEXT KC_MEDIA_NEXT_TRACK
 #define _VOL_UP KC_AUDIO_VOL_UP
 #define _VOL_DOWN KC_AUDIO_VOL_DOWN
+#define _PLAY KC_MEDIA_PLAY_PAUSE
 
 // custom tap dances
 #define _KC_UP_DIR	LT(9, KC_0)
@@ -69,6 +70,16 @@
 #define _KC_ML_COMMENT	LT(10, KC_NO)
 #define _APP_TABS		LT(11, KC_NO)
 #define _APP_WINDOWS	LT(12, KC_NO)
+#define _DESKTOP	LT(13, KC_NO)
+#define _PREV_DESK	LT(14, KC_NO)
+#define _QUOTE		LT(0, KC_QUOTE)
+#define _DQUOTE		LT(9, KC_QUOTE)
+#define _KC_E		LT(0, KC_E)
+#define _LPRN		LT(0, KC_LPRN)
+#define _LBRACKET	LT(0, KC_LBRACKET)
+#define _LCURLBR	LT(9, KC_LCBR)
+
+
 
 
 

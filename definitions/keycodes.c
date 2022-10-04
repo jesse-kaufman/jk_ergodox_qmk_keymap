@@ -9,13 +9,16 @@ void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_handle_caps_word(uint16_t keycode);
 
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
 
 	switch (keycode) {
 		case _KC_UP_DIR:
 			MF_STR_TAP_HOLD("../", "./");
+			return false;
+
+		case _LPRN:
+			MF_TAP_HOLD(KC_LPRN, KC_RPRN);
 			return false;
 
 		case _KC_NIX_HOME:
@@ -35,6 +38,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 			return false;
 
+		case _QUOTE:
+			MF_TAP_HOLD_MIXED(KC_QUOTE, "", MF_NOKEY, "''"SS_TAP (X_LEFT));
+			return false;
+
+		case _LCURLBR:
+			MF_TAP_HOLD(KC_LCBR, KC_RCBR);
+			return false;
+
+		case _LBRACKET:
+			MF_TAP_HOLD(KC_LBRACKET, KC_RBRACKET);
+			return false;
+
+		case _DESKTOP:
+			MF_TAP_HOLD(HYPR(KC_5), LCTL(KC_RIGHT));
+			return false;
+
+		case _KC_E:
+			MF_TAP_HOLD(KC_E, KC_QUOTE);
+			return false;
+
+		case _PREV_DESK:
+			MF_TAP_HOLD(LGUI(KC_SPACE), LCTL(KC_LEFT));
+			return false;
+
+		case _DQUOTE:
+			MF_TAP_HOLD_MIXED(KC_DQUO, "", MF_NOKEY, "\"\""SS_TAP (X_LEFT));
+			return false;
+
 		case _LTEQ:
 			MF_TAP_HOLD_MIXED(KC_LABK, "", MF_NOKEY, "<=" );
 			return false;
@@ -44,7 +75,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _APP_WINDOWS:
-			MF_TAP_HOLD(LCMD(KC_GRAVE), LCTL(KC_DOWN));
+			MF_TAP_HOLD(LCMD(KC_GRAVE), KC_F17);
 			return false;
 
 		case _APP_TABS:
@@ -223,7 +254,6 @@ void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event) {
 		send_string(event->string);
 		clear_mods();
 		clear_oneshot_mods();
-
 	}
 }
 
