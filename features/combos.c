@@ -15,19 +15,20 @@ enum combos {
 	COMBO_SELECT_ALL,
 	COMBO_NEXT_DESKTOP,
 	COMBO_PREV_DESKTOP,
-	COMBO_SQUOTE,
+	// COMBO_SQUOTE,
 	COMBO_BOOTLOADER,
 	COMBO_RESET_ZOOM,
 	COMBO_MUTE,
 	COMBO_HOME,
 	COMBO_END_KEY,
+	COMBO_PAUSE,
 
 	COMBO_COUNT
 };
 
 uint16_t COMBO_LEN = COMBO_COUNT;
 
-const uint16_t PROGMEM combo_backspace[] = { KC_N, KC_E, COMBO_END };
+const uint16_t PROGMEM combo_backspace[] = { KC_N, _KC_E, COMBO_END };
 const uint16_t PROGMEM combo_esc[] = { KC_F, KC_W, COMBO_END };
 const uint16_t PROGMEM combo_tab[] = { _KC_S, _KC_T, COMBO_END };
 
@@ -37,10 +38,12 @@ const uint16_t PROGMEM combo_paste[] = { KC_X, KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM combo_save[] = { KC_W, KC_F, KC_P, COMBO_END };
 const uint16_t PROGMEM combo_select_all[] = { KC_Z, KC_X, KC_C, KC_V, COMBO_END };
 
-const uint16_t PROGMEM combo_squote[] = { KC_E, KC_I, COMBO_END };
+// const uint16_t PROGMEM combo_squote[] = { KC_E, KC_I, COMBO_END };
 
 const uint16_t PROGMEM combo_reset_zoom[] = { _ZOOM_IN, _ZOOM_OUT, COMBO_END };
 const uint16_t PROGMEM combo_mute[] = { _VOL_UP, _VOL_DOWN, COMBO_END };
+const uint16_t PROGMEM combo_pause[] = { _PLAY, _VOL_DOWN, COMBO_END };
+
 
 const uint16_t PROGMEM combo_home[] = { KC_PGUP, KC_O, COMBO_END };
 const uint16_t PROGMEM combo_end_key[] = { KC_PGDOWN, KC_QUES, COMBO_END };
@@ -59,7 +62,7 @@ combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_PASTE] = COMBO_ACTION(combo_paste),
 	[COMBO_SAVE] = COMBO_ACTION(combo_save),
 	[COMBO_SELECT_ALL] = COMBO_ACTION(combo_select_all),
-	[COMBO_SQUOTE] = COMBO_ACTION(combo_squote),
+	// [COMBO_SQUOTE] = COMBO_ACTION(combo_squote),
 	[COMBO_RESET_ZOOM] = COMBO_ACTION(combo_reset_zoom),
 	[COMBO_MUTE] = COMBO_ACTION(combo_mute),
 	[COMBO_NEXT_DESKTOP] = COMBO_ACTION(combo_next_desktop),
@@ -67,6 +70,7 @@ combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_BOOTLOADER] = COMBO_ACTION(combo_bootloader),
 	[COMBO_HOME] = COMBO_ACTION(combo_home),
 	[COMBO_END_KEY] = COMBO_ACTION(combo_end_key),
+	[COMBO_PAUSE] = COMBO_ACTION(combo_pause),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -93,9 +97,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				register_code(KC_TAB);
 				break;
 
-			case COMBO_SQUOTE:
-				tap_code(KC_QUOTE);
+			case COMBO_PAUSE:
+				tap_code16(KC_PAUSE);
+				my_indicate_success();
 				break;
+
+/*
+            case COMBO_SQUOTE:
+                tap_code(KC_QUOTE);
+                break;
+ */
 
 			case COMBO_CUT:
 				tap_code16(LGUI(KC_X));
@@ -183,6 +194,7 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
 		case COMBO_BOOTLOADER:
 		case COMBO_RESET_ZOOM:
 		case COMBO_MUTE:
+		case COMBO_PAUSE:
 			return true;
 	}
 
