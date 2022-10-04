@@ -1,5 +1,6 @@
 #include "keycodes.h"
 #include "../features/tapdance.h"
+#include "../features/leader.h"
 #include "string.h"
 
 void mf_handle_key_event(keyrecord_t* record, mf_key_config* key);
@@ -11,6 +12,11 @@ void mf_handle_caps_word(uint16_t keycode);
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
+
+	// output nothing if the leader key has been tapped before the MF key
+	if (leading) {
+		return true;
+	}
 
 	switch (keycode) {
 		case _KC_UP_DIR:
