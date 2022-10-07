@@ -11,6 +11,7 @@ void my_indicate_success(void) {
 	ergodox_led_all_on();
 	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
 	ergodox_led_all_off();
+	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT/2);
 }
 
 void my_flash_twice(void) {
@@ -25,6 +26,7 @@ void my_flash_twice(void) {
 	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
 
 	ergodox_led_all_off();
+	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT/2);
 }
 
 void my_indicate_modifier(void) {
