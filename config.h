@@ -6,6 +6,7 @@
 #define HOLD_FOR_COMMAND_TIMEOUT 350
 
 
+#define ___X___ XXXXXXX
 
 #undef TAPPING_TERM
 #define TAPPING_TERM 275
