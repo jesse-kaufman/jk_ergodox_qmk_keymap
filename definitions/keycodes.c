@@ -301,6 +301,19 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 	}
 }
 
+
+// set force_hold per key
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+	switch (keycode) {
+		case _KC_E:  // apostrophe when held
+			return true;
+
+		default:
+			return false;
+	}
+}
+
+
 // customize which key codes disengage caps word
 bool caps_word_press_user(uint16_t keycode) {
 	switch (keycode) {
