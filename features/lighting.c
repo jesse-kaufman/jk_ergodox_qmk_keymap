@@ -6,27 +6,30 @@
 #include "../definitions/layers.h"
 #include "lighting.h"
 
+#define LED_BRIGHTNESS_MED 100
+
 void my_indicate_success(void) {
-	ergodox_led_all_set(LED_BRIGHTNESS_HI);
+	ergodox_led_all_set(LED_BRIGHTNESS_LO);
 	ergodox_led_all_on();
-	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
+	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
 	ergodox_led_all_off();
-	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT/2);
+	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME/2);
 }
 
 void my_flash_twice(void) {
-	ergodox_led_all_set(LED_BRIGHTNESS_HI);
-	ergodox_led_all_on();
-	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
-
-	ergodox_led_all_off();
-	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT/2);
+	ergodox_led_all_set(LED_SUCCESS_INDICATOR_ON_TIME);
 
 	ergodox_led_all_on();
-	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT);
+	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
 
 	ergodox_led_all_off();
-	_delay_ms(HOLD_FIRED_INDICATOR_TIMEOUT/2);
+	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME/2);
+
+	ergodox_led_all_on();
+	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
+
+	ergodox_led_all_off();
+	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME/2);
 }
 
 void my_indicate_modifier(void) {
