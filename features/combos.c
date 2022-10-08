@@ -1,8 +1,10 @@
 #ifdef COMBO_ENABLE
 
 #include "definitions/keycodes.h"
-#include "features/tapdance.h"
-#include "features/lighting.h"
+#include "tapdance.h"
+#include "lighting.h"
+#include "combos.h"
+
 
 enum combos {
 	COMBO_BACKSPACE,
