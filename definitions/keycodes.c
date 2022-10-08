@@ -183,6 +183,7 @@ void mf_handle_key_event(keyrecord_t* record, mf_key_config* key) {
 	}
 	else {
 		// key is being held or being released from a hold
+		// key is being held or being released from a single hold
 
 		if (record->tap.interrupted) {
 			if (record->event.pressed) {
@@ -291,14 +292,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 		case _QUOTE:
 		case _LBRACKET:
-		case _KC_R:
-		case _KC_A:
+		case _KC_R:  // SHIFT
+		case _KC_A:  // ALT
 		case _SPACE:
 			return TAPPING_TERM;
 
-		case _KC_T:
-		case _KC_S:
-		case _KC_K:
+		case _KC_E:  // apostrophe when held
+		case _KC_T:  // FN layer
+		case _KC_S:  // NUM layer
+		case _KC_K:  // CODE layer
 			return TAPPING_TERM-40;
 
 		case _TAB_MGMT:
