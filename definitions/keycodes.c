@@ -128,40 +128,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // function to handle multi-function keys
 void mf_handle_key_event(keyrecord_t* record, mf_key_config* key) {
-	/*
-	   if ((key->double_hold.keycode || key->double_tap.keycode || key->double_hold.fn || key->double_tap.fn) && record->tap.count == 2) {
-	    // key was tapped twice
-
-	    if (record->tap.interrupted) {
-	        // This check is to distinguish between typing "pepper", and actually wanting a double tap
-	        // action when hitting 'pp'. Suggested use case for this is when you want to send two
-	        // keystrokes of the key, and not the 'double tap' action/macro.
-
-	        if (!record->event.pressed) {
-	            // Double-tap has been interrupted
-	            mf_do_interrupt(record,&key->double_tap);
-	            return;
-	        }
-	        else {
-	            // Double-hold has been interrupted
-	            mf_do_interrupt(record,&key->double_hold);
-	            return;
-	        }
-	    }
-	    else if (record->event.pressed) {
-	        // tapped, then pressed and held
-	        mf_do_press(record,&key->double_hold);
-	        return;
-
-	    }
-	    else {
-	        // clean double-tap with no interrupt, do the double-tap action instead of typing 'pp' in 'pepper'
-	        // @see double single tap for pepper analogy
-	        mf_do_press(record,&key->double_tap);
-	        return;
-	    }
-	   }
-	 */
 
 	if (record->tap.count > 0) {
 		// key was tapped one or more times
