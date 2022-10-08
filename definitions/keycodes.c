@@ -10,6 +10,13 @@ void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_handle_caps_word(uint16_t keycode);
 
 
+void mf_clear_all_mods(void) {
+	clear_mods();
+	clear_weak_mods();
+	clear_oneshot_mods();
+	caps_word_off();
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
 
@@ -29,15 +36,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		case _KC_NIX_HOME:
 			MF_STR_TAP("~/");
+			mf_clear_all_mods();
 			return false;
 
 		case _KC_COMMENT:
 			MF_STR_TAP("// ");
+			mf_clear_all_mods();
 			return false;
 
 		case _KC_ML_COMMENT:
 			if ( mods & MOD_MASK_GUI) {
 				MF_STR_TAP("/**" SS_TAP(X_ENTER) " *"SS_TAP (X_ENTER)"*/"SS_TAP (X_UP));
+				mf_clear_all_mods();
 			}
 			else {
 				MF_STR_TAP_HOLD("/*", "*/");
@@ -58,6 +68,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		case _DESKTOP:
 			MF_TAP_HOLD(HYPR(KC_5), LCTL(KC_RIGHT));
+			mf_clear_all_mods();
 			return false;
 
 		case _KC_E:
@@ -66,6 +77,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		case _PREV_DESK:
 			MF_TAP_HOLD(LGUI(KC_SPACE), LCTL(KC_LEFT));
+			mf_clear_all_mods();
 			return false;
 
 		case _DQUOTE:
@@ -218,8 +230,7 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event) {
 		}
 	}
 	else if (event->string && 0 != strcmp(event->string, "")) {
-		clear_mods();
-		clear_oneshot_mods();
+		mf_clear_all_mods();
 		send_string(event->string);
 	}
 }
@@ -255,11 +266,8 @@ void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event) {
 		}
 	}
 	else if (event->string && 0 != strcmp(event->string, "")) {
-		clear_mods();
-		clear_oneshot_mods();
+		mf_clear_all_mods();
 		send_string(event->string);
-		clear_mods();
-		clear_oneshot_mods();
 	}
 }
 
