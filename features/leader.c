@@ -68,9 +68,7 @@ void my_leader_matrix_scan_user(void) {
 }
 
 void leader_start(void) {
-	clear_mods();
-	clear_weak_mods();
-	clear_oneshot_mods();
+	my_clear_all_mods();
 	ergodox_led_all_set(LED_BRIGHTNESS_LO);
 	ergodox_led_all_on();
 }

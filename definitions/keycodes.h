@@ -99,6 +99,10 @@ enum {
 
 
 
+void my_clear_all_mods(void);
+
+
+
 // CUSTOM MULTI-FUNCTION KEYS
 #define MF_NOKEY 0
 #define MF_DEF_REGISTER_TAP true

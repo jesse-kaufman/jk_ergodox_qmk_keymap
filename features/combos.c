@@ -79,8 +79,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 	}
 
 	if ( combo_index != COMBO_BACKSPACE && combo_index != COMBO_ESC && combo_index != COMBO_TAB && combo_index != COMBO_PASTE && combo_index != COMBO_COPY && combo_index != COMBO_SAVE ) {
-		clear_mods();
-		clear_oneshot_mods();
+		my_clear_all_mods();
 	}
 
 	if (pressed) {

@@ -10,7 +10,7 @@ void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_handle_caps_word(uint16_t keycode);
 
 
-void mf_clear_all_mods(void) {
+void my_clear_all_mods(void) {
 	clear_mods();
 	clear_weak_mods();
 	clear_oneshot_mods();
@@ -32,14 +32,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _KC_NIX_HOME:
-			mf_clear_all_mods();
+			my_clear_all_mods();
 			if (record->event.pressed) {
 				SEND_STRING("~/");
 			}
 			return false;
 
 		case _KC_COMMENT:
-			mf_clear_all_mods();
+			my_clear_all_mods();
 			if (record->event.pressed) {
 				SEND_STRING("// ");
 			}
@@ -47,7 +47,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		case _KC_ML_COMMENT:
 			if ( mods & MOD_MASK_GUI) {
-				mf_clear_all_mods();
+				my_clear_all_mods();
 				SEND_STRING("/**" SS_TAP(X_ENTER) " * "SS_TAP (X_ENTER)" */"SS_TAP (X_UP));
 			}
 			else {
@@ -60,7 +60,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _DESKTOP:
-			mf_clear_all_mods();
+			my_clear_all_mods();
 			MF_TAP_NO_REPEAT_HOLD(HYPR(KC_5), LCTL(KC_RIGHT));
 			return false;
 
@@ -69,7 +69,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _PREV_DESK:
-			mf_clear_all_mods();
+			my_clear_all_mods();
 			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_SPACE), LCTL(KC_LEFT));
 			return false;
 
@@ -118,12 +118,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _ZOOM_OUT:
-			mf_clear_all_mods();
+			my_clear_all_mods();
 			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_MINUS),HYPR(KC_Z));
 			return false;
 
 		case _ZOOM_IN:
-			mf_clear_all_mods();
+			my_clear_all_mods();
 			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_PLUS),MEH(KC_1));
 			return false;
 
@@ -212,7 +212,7 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event) {
 		}
 	}
 	else if (event->string && 0 != strcmp(event->string, "")) {
-		mf_clear_all_mods();
+		my_clear_all_mods();
 		send_string(event->string);
 	}
 }
@@ -248,7 +248,7 @@ void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event) {
 		}
 	}
 	else if (event->string && 0 != strcmp(event->string, "")) {
-		mf_clear_all_mods();
+		my_clear_all_mods();
 		send_string(event->string);
 	}
 }
