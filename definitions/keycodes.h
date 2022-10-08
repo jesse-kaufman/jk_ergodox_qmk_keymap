@@ -2,6 +2,9 @@
 #include QMK_KEYBOARD_H
 #include "layers.h"
 
+void my_clear_all_mods(void);
+
+
 // LAYER KEYCODES
 #define _KC_T LT(_FN,KC_T)
 #define _KC_S LT(_NUM, KC_S)
@@ -74,7 +77,8 @@ enum {
 	MF_KEY_COUNT
 };
 
-// custom tap dances
+
+// CUSTOM MULTI-FUNCTION KEYS
 #define _KC_UP_DIR  LT(9, MF_KC_UP_DIR)
 #define _KC_SCOLN   LT(8, KC_SCOLON)
 #define _SPACE      MT(0, KC_SPACE)
@@ -96,14 +100,9 @@ enum {
 #define _ZOOM_OUT   LT(9, MF_ZOOM_OUT)
 #define _ZOOM_IN    LT(9, MF_ZOOM_IN)
 
-
-
-
-void my_clear_all_mods(void);
-
-
-
-// CUSTOM MULTI-FUNCTION KEYS
+/**
+ * CUSTOM MULTI-FUNCTION KEY CONFIG
+ */
 #define MF_NOKEY 0
 #define MF_DEF_REGISTER_TAP true
 #define MF_DEF_REGISTER_HOLD true
