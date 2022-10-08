@@ -22,6 +22,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 	// output nothing if the leader key has been tapped before the MF key
 	if (leading) {
+
 		return true;
 	}
 
@@ -30,24 +31,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			MF_STR_TAP_HOLD("../", "./");
 			return false;
 
-		case _LPRN:
-			MF_TAP_HOLD(KC_LPRN, KC_RPRN);
-			return false;
-
 		case _KC_NIX_HOME:
-			MF_STR_TAP("~/");
 			mf_clear_all_mods();
+			if (record->event.pressed) {
+				SEND_STRING("~/");
+			}
 			return false;
 
 		case _KC_COMMENT:
-			MF_STR_TAP("// ");
 			mf_clear_all_mods();
+			if (record->event.pressed) {
+				SEND_STRING("// ");
+			}
 			return false;
 
 		case _KC_ML_COMMENT:
 			if ( mods & MOD_MASK_GUI) {
-				MF_STR_TAP("/**" SS_TAP(X_ENTER) " *"SS_TAP (X_ENTER)"*/"SS_TAP (X_UP));
 				mf_clear_all_mods();
+				SEND_STRING("/**" SS_TAP(X_ENTER) " * "SS_TAP (X_ENTER)" */"SS_TAP (X_UP));
 			}
 			else {
 				MF_STR_TAP_HOLD("/*", "*/");
@@ -55,29 +56,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _QUOTE:
-			MF_TAP_HOLD_MIXED(KC_QUOTE, "", MF_NOKEY, "''"SS_TAP (X_LEFT));
-			return false;
-
-		case _LCURLBR:
-			MF_TAP_HOLD(KC_LCBR, KC_RCBR);
-			return false;
-
-		case _LBRACKET:
-			MF_TAP_HOLD(KC_LBRACKET, KC_RBRACKET);
+			MF_TAP_HOLD_ONCE(KC_QUOTE, KC_MINUS);
 			return false;
 
 		case _DESKTOP:
-			MF_TAP_HOLD(HYPR(KC_5), LCTL(KC_RIGHT));
 			mf_clear_all_mods();
+			MF_TAP_NO_REPEAT_HOLD(HYPR(KC_5), LCTL(KC_RIGHT));
 			return false;
 
 		case _KC_E:
-			MF_TAP_HOLD(KC_E, KC_QUOTE);
+			MF_TAP_NO_REPEAT_HOLD(KC_E, KC_QUOTE);
 			return false;
 
 		case _PREV_DESK:
-			MF_TAP_HOLD(LGUI(KC_SPACE), LCTL(KC_LEFT));
 			mf_clear_all_mods();
+			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_SPACE), LCTL(KC_LEFT));
 			return false;
 
 		case _DQUOTE:
@@ -93,11 +86,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _APP_WINDOWS:
-			MF_TAP_HOLD(LCMD(KC_GRAVE), KC_F17);
+			MF_TAP_NO_REPEAT_HOLD(LCMD(KC_GRAVE), KC_F17);
 			return false;
 
 		case _APP_TABS:
-			MF_TAP_HOLD(LCTL(KC_TAB), LCMD(LSFT(KC_UP)));
+			MF_TAP_NO_REPEAT_HOLD(LCTL(KC_TAB), LCMD(LSFT(KC_UP)));
 			return false;
 
 		case _SPACE:
@@ -108,14 +101,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_HOLD(KC_DOT, KC_EXLM);
 			return false;
 
+		case _LPRN:
+			MF_TAP_HOLD_ONCE(KC_LPRN, KC_RPRN);
+			return false;
+
+		case _LCURLBR:
+			MF_TAP_HOLD_ONCE(KC_LCBR, KC_RCBR);
+			return false;
+
+		case _LBRACKET:
+			MF_TAP_HOLD_ONCE(KC_LBRACKET, KC_RBRACKET);
+			return false;
+
 		case _COMMA:
-			MF_TAP_HOLD(KC_COMMA, KC_QUOTE);
+			MF_TAP_HOLD_ONCE(KC_COMMA, KC_QUOTE);
+			return false;
+
+		case _ZOOM_OUT:
+			mf_clear_all_mods();
+			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_MINUS),HYPR(KC_Z));
+			return false;
+
+		case _ZOOM_IN:
+			mf_clear_all_mods();
+			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_PLUS),MEH(KC_1));
 			return false;
 
 		case _KC_SCOLN:
-			MF_TAP_HOLD(KC_SCOLON, KC_COLON);
+			MF_TAP_HOLD_ONCE(KC_SCOLON, KC_COLON);
 			return false;
 	}
+
 
 	return true;
 }
@@ -148,7 +164,6 @@ void mf_handle_key_event(keyrecord_t* record, mf_key_config* key) {
 		}
 	}
 	else {
-		// key is being held or being released from a hold
 		// key is being held or being released from a single hold
 
 		if (record->tap.interrupted) {
