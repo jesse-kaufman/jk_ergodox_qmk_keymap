@@ -167,6 +167,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 	}
 }
 
+
 bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key_index, uint16_t keycode) {
 	switch (combo_index) {
 		case COMBO_BACKSPACE:
@@ -178,6 +179,21 @@ bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key
 			break;
 	}
 	return false;
+}
+
+bool get_combo_term(uint16_t index, combo_t *combo) {
+	switch (index) {
+		case COMBO_PASTE:
+		case COMBO_SAVE:
+		case COMBO_CUT:
+		case COMBO_SELECT_ALL:
+		case COMBO_COPY:
+		case COMBO_NEXT_DESKTOP:
+		case COMBO_PREV_DESKTOP:
+			return COMBO_TERM+20;
+	}
+
+	return COMBO_TERM;
 }
 
 bool get_combo_must_hold(uint16_t index, combo_t *combo) {
