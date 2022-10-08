@@ -3,7 +3,6 @@
 #include "definitions/keycodes.h"
 #include "tapdance.h"
 #include "lighting.h"
-#include "combos.h"
 
 
 enum combos {
