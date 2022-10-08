@@ -28,8 +28,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_SYM] = LAYOUT_ergodox_pretty(
 		_______,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
 		_______,		___X___,		KC_AT,			KC_HASH,		KC_PERC,		___X___,		_______,												TO(_NUM),		___X___,		KC_AMPR,		KC_COLON,		_DQUOTE,		KC_UNDS,		_______,
-		_______,		___X___,		_HYPHEN,		KC_ASTR,		KC_EQUAL,		_GTEQ,																					___X___,		_LPRN,			_LBRACKET,		_LCURLBR,		_DQUOTE,		_______,
-		_______,		___X___,		KC_SLASH,		KC_PLUS,		KC_CIRC,		_LTEQ,			_______,												TO(_CODE),		___X___,		KC_DLR,			_KC_SCOLN,		KC_EXLM,		KC_SLASH,		_______,
+		_______,		___X___,		_HYPHEN,		KC_ASTR,		KC_EQUAL,		KC_DLR,																					___X___,		_LPRN,			_LBRACKET,		_LCURLBR,		_DQUOTE,		_______,
+		_______,		___X___,		KC_SLASH,		KC_PLUS,		KC_CIRC,		___X___,		_______,												TO(_CODE),		___X___,		_LTEQ,			_KC_SCOLN,		_GTEQ,			KC_SLASH,		_______,
 		_______, 		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
