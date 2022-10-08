@@ -6,6 +6,7 @@
 #define _KC_T LT(_FN,KC_T)
 #define _KC_S LT(_NUM, KC_S)
 #define _KC_K LT(_CODE, KC_K)
+
 #define _OSL_SYM OSL(_SYM)
 
 // FANCY QUOTES KEYCODES
@@ -28,21 +29,15 @@
 #define _MEH_RBRKT MEH(KC_RBRACKET)
 #define _MEH_LPRN MEH(KC_LPRN)
 
-// MOUSE KEYCODE
-#define _SHFT_WHDN LSFT(KC_MS_WH_DOWN)
-#define _SHFT_WHUP LSFT(KC_MS_WH_UP)
-
 // GLOBAL HOTKEYS
-#define _ZOOM_IN HYPR(KC_EQUAL)
-#define _ZOOM_OUT HYPR(KC_MINUS)
 #define _FORWARD MEH(KC_UP)
 #define _BACK MEH(KC_DOWN)
 
 // MOD TAPS
-// #define _SPACE MT(MOD_LSFT | MOD_LALT, KC_SPACE)
 #define _SHFT_ENTER MT(MOD_RSFT, KC_ENTER)
 #define _KC_A MT(MOD_LALT, KC_A)
 #define _KC_R MT(MOD_LSFT, KC_R)
+
 
 // OTHER KEYCODES
 #define _UNDO LGUI(KC_Z)
@@ -56,37 +51,50 @@
 #define _VOL_DOWN KC_AUDIO_VOL_DOWN
 #define _PLAY KC_MEDIA_PLAY_PAUSE
 
+enum custom_keycodes {
+	_KC_NIX_HOME = EZ_SAFE_RANGE,
+	_KC_COMMENT,
+
+	CUSTOM_KEYCODE_COUNT
+};
+
+
+enum {
+	MF_KC_SCOLN = CUSTOM_KEYCODE_COUNT,
+	MF_KC_UP_DIR,
+	MF_KC_CUR_DIR,
+	MF_KC_ML_COMMENT,
+	MF_APP_TABS,
+	MF_APP_WINDOWS,
+	MF_DESKTOP,
+	MF_PREV_DESK,
+	MF_ZOOM_OUT,
+	MF_ZOOM_IN,
+
+	MF_KEY_COUNT
+};
+
 // custom tap dances
-#define _KC_UP_DIR	LT(9, KC_0)
-#define _KC_SCOLN	LT(0, KC_SCOLON)
-#define _SPACE		LT(0, KC_SPACE)
-#define _DOT		LT(0, KC_DOT)
-#define _COMMA		LT(0, KC_COMMA)
-#define _LTEQ		LT(9, KC_LABK)
-#define _GTEQ		LT(10, KC_RABK)
-#define _KC_NIX_HOME	LT(9, KC_1)
-#define _KC_CUR_DIR		LT(9, KC_2)
-#define _KC_COMMENT		LT(9, KC_NO)
-#define _KC_ML_COMMENT	LT(10, KC_NO)
-#define _APP_TABS		LT(11, KC_NO)
-#define _APP_WINDOWS	LT(12, KC_NO)
-#define _DESKTOP	LT(13, KC_NO)
-#define _PREV_DESK	LT(14, KC_NO)
-#define _QUOTE		LT(0, KC_QUOTE)
-#define _DQUOTE		LT(9, KC_QUOTE)
-#define _KC_E		LT(0, KC_E)
-#define _LPRN		LT(0, KC_LPRN)
-#define _LBRACKET	LT(0, KC_LBRACKET)
-#define _LCURLBR	LT(9, KC_LCBR)
-
-
-
-
-
-
-
-
-
+#define _KC_UP_DIR  LT(9, MF_KC_UP_DIR)
+#define _KC_SCOLN   LT(8, KC_SCOLON)
+#define _SPACE      MT(0, KC_SPACE)
+#define _LTEQ       LT(9, KC_LABK)
+#define _GTEQ       LT(10, KC_RABK)
+#define _APP_TABS       LT(11, MF_APP_TABS)
+#define _APP_WINDOWS    LT(12, MF_APP_WINDOWS)
+#define _DESKTOP    LT(13, MF_DESKTOP)
+#define _PREV_DESK  LT(14, MF_PREV_DESK)
+#define _QUOTE      LT(15, KC_QUOTE)
+#define _DQUOTE     LT(16, KC_DQUO)
+#define _KC_E       LT(17, KC_E)
+#define _LPRN       LT(8, KC_LPRN)
+#define _DOT        LT(8, KC_DOT)
+#define _COMMA      LT(18, KC_COMMA)
+#define _KC_ML_COMMENT      LT(9, MF_KC_ML_COMMENT)
+#define _LBRACKET   LT(8, KC_LBRACKET)
+#define _LCURLBR    LT(9, KC_LCBR)
+#define _ZOOM_OUT   LT(9, MF_ZOOM_OUT)
+#define _ZOOM_IN    LT(9, MF_ZOOM_IN)
 
 
 
@@ -113,8 +121,6 @@ struct mf_key_event_config {
 typedef struct mf_key_config {
 	struct mf_key_event_config tap;
 	struct mf_key_event_config hold;
-	struct mf_key_event_config double_tap;
-	struct mf_key_event_config double_hold;
 } mf_key_config;
 
 
@@ -123,38 +129,26 @@ typedef struct mf_key_config {
  */
 #define MF_TAP_HOLD( tap_kc, hold_kc ) \
 	; MF_KEY_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-	                  hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY, \
-	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_TAP, MF_NOKEY, \
-	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_HOLD, MF_NOKEY );
+	                  hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY );
 
 #define MF_TAP_NO_REPEAT_HOLD( tap_kc, hold_kc ) \
 	; MF_KEY_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-	                  hold_kc, false, MF_NOKEY, \
-	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_TAP, MF_NOKEY, \
-	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_HOLD, MF_NOKEY );
+	                  hold_kc, false, MF_NOKEY );
+
+#define MF_TAP_HOLD_ONCE( tap_kc, hold_kc ) \
+	; MF_KEY_ADVANCED(tap_kc, false, MF_NOKEY, \
+	                  hold_kc, false, MF_NOKEY );
 
 #define MF_TAP_HOLD_ADVANCED( tap_kc, tap_do_register, tap_interrupt_kc, hold_kc, hold_do_register, hold_interrupt_kc ) \
 	; MF_KEY_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
-	                  hold_kc, hold_do_register, hold_interrupt_kc, \
-	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_TAP, MF_NOKEY, \
-	                  MF_NOKEY, MF_DEF_REGISTER_DOUBLE_HOLD, MF_NOKEY );
-
-#define MF_TAP_HOLD_DOUBLE( tap_kc, hold_kc, double_tap_kc, double_hold_kc ) \
-	; MF_KEY_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-	                  hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY, \
-	                  double_tap_kc, MF_DEF_REGISTER_DOUBLE_TAP, MF_NOKEY, \
-	                  double_hold_kc, MF_DEF_REGISTER_DOUBLE_HOLD, MF_NOKEY );
+	                  hold_kc, hold_do_register, hold_interrupt_kc );
 
 
 #define MF_KEY_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
-	                    hold_kc, hold_do_register, hold_interrupt_kc, \
-	                    double_hold_kc, double_hold_do_register, double_hold_interrupt_kc, \
-	                    double_tap_kc, double_tap_do_register, double_tap_interrupt_kc) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
+	                    hold_kc, hold_do_register, hold_interrupt_kc) \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register }, \
 		.hold = { .keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register }, \
-		.double_tap = { .keycode = double_tap_kc, .interrupt_keycode = double_tap_interrupt_kc, .do_register = false }, \
-		.double_hold = { .keycode = double_hold_kc, .interrupt_keycode = double_hold_interrupt_kc, .do_register = double_hold_do_register } \
 	});
 
 
@@ -162,18 +156,16 @@ typedef struct mf_key_config {
  * TAP/HOLD STRING MACROS
  */
  #define MF_STR_TAP_HOLD(tap_str, hold_str) \
-	; MF_STR_KEY_ADVANCED(tap_str, hold_str, "", "" );
+	; MF_STR_KEY_ADVANCED(tap_str, hold_str);
 
  #define MF_STR_TAP(str) \
-	; MF_STR_KEY_ADVANCED(str, "", "", "" );
+	; MF_STR_KEY_ADVANCED(str, "");
 
 
-#define MF_STR_KEY_ADVANCED(tap_str, hold_str, double_tap_str, double_hold_str) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
+#define MF_STR_KEY_ADVANCED(tap_str, hold_str) \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = MF_NOKEY  }, \
 		.hold = { .string = hold_str, .keycode = MF_NOKEY }, \
-		.double_tap = { .string = double_tap_str }, \
-		.double_hold = { .string = double_hold_str } \
 	});
 
 
@@ -185,31 +177,14 @@ typedef struct mf_key_config {
 	            MF_NOFN, MF_NOFN, MF_NOFN \
 	            );
 
-#define MF_TAP_HOLD_DOUBLE_FN(tap_fn, hold_fn, double_tap_fn, double_hold_fn) \
-	; MF_KEY_FN(tap_fn, hold_fn, double_tap_fn, double_hold_fn, \
-	            MF_NOFN, MF_NOFN, MF_NOFN \
-	            );
-
-#define MF_KEY_FN(tap_fn, hold_fn, double_tap_fn, double_hold_fn, \
-	              tap_release_fn, hold_release_fn, double_hold_release_fn \
-	              ) \
-	; mf_handle_key_event(record,&(mf_key_config) { \
+#define MF_KEY_FN(tap_fn, hold_fn, tap_release_fn, hold_release_fn ) \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .fn = tap_fn, .fn_release = tap_release_fn }, \
 		.hold = { .fn = hold_fn, .fn_release = hold_release_fn }, \
-		.double_tap = { .fn = double_tap_fn }, \
-		.double_hold = { .fn = double_hold_fn, .fn_release = double_hold_release_fn } \
 	});
 
 #define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
+	; mf_handle_key_event(keycode,record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = tap_kc  }, \
 		.hold = { .string = hold_str, .keycode = hold_kc }, \
-	});
-
-#define MF_TAP_HOLD_DOUBLE_MIXED(tap_kc, tap_str, hold_kc, hold_str, double_hold_kc, double_tap_str, double_hold_str) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
-		.tap = { .string = tap_str, .keycode = tap_kc  }, \
-		.hold = { .string = hold_str, .keycode = hold_kc }, \
-		.double_tap = { .string = double_tap_str }, \
-		.double_hold = { .string = double_hold_str } \
 	});
