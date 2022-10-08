@@ -15,7 +15,7 @@ enum combos {
 	COMBO_SELECT_ALL,
 	COMBO_NEXT_DESKTOP,
 	COMBO_PREV_DESKTOP,
-	// COMBO_SQUOTE,
+	COMBO_DQUOTE,
 	COMBO_BOOTLOADER,
 	COMBO_RESET_ZOOM,
 	COMBO_MUTE,
@@ -38,7 +38,7 @@ const uint16_t PROGMEM combo_paste[] = { KC_X, KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM combo_save[] = { KC_W, KC_F, KC_P, COMBO_END };
 const uint16_t PROGMEM combo_select_all[] = { KC_Z, KC_X, KC_C, KC_V, COMBO_END };
 
-// const uint16_t PROGMEM combo_squote[] = { KC_E, KC_I, COMBO_END };
+const uint16_t PROGMEM combo_dquote[] = { _KC_E, KC_I, COMBO_END };
 
 const uint16_t PROGMEM combo_reset_zoom[] = { _ZOOM_IN, _ZOOM_OUT, COMBO_END };
 const uint16_t PROGMEM combo_mute[] = { _VOL_UP, _VOL_DOWN, COMBO_END };
@@ -62,7 +62,7 @@ combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_PASTE] = COMBO_ACTION(combo_paste),
 	[COMBO_SAVE] = COMBO_ACTION(combo_save),
 	[COMBO_SELECT_ALL] = COMBO_ACTION(combo_select_all),
-	// [COMBO_SQUOTE] = COMBO_ACTION(combo_squote),
+	[COMBO_DQUOTE] = COMBO_ACTION(combo_dquote),
 	[COMBO_RESET_ZOOM] = COMBO_ACTION(combo_reset_zoom),
 	[COMBO_MUTE] = COMBO_ACTION(combo_mute),
 	[COMBO_NEXT_DESKTOP] = COMBO_ACTION(combo_next_desktop),
@@ -102,11 +102,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				my_indicate_success();
 				break;
 
-/*
-            case COMBO_SQUOTE:
-                tap_code(KC_QUOTE);
-                break;
- */
+			case COMBO_DQUOTE:
+				tap_code16(KC_DQUO);
+				break;
 
 			case COMBO_CUT:
 				tap_code16(LGUI(KC_X));
