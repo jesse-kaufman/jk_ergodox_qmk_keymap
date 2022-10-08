@@ -49,9 +49,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// CODE layer
 	[_CODE] = LAYOUT_ergodox_pretty(
 		_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
-		_______,		___X___,		___X___,		_KC_COMMENT,	_KC_ML_COMMENT,	___X___,		_______,												TO(_NUM),		___X___,		KC_TILD,		KC_PIPE,		___X___,		_______,		_______,
+		_______,		___X___,		___X___,		_KC_COMMENT,	_KC_ML_COMMENT,	___X___,		_______,												TO(_NUM),		___X___,		KC_PIPE,		KC_TILD,		KC_BSLASH,		_______,		_______,
 		_______,		___X___,		___X___,		_KC_NIX_HOME,	___X___,		___X___,																				___X___,		_MEH_LPRN,		_MEH_LBRKT,		_MEH_RBRKT,		___X___,		_______,
-		_______,		___X___,		___X___,		_KC_UP_DIR,		___X___,		___X___,		_______,												TO(_BASE),		___X___,		KC_BSLASH,		KC_GRAVE,		___X___,		___X___,		_______,
+		_______,		___X___,		___X___,		_KC_UP_DIR,		___X___,		___X___,		_______,												TO(_BASE),		___X___,		___X___ ,		KC_GRAVE,		___X___,		___X___,		_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
