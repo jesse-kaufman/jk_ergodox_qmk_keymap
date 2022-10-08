@@ -1,6 +1,3 @@
-#define LED_SUCCESS_INDICATOR_ON_TIME 100
-#define LED_SUCCESS_INDICATOR_OFF_TIME 60
-
 extern rgb_config_t rgb_matrix_config;
 extern const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3];
 
