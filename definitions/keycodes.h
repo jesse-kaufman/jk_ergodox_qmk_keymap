@@ -146,7 +146,7 @@ typedef struct mf_key_config {
 
 #define MF_KEY_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
 	                    hold_kc, hold_do_register, hold_interrupt_kc) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+	; mf_handle_key_event(record, &(mf_key_config) { \
 		.tap = { .keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register }, \
 		.hold = { .keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register }, \
 	});
@@ -163,7 +163,7 @@ typedef struct mf_key_config {
 
 
 #define MF_STR_KEY_ADVANCED(tap_str, hold_str) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+	; mf_handle_key_event(record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = MF_NOKEY  }, \
 		.hold = { .string = hold_str, .keycode = MF_NOKEY }, \
 	});
@@ -178,13 +178,13 @@ typedef struct mf_key_config {
 	            );
 
 #define MF_KEY_FN(tap_fn, hold_fn, tap_release_fn, hold_release_fn ) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+	; mf_handle_key_event(record, &(mf_key_config) { \
 		.tap = { .fn = tap_fn, .fn_release = tap_release_fn }, \
 		.hold = { .fn = hold_fn, .fn_release = hold_release_fn }, \
 	});
 
 #define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str) \
-	; mf_handle_key_event(keycode,record, &(mf_key_config) { \
+	; mf_handle_key_event(record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = tap_kc  }, \
 		.hold = { .string = hold_str, .keycode = hold_kc }, \
 	});
