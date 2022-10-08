@@ -189,7 +189,10 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_COPY:
 		case COMBO_NEXT_DESKTOP:
 		case COMBO_PREV_DESKTOP:
-			return COMBO_TERM+20;
+			return COMBO_TERM + 20;
+
+		case COMBO_BACKSPACE:
+			return COMBO_BACKSPACE + 10;
 	}
 
 	return COMBO_TERM;
