@@ -98,7 +98,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				break;
 
 			case COMBO_PAUSE:
-				tap_code16(KC_PAUSE);
+				tap_code16(HYPR(KC_PAUSE));
 				my_indicate_success();
 				break;
 
@@ -190,13 +190,13 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_COPY:
 		case COMBO_NEXT_DESKTOP:
 		case COMBO_PREV_DESKTOP:
-			return COMBO_TERM + 20;
+			return 70;
 
 		case COMBO_BACKSPACE:
-			return COMBO_BACKSPACE + 10;
+			return 10;
 	}
 
-	return COMBO_TERM;
+	return;
 }
 
 bool get_combo_must_hold(uint16_t index, combo_t *combo) {
