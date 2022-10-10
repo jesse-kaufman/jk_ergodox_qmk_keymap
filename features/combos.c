@@ -193,7 +193,7 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 			return 70;
 
 		case COMBO_BACKSPACE:
-			return 10;
+			return 20;
 	}
 
 	return;
