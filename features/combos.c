@@ -181,8 +181,10 @@ bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key
 	return false;
 }
 
+
 bool get_combo_term(uint16_t index, combo_t *combo) {
 	switch (index) {
+		case COMBO_ESC:
 		case COMBO_PASTE:
 		case COMBO_SAVE:
 		case COMBO_CUT:
