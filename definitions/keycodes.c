@@ -1,6 +1,7 @@
 #include "keycodes.h"
-#include "../features/tapdance.h"
-#include "../features/leader.h"
+#include "features/tapdance.h"
+#include "features/leader.h"
+#include "features/lighting.h"
 #include "string.h"
 
 void mf_handle_key_event(keyrecord_t* record, mf_key_config* key);
@@ -8,6 +9,7 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_release(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_handle_caps_word(uint16_t keycode);
+void mf_indicate_success(uint16_t* keycode);
 
 
 void my_clear_all_mods(void) {
@@ -213,10 +215,14 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event) {
 		mf_handle_caps_word(event->keycode);
 
 		if (event->do_register) {
+			mf_indicate_success(&event->keycode);
+
 			// register the keycode
 			register_code16(event->keycode);
 		}
 		else {
+			mf_indicate_success(&event->keycode);
+
 			// tap the keycode
 			tap_code16(event->keycode);
 		}
@@ -311,6 +317,16 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 		default:
 			return false;
+	}
+}
+
+
+void mf_indicate_success(uint16_t* keycode) {
+	switch (*keycode) {
+		case KC_MEDIA_NEXT_TRACK:
+		case KC_MEDIA_PREV_TRACK:
+			my_indicate_success();
+			break;
 	}
 }
 
