@@ -13,6 +13,7 @@ enum combos {
 	COMBO_COPY,
 	COMBO_PASTE,
 	COMBO_SAVE,
+	COMBO_SAVE2,
 	COMBO_SELECT_ALL,
 	COMBO_NEXT_DESKTOP,
 	COMBO_PREV_DESKTOP,
@@ -37,6 +38,8 @@ const uint16_t PROGMEM combo_cut[] = { KC_X, KC_V, COMBO_END };
 const uint16_t PROGMEM combo_copy[] = { KC_X, KC_C, COMBO_END };
 const uint16_t PROGMEM combo_paste[] = { KC_X, KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM combo_save[] = { KC_W, KC_F, KC_P, COMBO_END };
+const uint16_t PROGMEM combo_save2[] = { KC_V, _SPACE, COMBO_END };
+
 const uint16_t PROGMEM combo_select_all[] = { KC_Z, KC_X, KC_C, KC_V, COMBO_END };
 
 const uint16_t PROGMEM combo_dquote[] = { _KC_E, KC_I, COMBO_END };
@@ -62,6 +65,7 @@ combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_COPY] = COMBO_ACTION(combo_copy),
 	[COMBO_PASTE] = COMBO_ACTION(combo_paste),
 	[COMBO_SAVE] = COMBO_ACTION(combo_save),
+	[COMBO_SAVE2] = COMBO_ACTION(combo_save2),
 	[COMBO_SELECT_ALL] = COMBO_ACTION(combo_select_all),
 	[COMBO_DQUOTE] = COMBO_ACTION(combo_dquote),
 	[COMBO_RESET_ZOOM] = COMBO_ACTION(combo_reset_zoom),
@@ -79,7 +83,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 		caps_word_off();
 	}
 
-	if ( combo_index != COMBO_BACKSPACE && combo_index != COMBO_ESC && combo_index != COMBO_TAB && combo_index != COMBO_PASTE && combo_index != COMBO_COPY && combo_index != COMBO_SAVE ) {
+	if ( combo_index != COMBO_BACKSPACE && combo_index != COMBO_ESC && combo_index != COMBO_TAB && combo_index != COMBO_PASTE && combo_index != COMBO_COPY && combo_index != COMBO_SAVE && combo_index != COMBO_SAVE2 ) {
 		my_clear_all_mods();
 	}
 
@@ -122,6 +126,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				break;
 
 			case COMBO_SAVE:
+				tap_code16(LGUI(KC_S));
+				my_flash_twice();
+				break;
+
+			case COMBO_SAVE2:
 				tap_code16(LGUI(KC_S));
 				my_flash_twice();
 				break;
@@ -187,6 +196,7 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_ESC:
 		case COMBO_PASTE:
 		case COMBO_SAVE:
+		case COMBO_SAVE2:
 		case COMBO_CUT:
 		case COMBO_SELECT_ALL:
 		case COMBO_COPY:
@@ -208,6 +218,7 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
 		case COMBO_COPY:
 		case COMBO_PASTE:
 		case COMBO_SAVE:
+		case COMBO_SAVE2:
 		case COMBO_SELECT_ALL:
 		case COMBO_NEXT_DESKTOP:
 		case COMBO_PREV_DESKTOP:
