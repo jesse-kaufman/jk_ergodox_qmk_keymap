@@ -50,8 +50,6 @@ void my_clear_all_mods(void);
 #define _SCREEN_UP KC_BRIGHTNESS_UP
 #define _PREV KC_MEDIA_PREV_TRACK
 #define _NEXT KC_MEDIA_NEXT_TRACK
-#define _VOL_UP KC_AUDIO_VOL_UP
-#define _VOL_DOWN KC_AUDIO_VOL_DOWN
 #define _PLAY KC_MEDIA_PLAY_PAUSE
 
 enum custom_keycodes {
@@ -99,6 +97,9 @@ enum {
 #define _LCURLBR    LT(9, KC_LCBR)
 #define _ZOOM_OUT   LT(9, MF_ZOOM_OUT)
 #define _ZOOM_IN    LT(9, MF_ZOOM_IN)
+#define _VOL_UP		LT(9, KC_AUDIO_VOL_UP)
+#define _VOL_DOWN	LT(9, KC_AUDIO_VOL_DOWN)
+
 
 /**
  * CUSTOM MULTI-FUNCTION KEY CONFIG

@@ -127,6 +127,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_PLUS),MEH(KC_1));
 			return false;
 
+		case _VOL_UP:
+			my_clear_all_mods();
+			MF_TAP_NO_REPEAT_HOLD(KC_AUDIO_VOL_UP, KC_MEDIA_NEXT_TRACK);
+			return false;
+
+		case _VOL_DOWN:
+			my_clear_all_mods();
+			MF_TAP_NO_REPEAT_HOLD(KC_AUDIO_VOL_DOWN, KC_MEDIA_PREV_TRACK);
+			return false;
+
 		case _KC_SCOLN:
 			MF_TAP_HOLD_ONCE(KC_SCOLON, KC_COLON);
 			return false;
