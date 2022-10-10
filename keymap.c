@@ -27,8 +27,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// SYM layer
 	[_SYM] = LAYOUT_ergodox_pretty(
 		_______,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
-		_______,		___X___,		KC_AT,			KC_HASH,		KC_PERC,		___X___,		_______,												TO(_NUM),		___X___,		KC_AMPR,		KC_COLON,		KC_UNDS,		_______,		_______,
-		_______,		___X___,		_HYPHEN,		KC_ASTR,		KC_EQUAL,		KC_DLR,																					___X___,		_LPRN,			_LBRACKET,		_LCURLBR,		_DQUOTE,		_______,
+		_______,		___X___,		KC_AT,			KC_HASH,		KC_PERC,		___X___,		_______,												TO(_NUM),		KC_PIPE,		KC_UNDS,		KC_COLON,		KC_AMPR,		_______,		_______,
+		_______,		___X___,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_DLR,																					KC_BSLASH,		_LPRN,			_LBRACKET,		_LCURLBR,		_DQUOTE,		_______,
 		_______,		___X___,		KC_SLASH,		KC_PLUS,		KC_CIRC,		___X___,		_______,												TO(_CODE),		___X___,		_LTEQ,			_KC_SCOLN,		_GTEQ,			KC_SLASH,		_______,
 		_______, 		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NUM] = LAYOUT_ergodox_pretty(
 		___X___,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
 		_______,		___X___,		_______,		_______,		_______,		___X___,		_______,												TO(_BASE),		___X___,		KC_7,			KC_8,			KC_9,			_______,		_______,
-		_______,		___X___,		KC_MINUS,		KC_ASTR,		KC_EQUAL,		___X___,																				___X___,		KC_4,			KC_5,			KC_6,			KC_PLUS,		_______,
+		_______,		___X___,		KC_ASTR,		KC_MINUS,		KC_EQUAL,		___X___,																				___X___,		KC_4,			KC_5,			KC_6,			KC_PLUS,		_______,
 		_______,		___X___,		KC_SLASH,		KC_PLUS,		KC_MINUS,		___X___,		_______,												TO(_CODE),		KC_DOT,			KC_1,			KC_2,			KC_3,			KC_DOT,			_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// CODE layer
 	[_CODE] = LAYOUT_ergodox_pretty(
 		_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
-		_______,		___X___,		___X___,		_KC_COMMENT,	_KC_ML_COMMENT,	___X___,		_______,												TO(_NUM),		___X___,		KC_PIPE,		KC_TILD,		KC_BSLASH,		_______,		_______,
+		_______,		___X___,		___X___,		_KC_COMMENT,	_KC_ML_COMMENT,	___X___,		_______,												TO(_NUM),		___X___,		___X___,		KC_TILD,		___X___,		_______,		_______,
 		_______,		___X___,		___X___,		_KC_NIX_HOME,	___X___,		___X___,																				___X___,		_MEH_LPRN,		_MEH_LBRKT,		_MEH_RBRKT,		___X___,		_______,
 		_______,		___X___,		___X___,		_KC_UP_DIR,		___X___,		___X___,		_______,												TO(_BASE),		___X___,		___X___ ,		KC_GRAVE,		___X___,		___X___,		_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
