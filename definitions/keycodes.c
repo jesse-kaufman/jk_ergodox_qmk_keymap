@@ -338,8 +338,15 @@ void mf_indicate_success(uint16_t* keycode) {
 	switch (*keycode) {
 		case KC_MEDIA_NEXT_TRACK:
 		case KC_MEDIA_PREV_TRACK:
+		case LGUI(KC_Q):
+		case LGUI(KC_W):
 			my_indicate_success();
 			break;
+
+		case LGUI(KC_S):
+			my_flash_twice();
+			break;
+
 	}
 }
 
