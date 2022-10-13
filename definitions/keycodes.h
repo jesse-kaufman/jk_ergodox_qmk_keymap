@@ -118,6 +118,10 @@ enum {
 #define MF_DEF_REGISTER_DOUBLE_HOLD true
 #define MF_NOFN 0
 
+
+/**
+ * STRUCTS FOR MULTIFUNCTION KEYS
+ */
 struct mf_key_event_config {
 	uint16_t keycode;
 	uint16_t interrupt_keycode;
