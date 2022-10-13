@@ -12,6 +12,9 @@ void my_leader_matrix_scan_user(void) {
 		// SPOTLIGHT
 		MY_KEY_SEQ(KC_LEAD, 0, 0, 0, 0, LGUI(KC_SPACE));
 
+		// CLICKUP
+		MY_KEY_SEQ(KC_C, KC_L, KC_I, 0, 0, HYPR(KC_I));
+
 		// TERMINAL
 		MY_KEY_SEQ(KC_T, 0, 0, 0, 0, HYPR(KC_T));
 
