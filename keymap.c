@@ -16,9 +16,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// COLEMAK BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
 		TT(_FN),		___X___,		___X___,		SCMD(KC_4),		SCMD(KC_5),		LGUI(KC_S),	_PREV_DESK,													_DESKTOP,	 	___X___,		___X___,		___X___,		___X___,		___X___,		_TAB_MGMT,
-		MEH(KC_F13),	KC_Q,			KC_W,			KC_F,			KC_P,			KC_G,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_MEH_LPRN,		LGUI(KC_M),
-		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_D,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
-		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_V,			KC_B,		KC_LEAD,													OSL(_CODE),	 	_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
+		MEH(KC_F13),	KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_MEH_LPRN,		LGUI(KC_M),
+		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_G,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
+		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,		KC_LEAD,													OSL(_CODE),	 	_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_LSHIFT,																											OSL(_SYM),		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),
 																									_ZOOM_OUT,		_ZOOM_IN,					_VOL_DOWN,		_VOL_UP,
 																													MEH(KC_F19),				_PLAY,
@@ -64,9 +64,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// FN layer
 	[_FN] = LAYOUT_ergodox_pretty(
 		_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
-		_______,		___X___,		___X___,		___X___,		MEH(KC_P),		MEH(KC_5),		_______,												TO(_NUM),		_______,		KC_PGUP,		KC_UP,			___X___,		KC_HOME,		_______,
-		_______,		___X___,		KC_LSFT,		MEH(KC_0),		MEH(KC_U),		MEH(KC_6),																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
-		_______,		___X___,		MEH(KC_X),		___X___,		MEH(KC_D),		MEH(KC_E),		_______,												TO(_CODE),		___X___,		KC_PGDOWN,		___X___,		KC_DOT,			KC_END,			_______,
+		_______,		___X___,		LGUI(KC_W),			LGUI(KC_F),		MEH(KC_P),		MEH(KC_5),		_______,												TO(_NUM),		_______,		KC_PGUP,		KC_UP,			___X___,		KC_HOME,		_______,
+		_______,		___X___,		KC_LSFT,		_FN_S,			MEH(KC_U),		MEH(KC_6),																				LALT(KC_LEFT),	KC_LEFT,		KC_DOWN,		KC_RIGHT,		LALT(KC_RIGHT),	_______,
+		_______,		___X___,		_FN_X,			MEH(KC_0),		MEH(KC_D),		MEH(KC_E),		_______,												TO(_CODE),		___X___,		KC_PGDOWN,		___X___,		KC_DOT,			KC_END,			_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		KC_LEFT,		KC_RIGHT,		TT(_MOUSE),
 																										_SCREEN_DN,		_SCREEN_UP,				_______,		_______,
 																														_______,				_______,
