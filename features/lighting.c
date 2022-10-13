@@ -20,27 +20,37 @@ void keyboard_post_init_user(void) {
 }
 
 
+// flashes all LEDs once and leaves red LED alone if a layer is active
 void my_indicate_success(void) {
 	ergodox_led_all_set(LED_BRIGHTNESS_MED);
 	ergodox_led_all_on();
 	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
-	ergodox_led_all_off();
+
+	if (layer_state) {
+		ergodox_right_led_2_off();
+		ergodox_right_led_3_off();
+	}
+	else {
+		ergodox_led_all_off();
+	}
+
 	_delay_ms(LED_SUCCESS_INDICATOR_OFF_TIME);
 }
 
+// flashes green LED twice
 void my_flash_twice(void) {
-	ergodox_led_all_set(LED_BRIGHTNESS_MED);
+	ergodox_right_led_2_set(LED_BRIGHTNESS_MED);
 
-	ergodox_led_all_on();
+	ergodox_right_led_2_on();
 	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
 
-	ergodox_led_all_off();
+	ergodox_right_led_2_off();
 	_delay_ms(LED_SUCCESS_INDICATOR_OFF_TIME);
 
-	ergodox_led_all_on();
+	ergodox_right_led_2_on();
 	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
 
-	ergodox_led_all_off();
+	ergodox_right_led_2_off();
 	_delay_ms(LED_SUCCESS_INDICATOR_OFF_TIME);
 }
 
