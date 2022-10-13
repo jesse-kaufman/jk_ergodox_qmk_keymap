@@ -72,6 +72,8 @@ enum {
 	MF_ZOOM_OUT,
 	MF_ZOOM_IN,
 	MF_HTML,
+	MF_FN_X,
+	MF_FN_S,
 
 	MF_KEY_COUNT
 };
@@ -101,6 +103,8 @@ enum {
 #define _VOL_UP		LT(9, KC_AUDIO_VOL_UP)
 #define _VOL_DOWN	LT(9, KC_AUDIO_VOL_DOWN)
 #define _HTML		LT(9, MF_HTML)
+#define _FN_X		LT(9, MF_FN_X)
+#define _FN_S		LT(9, MF_FN_S)
 
 
 
