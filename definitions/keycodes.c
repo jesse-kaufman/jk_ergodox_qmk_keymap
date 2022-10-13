@@ -79,6 +79,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_HOLD_MIXED(KC_DQUO, "", MF_NOKEY, "\"\""SS_TAP (X_LEFT));
 			return false;
 
+		case _HTML:
+			MF_STR_KEY_ADVANCED("<>"SS_TAP (X_LEFT), "</>" SS_TAP (X_LEFT));
+			return false;
+
 		case _LTEQ:
 			MF_TAP_HOLD_MIXED(KC_LABK, "", MF_NOKEY, "<=" );
 			return false;
@@ -142,6 +146,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case _KC_SCOLN:
 			MF_TAP_HOLD_ONCE(KC_SCOLON, KC_COLON);
 			return false;
+
 	}
 
 
