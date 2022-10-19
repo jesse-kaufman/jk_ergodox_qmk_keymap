@@ -19,7 +19,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		MEH(KC_F13),	KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_MEH_LPRN,		LGUI(KC_M),
 		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_G,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
 		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,		KC_LEAD,													OSL(_CODE),	 	_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
-		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_LSHIFT,																											OSL(_SYM),		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),
+		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_LSHIFT,																											_OSL_SYM,		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),
 																									_ZOOM_OUT,		_ZOOM_IN,					_VOL_DOWN,		_VOL_UP,
 																													MEH(KC_F19),				_PLAY,
 																						_SPACE,		_OSM_LCMD,		MEH(KC_F20),				KC_LEAD,		_OSM_LSHIFT,	_SHFT_ENTER
@@ -31,10 +31,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,		___X___,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,		_______,												TO(_NUM),		___X___,		KC_AMPR,		KC_UNDS,		KC_PIPE,		_MEH_LBRKT,		_______,
 		_______,		___X___,		KC_ASTR,		_HYPHEN,		KC_EQUAL,		KC_CIRC,																				___X___,		KC_LPRN,		KC_COLON,		KC_RPRN,		___X___,		_______,
 		_______,		___X___,		KC_SLASH,		___X___,		KC_PLUS,		___X___,		_______,												TO(_CODE),		___X___,		_LTEQ,			_KC_SCOLN,		_GTEQ,			___X___,		_______,
-		_______, 		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
+		_______, 		_______,		_______,		_______,		_______,																												OSL(_CODE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
-																						_______,		_______,		_______,				_______,		_______,		_______
+																						_______,		_______,		_______,				_______,		CAPS_WORD,		_______
 	),
 
 	// CODE layer
