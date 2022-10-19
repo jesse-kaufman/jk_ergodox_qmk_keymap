@@ -16,7 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// COLEMAK BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
 		TT(_FN),		___X___,		___X___,		SCMD(KC_4),		SCMD(KC_5),		LGUI(KC_S),	_PREV_DESK,													_DESKTOP,	 	___X___,		___X___,		___X___,		___X___,		___X___,		_TAB_MGMT,
-		MEH(KC_F13),	KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_MEH_LPRN,		LGUI(KC_M),
+		MEH(KC_F13),	KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,		KC_ESC,														TT(_NUM),		KC_J,			KC_L,			KC_U,			KC_Y,			_MEH_LPRN,		_MINIMIZE,
 		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_G,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
 		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,		KC_LEAD,													OSL(_CODE),	 	_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
 		_UNDO,			_REDO,			_OSM_CTR,		_OSM_OPT,		_OSM_LSHIFT,																											_OSL_SYM,		_OSM_RCMD,		KC_DOWN,		KC_UP,			TT(_FN),

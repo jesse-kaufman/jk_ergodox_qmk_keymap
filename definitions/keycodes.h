@@ -74,6 +74,7 @@ enum {
 	MF_HTML,
 	MF_FN_X,
 	MF_FN_S,
+	MF_MINIMIZE,
 
 	MF_KEY_COUNT
 };
@@ -105,6 +106,8 @@ enum {
 #define _HTML		LT(9, MF_HTML)
 #define _FN_X		LT(9, MF_FN_X)
 #define _FN_S		LT(9, MF_FN_S)
+#define _MINIMIZE	LT(9, MF_MINIMIZE)
+
 
 
 

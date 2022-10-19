@@ -24,7 +24,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 	// output nothing if the leader key has been tapped before the MF key
 	if (leading) {
-
 		return true;
 	}
 
@@ -142,6 +141,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case _FN_X:
 			my_clear_all_mods();
 			MF_TAP_NO_REPEAT_HOLD(MEH(KC_X), LGUI(KC_Q));
+			return false;
+
+		case _MINIMIZE:
+			my_clear_all_mods();
+			MF_TAP_NO_REPEAT_HOLD(KC_NO, LGUI(KC_M));
 			return false;
 	}
 
