@@ -25,6 +25,7 @@ typedef struct {
 
 enum {
 	SINGLE_TAP = 1,
+	SINGLE_TAP_INTERRUPT,
 	SINGLE_HOLD,
 	DOUBLE_TAP,
 	DOUBLE_HOLD,

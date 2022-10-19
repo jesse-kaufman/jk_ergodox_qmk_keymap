@@ -15,7 +15,11 @@ uint8_t dance_step(qk_tap_dance_state_t *state) {
 
 		// single tap/hold actions
 
-		if (state->interrupted || !state->pressed) {
+		if (state->interrupted) {
+			// single tap interrupted
+			return SINGLE_TAP_INTERRUPT;
+		}
+		else if (!state->pressed) {
 			// single tap of key
 			return SINGLE_TAP;
 		}
@@ -67,6 +71,7 @@ void dance_tab_mgmt(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_TAB_MGMT].step = dance_step(state);
 	switch (dance_state[DANCE_TAB_MGMT].step) {
 		case SINGLE_TAP:
+		case SINGLE_TAP_INTERRUPT:
 			tap_code16(LGUI(KC_T));
 			break;
 
@@ -75,6 +80,7 @@ void dance_tab_mgmt(qk_tap_dance_state_t *state, void *user_data) {
 			break;
 
 		case DOUBLE_TAP:
+		case DOUBLE_SINGLE_TAP:
 			tap_code16(LGUI(KC_W));
 			break;
 	}
@@ -100,6 +106,7 @@ void dance_dash_finished(qk_tap_dance_state_t *state, void *user_data) {
 	dance_state[DANCE_DASH].step = dance_step(state);
 	switch (dance_state[DANCE_DASH].step) {
 		case SINGLE_TAP:
+		case SINGLE_TAP_INTERRUPT:
 			tap_code16(KC_MINUS);
 			break;
 
@@ -127,9 +134,6 @@ void dance_dash_reset(qk_tap_dance_state_t *state, void *user_data) {
 	}
 	dance_state[DANCE_DASH].step = 0;
 }
-
-
-
 
 
 qk_tap_dance_action_t tap_dance_actions[] = {
