@@ -107,18 +107,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_HOLD(KC_DOT, KC_EXLM);
 			return false;
 
-		case _LPRN:
-			MF_TAP_HOLD_ONCE(KC_LPRN, KC_RPRN);
-			return false;
-
-		case _LCURLBR:
-			MF_TAP_HOLD_ONCE(KC_LCBR, KC_RCBR);
-			return false;
-
-		case _LBRACKET:
-			MF_TAP_HOLD_ONCE(KC_LBRACKET, KC_RBRACKET);
-			return false;
-
 		case _COMMA:
 			MF_TAP_HOLD_ONCE(KC_COMMA, KC_QUOTE);
 			return false;
