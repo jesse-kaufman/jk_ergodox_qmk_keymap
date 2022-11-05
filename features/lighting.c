@@ -5,6 +5,7 @@
 #include QMK_KEYBOARD_H
 #include "../definitions/layers.h"
 #include "lighting.h"
+#include "casemodes.h"
 
 #define LED_SUCCESS_INDICATOR_ON_TIME 100
 #define LED_SUCCESS_INDICATOR_OFF_TIME 60
@@ -80,22 +81,60 @@ void my_indicate_one_shot_active(void) {
 	ergodox_right_led_2_set(LED_BRIGHTNESS_LO);
 	ergodox_right_led_2_on();
 }
-
-
-void my_indicate_shift_modifier_on(void) {
-	if (is_caps_word_on()) {
-		ergodox_right_led_3_set(LED_BRIGHTNESS_MED_HI);
-	}
-	else {
-		ergodox_right_led_3_set(LED_BRIGHTNESS_LO);
-	}
+void my_indicate_caps_word_on(void) {
+	ergodox_right_led_3_set(LED_BRIGHTNESS_LO);
 	ergodox_right_led_3_on();
 }
-
-
-void my_indicate_shift_modifier_off(void) {
-	ergodox_right_led_3_off();
+void my_indicate_caps_word_off(void) {
+	if (get_xcase_state()) {
+		my_indicate_xcase_on();
+	}
+	else {
+		ergodox_right_led_3_off();
+	}
 }
+void my_indicate_xcase_on(void) {
+	ergodox_right_led_3_set(LED_BRIGHTNESS_MED_HI);
+	ergodox_right_led_3_on();
+	if (get_xcase_state() == XCASE_WAIT) {
+		ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
+		ergodox_right_led_3_set(LED_BRIGHTNESS_LO);
+	}
+	else {
+		ergodox_right_led_1_set(LED_BRIGHTNESS_MED_HI);
+		ergodox_right_led_3_set(LED_BRIGHTNESS_MED_HI);
+	}
+	ergodox_right_led_1_on();
+}
+void my_indicate_xcase_off(void) {
+	if (!is_caps_word_on()) {
+		ergodox_right_led_3_off();
+	}
+	else {
+		my_indicate_caps_word_on();
+	}
+
+	uint8_t layer = biton32(layer_state);
+
+	if (layer==0) {
+		ergodox_right_led_1_off();
+	}
+}
+
+// void my_indicate_shift_modifier_on(void) {
+// 	if (is_caps_word_on()) {
+// 		my_indicate_caps_word_on();
+// 	}
+// 	else {
+// 		ergodox_right_led_3_set(LED_BRIGHTNESS_LO);
+// 		ergodox_right_led_3_on();
+// 	}
+// }
+
+
+// void my_indicate_shift_modifier_off(void) {
+// 	ergodox_right_led_3_off();
+// }
 
 
 
@@ -125,16 +164,19 @@ void rgb_matrix_indicators_user(void) {
 	set_layer_color(biton32(layer_state));
 
 	if (mods) {
-		if (mods & MOD_MASK_SHIFT)  {
-			my_indicate_shift_modifier_on();
-		}
+		// if (mods & MOD_MASK_SHIFT)  {
+		// 	my_indicate_shift_modifier_on();
+		// }
 
 		if (mods & MOD_MASK_CAG)  {
 			my_indicate_modifier();
 		}
 	}
 	else if (!is_caps_word_on()) {
-		my_indicate_shift_modifier_off();
+		my_indicate_caps_word_off();
+	}
+	else if (!get_xcase_state()) {
+		my_indicate_xcase_off();
 	}
 }
 
@@ -142,7 +184,7 @@ void rgb_matrix_indicators_user(void) {
 void oneshot_mods_changed_user(uint8_t mods) {
 	uint8_t one_shot = get_oneshot_mods();
 
-	if (one_shot & MOD_MASK_CSAG || is_oneshot_layer_active()) {
+	if (one_shot || is_oneshot_layer_active()) {
 		my_indicate_one_shot_active();
 	}
 	else {
@@ -168,6 +210,9 @@ uint8_t layer_state_set_user(uint8_t state) {
 	if ( layer ) {
 		if (!is_oneshot_layer_active()) {
 			ergodox_right_led_1_set(LED_BRIGHTNESS_HI);
+		}
+		else {
+			ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
 		}
 		ergodox_right_led_1_on();
 	}

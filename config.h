@@ -43,8 +43,6 @@
 #define LAYER_STATE_8BIT
 
 #undef NKRO_ENABLE
-#undef BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
 #define PERMISSIVE_HOLD
 #define TAPPING_TERM_PER_KEY
@@ -65,7 +63,7 @@
 #undef ENABLE_RGB_MATRIX_ALPHAS_MODS        // Static dual hue, speed is hue for secondary hue
 #undef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN    // Static gradient top to bottom, speed controls how much gradient changes
 #undef ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT    // Static gradient left to right, speed controls how much gradient changes
-#define ENABLE_RGB_MATRIX_BREATHING           // Single hue brightness cycling animation
+#undef ENABLE_RGB_MATRIX_BREATHING           // Single hue brightness cycling animation
 #undef ENABLE_RGB_MATRIX_BAND_SAT        // Single hue band fading saturation scrolling left to right
 #undef ENABLE_RGB_MATRIX_BAND_VAL       // Single hue band fading brightness scrolling left to right
 #undef ENABLE_RGB_MATRIX_BAND_PINWHEEL_SAT   // Single hue 3 blade spinning pinwheel fades saturation
@@ -96,7 +94,7 @@
 #undef ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE   // Pulses keys hit to hue & value then fades value out
 #undef ENABLE_RGB_MATRIX_SOLID_REACTIVE      // Static single hue, pulses keys hit to shifted hue then fades to current hue
 #undef ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE       // Hue & value pulse near a single key hit then fades value out
-#define ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE  // Hue & value pulse near multiple key hits then fades value out
+#undef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE  // Hue & value pulse near multiple key hits then fades value out
 #undef ENABLE_RGB_MATRIX_SOLID_REACTIVE_CROSS      // Hue & value pulse the same column and row of a single key hit then fades value out
 #undef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTICROSS // Hue & value pulse the same column and row of multiple key hits then fades value out
 #undef ENABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS      // Hue & value pulse away on the same column and row of a single key hit then fades value out

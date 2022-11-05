@@ -13,7 +13,7 @@ void my_leader_matrix_scan_user(void) {
 		MY_KEY_SEQ(KC_LEAD, 0, 0, 0, 0, LGUI(KC_SPACE));
 
 		// CLICKUP
-		MY_KEY_SEQ(KC_C, KC_L, KC_I, 0, 0, HYPR(KC_I));
+		MY_KEY_SEQ(KC_C, KC_U, 0, 0, 0, HYPR(KC_I));
 
 		// TERMINAL
 		MY_KEY_SEQ(KC_T, 0, 0, 0, 0, HYPR(KC_T));
@@ -22,7 +22,7 @@ void my_leader_matrix_scan_user(void) {
 		MY_KEY_SEQ(KC_S, 0, 0, 0, 0, HYPR(KC_S));
 
 		// SAFARI TECH EDITION
-		MY_KEY_SEQ(KC_T, KC_E, 0, 0, 0, HYPR(KC_E));
+		MY_KEY_SEQ(KC_S, KC_T, 0, 0, 0, HYPR(KC_E));
 
 		// MS OUTLOOK
 		MY_KEY_SEQ(KC_M, KC_S, KC_O, 0, 0, HYPR(KC_O));

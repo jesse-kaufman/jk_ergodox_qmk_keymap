@@ -2,6 +2,7 @@
 #include "features/tapdance.h"
 #include "features/leader.h"
 #include "features/lighting.h"
+#include "features/casemodes.h"
 #include "string.h"
 
 void mf_handle_key_event(keyrecord_t* record, mf_key_config* key);
@@ -9,6 +10,7 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_release(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_handle_caps_word(uint16_t keycode);
+void mf_handle_xcase(uint16_t keycode, keyrecord_t *record);
 void mf_indicate_success(uint16_t* keycode);
 
 
@@ -17,9 +19,14 @@ void my_clear_all_mods(void) {
 	clear_weak_mods();
 	clear_oneshot_mods();
 	caps_word_off();
+	disable_xcase();
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	if (!process_case_modes(keycode, record)) {
+		return false;
+	}
+
 	const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
 
 	// output nothing if the leader key has been tapped before the MF key
@@ -39,25 +46,45 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 			return false;
 
-		case _KC_COMMENT:
+		case _PAREN:
 			my_clear_all_mods();
-			if (record->event.pressed) {
-				SEND_STRING("// ");
-			}
+			MF_STR_KEY_ADVANCED("()" SS_TAP(X_LEFT), "[]" SS_TAP(X_LEFT));
 			return false;
 
-		case _KC_ML_COMMENT:
-			if ( mods & MOD_MASK_GUI) {
-				my_clear_all_mods();
-				SEND_STRING("/**" SS_TAP(X_ENTER) " * "SS_TAP (X_ENTER)" */"SS_TAP (X_UP));
-			}
-			else {
-				MF_STR_TAP_HOLD("/*", "*/");
-			}
+		case _CBRACKET:
+			my_clear_all_mods();
+			MF_STR_KEY_ADVANCED("{}" SS_TAP(X_LEFT), "[]" SS_TAP(X_LEFT));
+			return false;
+
+		case _BEG_CBLOCK:
+			my_clear_all_mods();
+			MF_STR_TAP("/*");
+			return false;
+
+		case _END_CBLOCK:
+			my_clear_all_mods();
+			MF_STR_TAP("*/");
+			return false;
+
+		case _EQ_ARR:
+			my_clear_all_mods();
+			MF_STR_TAP("=>");
+			return false;
+
+		case _DASH_ARR:
+			my_clear_all_mods();
+			MF_STR_TAP("->");
 			return false;
 
 		case _QUOTE:
-			MF_TAP_HOLD_ONCE(KC_QUOTE, KC_MINUS);
+			my_clear_all_mods();
+
+			if ( mods & MOD_MASK_SHIFT) {
+				MF_STR_KEY_ADVANCED("\"\"" SS_TAP(X_LEFT), "\"\"" SS_TAP(X_LEFT));
+			}
+			else {
+				MF_STR_KEY_ADVANCED("''" SS_TAP(X_LEFT), "\"\"" SS_TAP(X_LEFT));
+			}
 			return false;
 
 		case _DESKTOP:
@@ -75,11 +102,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _DQUOTE:
-			MF_TAP_HOLD_MIXED(KC_DQUO, "", MF_NOKEY, "\"\""SS_TAP (X_LEFT));
+			MF_TAP_HOLD_MIXED(KC_DQUO, "", MF_NOKEY, "\"\"" SS_TAP (X_LEFT));
 			return false;
 
 		case _HTML:
-			MF_STR_KEY_ADVANCED("<>"SS_TAP (X_LEFT), "</>" SS_TAP (X_LEFT));
+			MF_STR_KEY_ADVANCED("<>" SS_TAP (X_LEFT), "</>" SS_TAP (X_LEFT));
 			return false;
 
 		case _LTEQ:
@@ -106,8 +133,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_HOLD(KC_DOT, KC_EXLM);
 			return false;
 
+		case _EQUAL:
+			MF_TAP_HOLD_ONCE(KC_EQUAL, LALT(LSFT(KC_MINUS)));
+			return false;
+
+		case _DASH:
+			MF_TAP_HOLD_ONCE(KC_MINUS, LALT(KC_MINUS));
+			return false;
+
 		case _COMMA:
 			MF_TAP_HOLD_ONCE(KC_COMMA, KC_QUOTE);
+			return false;
+
+		case _KC_HASH:
+			MF_TAP_HOLD_MIXED(KC_HASH, "", MF_NOKEY, "// ");
 			return false;
 
 		case _ZOOM_OUT:
@@ -218,6 +257,7 @@ void mf_do_press(keyrecord_t* record, struct mf_key_event_config* event) {
 	else if (event->keycode) {
 		// handle caps word
 		mf_handle_caps_word(event->keycode);
+		mf_handle_xcase(event->keycode, record);
 
 		if (event->do_register) {
 			mf_indicate_success(&event->keycode);
@@ -243,6 +283,10 @@ void mf_handle_caps_word(uint16_t keycode) {
 	if (is_caps_word_on() && !caps_word_press_user(keycode)) {
 		caps_word_off();
 	}
+}
+
+void mf_handle_xcase(uint16_t keycode, keyrecord_t* record) {
+	process_case_modes(keycode, record);
 }
 
 
@@ -305,6 +349,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _KC_K:  // CODE layer
 			return TAPPING_TERM-40;
 
+		case KC_LSFT:
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
 
@@ -312,7 +357,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 			return TAPPING_TERM-50;
 	}
 }
-
 
 // set force_hold per key
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
@@ -324,7 +368,6 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 			return false;
 	}
 }
-
 
 void mf_indicate_success(uint16_t* keycode) {
 	switch (*keycode) {
@@ -339,27 +382,5 @@ void mf_indicate_success(uint16_t* keycode) {
 			my_flash_twice();
 			break;
 
-	}
-}
-
-
-// customize which key codes disengage caps word
-bool caps_word_press_user(uint16_t keycode) {
-	switch (keycode) {
-		// Keycodes that continue Caps Word, with shift applied.
-		case KC_A ... KC_Z:
-		case KC_MINS:
-			add_weak_mods(MOD_BIT(KC_RSFT));  // Apply shift to next key.
-			return true;
-
-		// Keycodes that continue Caps Word, without shifting.
-		case KC_1 ... KC_0:
-		case KC_BSPC:
-		case KC_DEL:
-		case KC_UNDS:
-			return true;
-
-		default:
-			return false;  // Deactivate Caps Word.
 	}
 }

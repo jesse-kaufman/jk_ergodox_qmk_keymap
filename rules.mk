@@ -29,3 +29,4 @@ SRC += features/lighting.c
 SRC += features/leader.c
 SRC += features/tapdance.c
 SRC += features/combos.c
+SRC += features/casemodes.c
