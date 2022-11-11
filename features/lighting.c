@@ -192,6 +192,13 @@ void oneshot_mods_changed_user(uint8_t mods) {
 	}
 }
 
+void caps_word_set_user(bool active) {
+    if (active) {
+        my_indicate_caps_word_on();
+    } else {
+		my_indicate_caps_word_off();
+    }
+}
 
 void oneshot_layer_changed_user(uint8_t layer) {
 	if (layer) {

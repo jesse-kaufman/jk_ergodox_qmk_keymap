@@ -34,6 +34,25 @@
  *       if the default should be used.
  */
 
+// Enable caps word
+void enable_caps_word(void) {
+	caps_word_off();
+	my_caps_word_enabled = true;
+}
+
+// Disable caps word
+void disable_caps_word(void) {
+	caps_word_off();
+	set_caps_word_state_off();
+}
+
+void set_caps_word_state_off(void) {
+	my_caps_word_enabled = false;
+}
+
+bool is_caps_word_active(void) {
+	return my_caps_word_enabled;
+}
 
 #ifndef DEFAULT_XCASE_SEPARATOR
 #define DEFAULT_XCASE_SEPARATOR KC_UNDS
@@ -111,9 +130,9 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
 			return false;
 
 		default:
-		// 	if (record->event.pressed) {
-				return true;
-		// 	}
+			// 	if (record->event.pressed) {
+			return true;
+			// 	}
 			break;
 	}
 	return false;

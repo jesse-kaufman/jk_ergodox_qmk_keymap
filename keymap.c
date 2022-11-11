@@ -17,21 +17,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BASE] = LAYOUT_ergodox_pretty(
 		_PREV_DESK,		KC_CAPSLOCK,	___X___,		SCMD(KC_4),		SCMD(KC_5),		LGUI(KC_S),		MEH(KC_F13),											_TAB_MGMT,	 	___X___,		___X___,		___X___,		___X___,		___X___,		_DESKTOP,
 		TO(_FN),		KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,			KC_ESC,													_MINIMIZE,		KC_J,			KC_L,			KC_U,			KC_Y,			_PAREN,			OSL(_NUM),
-		_APP_WINDOWS,	_KC_A,			_KC_R,			_KC_S,			_KC_T,			KC_G,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
-		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,			KC_LEAD,												KC_LSFT,		_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
+		_APP_WINDOWS,	KC_A,			KC_R,			_KC_S,			_KC_T,			KC_G,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
+		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,			KC_LEAD,												CAPS_WORD,		_KC_K,			KC_H,			_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
 		_UNDO,			_REDO,			KC_LCTL,		KC_LOPT,		KC_LSFT,																												_OSL_SYM,		KC_RCMD,		KC_DOWN,		KC_UP,			TO(_FN),
 																										_ZOOM_OUT,		_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														MEH(KC_F19),			_PLAY,
-																						_SPACE,			KC_LCMD,		MEH(KC_F20),			KC_LEAD,		OSL(_CODE),	_SHFT_ENTER
+																						_SPACE,			KC_LCMD,		MEH(KC_F20),			KC_LEAD,		KC_LSFT,	_SHFT_ENTER
 	),
 
 	// SYM layer
 	[_SYM] = LAYOUT_ergodox_pretty(
 		_______,		_LDFQUO,		_RDFQUO,		_LFQUO,			_RFQUO,			___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
-		_______,		___X___,		KC_AT,			_KC_HASH,		KC_DLR,			KC_PERC,		_______,												_______,		___X___,		KC_AMPR,		KC_UNDS,		KC_PIPE,		_QUOTE,			TO(_NUM),
-		_______,		___X___,		KC_ASTR,		_DASH,			_EQUAL,			KC_CIRC,																				___X___,		KC_LPRN,		KC_COLON,		KC_RPRN,		___X___,		_______,
-		_______,		___X___,		KC_SLASH,		___X___,		KC_PLUS,		___X___,		_______,												_______,		___X___,		_LTEQ,			_KC_SCOLN,		_GTEQ,			___X___,		_______,
-		_______, 		_______,		_______,		_______,		_______,																												TT(_CODE),		_______,		_______,		_______,		TO(_BASE),
+		_______,		KC_GRAVE,		KC_AT,			KC_DLR,			_KC_HASH,		KC_PERC,		_______,												_______,		___X___,		KC_AMPR,		KC_UNDS,		KC_PIPE,		_BRACKET,		TO(_NUM),
+		_______,		KC_TILD,		KC_ASTR,		_DASH,			_EQUAL,			KC_CIRC,																				___X___,		KC_LPRN,		KC_COLON,		KC_RPRN,		___X___,		_______,
+		_______,		___X___,		KC_SLASH,		KC_BSLASH,		KC_PLUS,		___X___,		_______,												_______,		___X___,		_LTEQ,			KC_SCOLON,		_GTEQ,			___X___,		_______,
+		_______, 		_______,		_______,		_______,		OSL(_CODE),																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -40,9 +40,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// CODE layer
 	[_CODE] = LAYOUT_ergodox_pretty(
 		_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,												_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,
-		_______,		___X___,		___X___,		_BEG_CBLOCK,	_END_CBLOCK,	___X___,		_______,												_______,		KC_BSLASH,		KC_LBRACKET,	___X___,		KC_RBRACKET,	_CBRACKET,		TO(_NUM),
-		_______,		___X___,		KC_ASTR,		_DASH_ARR,		_EQ_ARR,		_KC_NIX_HOME,																			___X___,		KC_LCBR,		_HTML,			KC_RCBR,		___X___,		_______,
-		_______,		___X___,		KC_SLASH,		___X___,		_KC_UP_DIR,		___X___,		_______,												_______,		___X___,		KC_TILD,		KC_GRAVE,		___X___,		___X___,		_______,
+		_______,		___X___,		___X___,		_COMMENT,		_BEG_CBLOCK,	_END_CBLOCK,	_______,												_______,		___X___,		___X___,		KC_LCBR,		___X___,		_CBRACKET,		TO(_NUM),
+		_______,		___X___,		KC_ASTR,		_DASH,			_CODE_ARROWS,	_NIX_HOME,																				___X___,		KC_LBRACKET,	___X___,		KC_RBRACKET,	___X___,		_______,
+		_______,		___X___,		KC_SLASH,		_END_CBLOCK,	_UP_DIR,		_CUR_DIR,		_______,												_______,		___X___,		_HTML_OPEN,		KC_RCBR,		_HTML_CLOSE,	___X___,		_______,
 		_______,		_______,		_______,		_______,		_______,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,

@@ -4,6 +4,7 @@
 #include "tapdance.h"
 #include "lighting.h"
 #include "casemodes.h"
+#include "leader.h"
 
 enum combos {
 	COMBO_BACKSPACE,
@@ -23,6 +24,7 @@ enum combos {
 	COMBO_HOME,
 	COMBO_END_KEY,
 	COMBO_PAUSE,
+	COMBO_SHIFT,
 	COMBO_CAPS_WORD,
 
 	COMBO_COUNT
@@ -30,7 +32,9 @@ enum combos {
 
 uint16_t COMBO_LEN = COMBO_COUNT;
 
+const uint16_t PROGMEM combo_shift[] = { KC_H, _COMMA, COMBO_END };
 const uint16_t PROGMEM combo_caps_word[] = { KC_L, KC_U, COMBO_END };
+
 const uint16_t PROGMEM combo_backspace[] = { KC_N, _KC_E, COMBO_END };
 const uint16_t PROGMEM combo_esc[] = { KC_F, KC_W, COMBO_END };
 const uint16_t PROGMEM combo_tab[] = { _KC_S, _KC_T, COMBO_END };
@@ -53,7 +57,7 @@ const uint16_t PROGMEM combo_home[] = { KC_PGUP, KC_O, COMBO_END };
 const uint16_t PROGMEM combo_end_key[] = { KC_PGDOWN, KC_QUES, COMBO_END };
 
 const uint16_t PROGMEM combo_next_desktop[] = { KC_N, _KC_E, KC_I, COMBO_END };
-const uint16_t PROGMEM combo_prev_desktop[] = { _KC_R, _KC_S, _KC_T, COMBO_END };
+const uint16_t PROGMEM combo_prev_desktop[] = { KC_R, _KC_S, _KC_T, COMBO_END };
 const uint16_t PROGMEM combo_bootloader[] = { _PREV_DESK, KC_Z, COMBO_END };
 
 
@@ -75,45 +79,30 @@ combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_HOME] = COMBO_ACTION(combo_home),
 	[COMBO_END_KEY] = COMBO_ACTION(combo_end_key),
 	[COMBO_PAUSE] = COMBO_ACTION(combo_pause),
+	[COMBO_SHIFT] = COMBO_ACTION(combo_shift),
 	[COMBO_CAPS_WORD] = COMBO_ACTION(combo_caps_word),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
-	// const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
+	// only allow escape if leading
+	if (combo_index != COMBO_ESC && leading) {
+		return;
+	}
+
 	const uint8_t layer = biton32(layer_state);
 
-	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_CAPS_WORD) {
+	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_SHIFT) {
 		caps_word_off();
 	}
 
-	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_ESC && combo_index != COMBO_TAB && combo_index != COMBO_PASTE && combo_index != COMBO_COPY && combo_index != COMBO_SAVE && combo_index != COMBO_CAPS_WORD) {
+	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_ESC && combo_index != COMBO_TAB && combo_index != COMBO_PASTE && combo_index != COMBO_COPY && combo_index != COMBO_SAVE && combo_index != COMBO_SHIFT) {
 		my_clear_all_mods();
 	}
 
 	if (pressed) {
 		switch (combo_index) {
-			case COMBO_CAPS_WORD:
-				clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-				if (layer == _SYM) {
-					if (get_xcase_state()) {
-						disable_xcase();
-						my_indicate_xcase_off();
-					}
-					else {
-						enable_xcase();
-						my_indicate_xcase_on();
-					}
-				}
-				else {
-					if (is_caps_word_on()) {
-						caps_word_off();
-						my_indicate_caps_word_off();
-					}
-					else {
-						caps_word_on();
-						my_indicate_caps_word_on();
-					}
-				}
+			case COMBO_SHIFT:
+				register_code(KC_LSFT);
 				break;
 
 			case COMBO_BACKSPACE:
@@ -195,6 +184,35 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				tap_code(KC_END);
 				break;
 		}
+
+	}
+	else {
+		switch (combo_index) {
+
+			case COMBO_CAPS_WORD:
+				clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
+				if (layer == _SYM) {
+					if (get_xcase_state()) {
+						disable_xcase();
+						my_indicate_xcase_off();
+					}
+					else {
+						enable_xcase();
+						my_indicate_xcase_on();
+					}
+				}
+				else {
+					if (!is_caps_word_active()) {
+						enable_caps_word();
+
+					}
+					else {
+						disable_caps_word();
+
+					}
+				}
+				break;
+		}
 	}
 }
 
@@ -208,6 +226,10 @@ bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key
 		case COMBO_TAB:
 			unregister_code(KC_TAB);
 			break;
+
+		case COMBO_SHIFT:
+			unregister_code(KC_LSFT);
+			break;
 	}
 	return false;
 }
@@ -216,6 +238,8 @@ bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key
 bool get_combo_term(uint16_t index, combo_t *combo) {
 	switch (index) {
 		case COMBO_ESC:
+		case COMBO_SHIFT:
+		case COMBO_CAPS_WORD:
 		case COMBO_PASTE:
 		case COMBO_SAVE:
 		case COMBO_CUT:
@@ -223,17 +247,18 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_COPY:
 		case COMBO_NEXT_DESKTOP:
 		case COMBO_PREV_DESKTOP:
-		case COMBO_CAPS_WORD:
-			return 100;
-
-		case COMBO_BOOTLOADER:
 			return 200;
 
+		case COMBO_BOOTLOADER:
+			return 250;
+
+		case COMBO_DQUOTE:
+		case COMBO_TAB:
 		case COMBO_BACKSPACE:
-			return 24;
+			return 23;
 
 		default:
-			return 26;
+			return 25;
 	}
 }
 

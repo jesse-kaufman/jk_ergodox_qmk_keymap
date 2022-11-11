@@ -76,7 +76,9 @@ void leader_start(void) {
 	ergodox_led_all_on();
 }
 
-
+bool is_leader_active(void) {
+	return leading;
+}
 
 bool is_leader_key_valid(uint16_t keycode) {
 	if (keycode >= KC_A && keycode <= KC_Z) {

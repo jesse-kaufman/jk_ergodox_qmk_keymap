@@ -27,7 +27,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		return false;
 	}
 
-	const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
+	// const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
 
 	// output nothing if the leader key has been tapped before the MF key
 	if (leading) {
@@ -35,56 +35,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	}
 
 	switch (keycode) {
-		case _KC_UP_DIR:
-			MF_STR_TAP_HOLD("../", "./");
+		case _CUR_DIR:
+			MF_STR_TAP("./");
 			return false;
 
-		case _KC_NIX_HOME:
-			my_clear_all_mods();
-			if (record->event.pressed) {
-				SEND_STRING("~/");
-			}
+		case _UP_DIR:
+			MF_STR_TAP("../");
+			return false;
+
+		case _NIX_HOME:
+			MF_STR_TAP("~/");
+			return false;
+
+		case _COMMENT:
+			MF_STR_TAP("// ");
 			return false;
 
 		case _PAREN:
-			my_clear_all_mods();
-			MF_STR_KEY_ADVANCED("()" SS_TAP(X_LEFT), "[]" SS_TAP(X_LEFT));
+			MF_STR_TAP_HOLD("()" SS_TAP(X_LEFT), "''" SS_TAP(X_LEFT));
 			return false;
 
 		case _CBRACKET:
-			my_clear_all_mods();
-			MF_STR_KEY_ADVANCED("{}" SS_TAP(X_LEFT), "[]" SS_TAP(X_LEFT));
+			MF_STR_TAP_HOLD("{}" SS_TAP(X_LEFT), "[]" SS_TAP(X_LEFT));
+			return false;
+
+		case _BRACKET:
+			MF_STR_TAP_HOLD("[]" SS_TAP(X_LEFT), "\"\"" SS_TAP(X_LEFT));
 			return false;
 
 		case _BEG_CBLOCK:
-			my_clear_all_mods();
 			MF_STR_TAP("/*");
 			return false;
 
 		case _END_CBLOCK:
-			my_clear_all_mods();
 			MF_STR_TAP("*/");
 			return false;
 
-		case _EQ_ARR:
-			my_clear_all_mods();
-			MF_STR_TAP("=>");
-			return false;
-
-		case _DASH_ARR:
-			my_clear_all_mods();
-			MF_STR_TAP("->");
-			return false;
-
-		case _QUOTE:
-			my_clear_all_mods();
-
-			if ( mods & MOD_MASK_SHIFT) {
-				MF_STR_KEY_ADVANCED("\"\"" SS_TAP(X_LEFT), "\"\"" SS_TAP(X_LEFT));
-			}
-			else {
-				MF_STR_KEY_ADVANCED("''" SS_TAP(X_LEFT), "\"\"" SS_TAP(X_LEFT));
-			}
+		case _CODE_ARROWS:
+			MF_STR_TAP_HOLD("->", "=>");
 			return false;
 
 		case _DESKTOP:
@@ -101,12 +89,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_SPACE), LCTL(KC_LEFT));
 			return false;
 
-		case _DQUOTE:
-			MF_TAP_HOLD_MIXED(KC_DQUO, "", MF_NOKEY, "\"\"" SS_TAP (X_LEFT));
+		case _HTML_OPEN:
+			MF_STR_TAP("<>"SS_TAP (X_LEFT));
 			return false;
 
-		case _HTML:
-			MF_STR_KEY_ADVANCED("<>" SS_TAP (X_LEFT), "</>" SS_TAP (X_LEFT));
+		case _HTML_CLOSE:
+			MF_STR_TAP("</>"SS_TAP (X_LEFT));
 			return false;
 
 		case _LTEQ:
@@ -146,7 +134,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 
 		case _KC_HASH:
-			MF_TAP_HOLD_MIXED(KC_HASH, "", MF_NOKEY, "// ");
+			MF_TAP_HOLD_MIXED(KC_HASH, "", MF_NOKEY, "#!");
 			return false;
 
 		case _ZOOM_OUT:
@@ -167,10 +155,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case _VOL_DOWN:
 			my_clear_all_mods();
 			MF_TAP_NO_REPEAT_HOLD(KC_AUDIO_VOL_DOWN, KC_MEDIA_PREV_TRACK);
-			return false;
-
-		case _KC_SCOLN:
-			MF_TAP_HOLD_ONCE(KC_SCOLON, KC_COLON);
 			return false;
 
 		case _FN_S:
@@ -336,10 +320,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _OSL_SYM:
 			return TAPPING_TERM-100;
 
-		case _QUOTE:
 		case _LBRACKET:
-		case _KC_R:  // SHIFT
-		case _KC_A:  // ALT
 		case _SPACE:
 			return TAPPING_TERM;
 

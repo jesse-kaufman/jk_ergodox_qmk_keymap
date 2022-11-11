@@ -1,5 +1,7 @@
 bool did_leader_succeed;
 bool leading;
+bool is_leader_active(void);
+
 
 void my_leader_matrix_scan_user(void);
 

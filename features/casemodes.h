@@ -20,9 +20,9 @@
 
 // enum for the xcase states
 enum xcase_state {
-    XCASE_OFF = 0,  // xcase is off
-    XCASE_ON,       // xcase is actively on
-    XCASE_WAIT,     // xcase is waiting for the delimiter input
+	XCASE_OFF = 0,  // xcase is off
+	XCASE_ON,       // xcase is actively on
+	XCASE_WAIT,     // xcase is waiting for the delimiter input
 };
 
 // Get xcase state
@@ -36,3 +36,9 @@ void disable_xcase(void);
 
 // Function to be put in process user
 bool process_case_modes(uint16_t keycode, const keyrecord_t *record);
+
+void set_caps_word_state_off(void);
+void disable_caps_word(void);
+void enable_caps_word(void);
+bool is_caps_word_active(void);
+bool my_caps_word_enabled;
