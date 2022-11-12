@@ -237,9 +237,8 @@ bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key
 
 bool get_combo_term(uint16_t index, combo_t *combo) {
 	switch (index) {
+		// COMMANDS
 		case COMBO_ESC:
-		case COMBO_SHIFT:
-		case COMBO_CAPS_WORD:
 		case COMBO_PASTE:
 		case COMBO_SAVE:
 		case COMBO_CUT:
@@ -249,14 +248,24 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_PREV_DESKTOP:
 			return 200;
 
+		// BOOTLOADER
 		case COMBO_BOOTLOADER:
 			return 250;
 
+		// EASILY-TRIGGERED COMBOS
 		case COMBO_DQUOTE:
 		case COMBO_TAB:
 		case COMBO_BACKSPACE:
-			return 23;
+			return 21;
 
+		// DEFAULTS
+		case COMBO_SHIFT:
+		case COMBO_CAPS_WORD:
+		case COMBO_PAUSE:
+		case COMBO_RESET_ZOOM:
+		case COMBO_HOME:
+		case COMBO_END_KEY:
+		case COMBO_MUTE:
 		default:
 			return 25;
 	}
@@ -276,6 +285,8 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
 		case COMBO_RESET_ZOOM:
 		case COMBO_MUTE:
 		case COMBO_PAUSE:
+		case COMBO_HOME:
+		case COMBO_END:
 			return true;
 	}
 
