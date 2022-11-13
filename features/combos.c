@@ -256,7 +256,7 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_DQUOTE:
 		case COMBO_TAB:
 		case COMBO_BACKSPACE:
-			return 21;
+			return 20;
 
 		// DEFAULTS
 		case COMBO_SHIFT:
@@ -286,7 +286,7 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
 		case COMBO_MUTE:
 		case COMBO_PAUSE:
 		case COMBO_HOME:
-		case COMBO_END:
+		case COMBO_END_KEY:
 			return true;
 	}
 
