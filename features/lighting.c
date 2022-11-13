@@ -7,8 +7,8 @@
 #include "lighting.h"
 #include "casemodes.h"
 
-#define LED_SUCCESS_INDICATOR_ON_TIME 100
-#define LED_SUCCESS_INDICATOR_OFF_TIME 60
+#define LED_SUCCESS_INDICATOR_ON_TIME 80
+#define LED_SUCCESS_INDICATOR_OFF_TIME 40
 #define LED_BRIGHTNESS_MED 100
 #define LED_BRIGHTNESS_MED_HI 130
 #define LED_RED
@@ -24,18 +24,17 @@ void keyboard_post_init_user(void) {
 // flashes all LEDs once and leaves red LED alone if a layer is active
 void my_indicate_success(void) {
 	ergodox_led_all_set(LED_BRIGHTNESS_MED);
+
 	ergodox_led_all_on();
 	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
 
-	if (layer_state) {
+	if (get_highest_layer(layer_state) == _BASE) {
+		ergodox_led_all_off();
+	}
+	else {
 		ergodox_right_led_2_off();
 		ergodox_right_led_3_off();
 	}
-	else {
-		ergodox_led_all_off();
-	}
-
-	_delay_ms(LED_SUCCESS_INDICATOR_OFF_TIME);
 }
 
 // flashes green LED twice
@@ -52,7 +51,6 @@ void my_flash_twice(void) {
 	_delay_ms(LED_SUCCESS_INDICATOR_ON_TIME);
 
 	ergodox_right_led_2_off();
-	_delay_ms(LED_SUCCESS_INDICATOR_OFF_TIME);
 }
 
 
@@ -94,7 +92,7 @@ void my_indicate_caps_word_off(void) {
 	}
 }
 void my_indicate_xcase_on(void) {
-	ergodox_right_led_3_set(LED_BRIGHTNESS_MED_HI);
+	ergodox_right_led_3_set(LED_BRIGHTNESS_MED);
 	ergodox_right_led_3_on();
 	if (get_xcase_state() == XCASE_WAIT) {
 		ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
@@ -114,9 +112,7 @@ void my_indicate_xcase_off(void) {
 		my_indicate_caps_word_on();
 	}
 
-	uint8_t layer = biton32(layer_state);
-
-	if (layer==0) {
+	if (layer_state_is(_BASE)) {
 		ergodox_right_led_1_off();
 	}
 }
@@ -212,9 +208,10 @@ void oneshot_layer_changed_user(uint8_t layer) {
 
 uint8_t layer_state_set_user(uint8_t state) {
 
-	uint8_t layer = biton32(state);
-
-	if ( layer ) {
+	if (get_highest_layer(state) == _BASE) {
+		ergodox_right_led_1_off();
+	}
+	else {
 		if (!is_oneshot_layer_active()) {
 			ergodox_right_led_1_set(LED_BRIGHTNESS_HI);
 		}
@@ -222,9 +219,6 @@ uint8_t layer_state_set_user(uint8_t state) {
 			ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
 		}
 		ergodox_right_led_1_on();
-	}
-	else {
-		ergodox_right_led_1_off();
 	}
 
 	return state;
