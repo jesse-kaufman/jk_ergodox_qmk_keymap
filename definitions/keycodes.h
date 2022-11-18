@@ -3,6 +3,10 @@
 #include "layers.h"
 
 void my_clear_all_mods(void);
+void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode);
+void mf_disable_oneshot_layer(void);
+bool mf_process_key(uint16_t keycode, keyrecord_t *record);
+
 
 // SHORTCUTS/READABILITY
 #define KC_DASH   KC_MINUS
@@ -12,22 +16,11 @@ void my_clear_all_mods(void);
 #define _KC_S LT(_NUM, KC_S)
 #define _KC_K LT(_CODE, KC_K)
 
-#define _OSL_SYM OSL(_SYM)
-
 // FANCY QUOTES KEYCODES
 #define _LDFQUO LALT(KC_LBRACKET)
 #define _RDFQUO LALT(LSFT(KC_LBRACKET))
 #define _LFQUO LALT(KC_RBRACKET)
 #define _RFQUO LALT(LSFT(KC_RBRACKET))
-
-// ONE-SHOT MODIFIERS
-#define _OSM_LCMD OSM(MOD_LGUI)
-#define _OSM_RCMD OSM(MOD_RGUI)
-#define _OSM_LSHIFT OSM(MOD_LSFT)
-#define _OSM_RSHIFT OSM(MOD_RSFT)
-#define _OSM_OPT OSM(MOD_LALT)
-#define _OSM_CTR OSM(MOD_LCTL)
-#define _OSM_CMDALT OSM(MOD_LGUI | MOD_LALT)
 
 // PROGRAMMING SHORTCUTS
 #define _MEH_LBRKT MEH(KC_LBRACKET)
@@ -39,17 +32,14 @@ void my_clear_all_mods(void);
 #define _BACK MEH(KC_DOWN)
 
 // MOD TAPS
-#define _SHFT_ENTER MT(MOD_RSFT, KC_ENTER)
+#define _SHFT_ENTER MT(MOD_LSFT, KC_ENTER)
 
 
 // OTHER KEYCODES
 #define _UNDO LGUI(KC_Z)
 #define _REDO LGUI(LSFT(KC_Z))
-#define _LAYER_LEDS TOGGLE_LAYER_COLOR
 #define _SCREEN_DN KC_BRIGHTNESS_DOWN
 #define _SCREEN_UP KC_BRIGHTNESS_UP
-#define _PREV KC_MEDIA_PREV_TRACK
-#define _NEXT KC_MEDIA_NEXT_TRACK
 #define _PLAY KC_MEDIA_PLAY_PAUSE
 
 
@@ -70,6 +60,7 @@ enum {
 	MF_QUOTE,
 	MF_KEY_COUNT,
 	MF_CODE_ARROWS,
+	MF_LAYERS,
 
 	MF_SAFE_RANGE,
 };
@@ -116,6 +107,12 @@ enum custom_keycodes {
 #define _CODE_ARROWS LT(9, MF_CODE_ARROWS)
 #define _EQUAL       LT(9, KC_EQUAL)
 #define _DASH        LT(9, KC_DASH)
+#define _ACTION_KEY1 LT(9, KC_F20)
+#define _ACTION_KEY2 LT(9, KC_F19)
+#define _FN_KEY      LT(9, MF_LAYERS)
+#define _SYM_KEY     LT(10, MF_LAYERS)
+
+
 
 
 
@@ -129,7 +126,7 @@ enum custom_keycodes {
 #define MF_DEF_REGISTER_HOLD true
 #define MF_DEF_REGISTER_DOUBLE_TAP false
 #define MF_DEF_REGISTER_DOUBLE_HOLD true
-#define MF_NOFN 0
+#define MF_NOFN NULL
 
 
 /**
@@ -138,11 +135,10 @@ enum custom_keycodes {
 struct mf_key_event_config {
 	uint16_t keycode;
 	uint16_t interrupt_keycode;
-	bool do_register;
-	void (*fn)(keyrecord_t* record);
-	void (*fn_release)(keyrecord_t* record);
-	bool fn_do_release;
 	const char *string;
+	bool do_register;
+	void (*fn_action)(uint16_t, keyrecord_t*);
+	void (*fn_release)(uint16_t, keyrecord_t*);
 };
 
 
@@ -151,68 +147,75 @@ typedef struct mf_key_config {
 	struct mf_key_event_config hold;
 } mf_key_config;
 
+typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
+
 
 /*
  * TAP/HOLD KEYCODE MACROS
  */
 #define MF_TAP_HOLD( tap_kc, hold_kc ) \
-	; MF_KEY_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-	                  hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY );
+	; MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
+	              hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY );
 
 #define MF_TAP_NO_REPEAT_HOLD( tap_kc, hold_kc ) \
-	; MF_KEY_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-	                  hold_kc, false, MF_NOKEY );
+	; MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
+	              hold_kc, false, MF_NOKEY );
 
 #define MF_TAP_HOLD_ONCE( tap_kc, hold_kc ) \
-	; MF_KEY_ADVANCED(tap_kc, false, MF_NOKEY, \
-	                  hold_kc, false, MF_NOKEY );
+	; MF_ADVANCED(tap_kc, false, MF_NOKEY, \
+	              hold_kc, false, MF_NOKEY );
 
 #define MF_TAP_HOLD_ADVANCED( tap_kc, tap_do_register, tap_interrupt_kc, hold_kc, hold_do_register, hold_interrupt_kc ) \
-	; MF_KEY_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
-	                  hold_kc, hold_do_register, hold_interrupt_kc );
+	; MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
+	              hold_kc, hold_do_register, hold_interrupt_kc );
 
 
-#define MF_KEY_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
-	                    hold_kc, hold_do_register, hold_interrupt_kc) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
+#define MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
+	                hold_kc, hold_do_register, hold_interrupt_kc) \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register }, \
 		.hold = { .keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register }, \
-	});
+	}, MF_NOFN, MF_NOFN); \
+	return false;
 
 
 /*
  * TAP/HOLD STRING MACROS
  */
  #define MF_STR_TAP_HOLD(tap_str, hold_str) \
-	; MF_STR_KEY_ADVANCED(tap_str, hold_str);
+	; MF_STR_ADVANCED(tap_str, hold_str);
 
  #define MF_STR_TAP(str) \
-	; MF_STR_KEY_ADVANCED(str, "");
+	; MF_STR_ADVANCED(str, "");
 
-
-#define MF_STR_KEY_ADVANCED(tap_str, hold_str) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
+#define MF_STR_ADVANCED(tap_str, hold_str) \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = MF_NOKEY  }, \
 		.hold = { .string = hold_str, .keycode = MF_NOKEY }, \
-	});
+	}, MF_NOFN, MF_NOFN); \
+	return false;
 
 
 /*
  * TAP/HOLD FUNCTION MACROS
  */
-#define MF_TAP_HOLD_FN(tap_fn, hold_fn) \
-	; MF_KEY_FN(tap_fn, hold_fn, MF_NOFN, MF_NOFN, \
-	            MF_NOFN, MF_NOFN, MF_NOFN \
-	            );
+#define MF_FN(tap_fn, hold_fn) \
+	; MF_FN_ADVANCED(tap_fn, MF_NOFN, hold_fn, MF_NOFN, MF_NOFN, MF_NOFN );
 
-#define MF_KEY_FN(tap_fn, hold_fn, tap_release_fn, hold_release_fn ) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
-		.tap = { .fn = tap_fn, .fn_release = tap_release_fn }, \
-		.hold = { .fn = hold_fn, .fn_release = hold_release_fn }, \
-	});
+	#define MF_FN_ADVANCED(tap_fn, tap_release_fn, hold_fn, hold_release_fn, down_fn, up_fn ) \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+		.tap = { .fn_action = tap_fn, .fn_release = tap_release_fn }, \
+		.hold = { .fn_action = hold_fn, .fn_release = hold_release_fn }, \
+	}, down_fn, up_fn); \
+	return false;
 
+
+/*
+ * MIXED FUNCTION MACROS
+ */
 #define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str) \
-	; mf_handle_key_event(record, &(mf_key_config) { \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = tap_kc  }, \
 		.hold = { .string = hold_str, .keycode = hold_kc }, \
-	});
+	}, MF_NOFN, MF_NOFN); \
+	return false;

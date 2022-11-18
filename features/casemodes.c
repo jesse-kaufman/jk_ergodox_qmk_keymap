@@ -16,6 +16,7 @@
 
 #include "casemodes.h"
 #include "lighting.h"
+#include "../definitions/keycodes.h"
 
 /* The caps word concept started with me @iaap on splitkb.com discord.
  * However it has been implemented and extended by many splitkb.com users:
@@ -33,26 +34,6 @@
  *       configurable default separator and overrideable function to determine
  *       if the default should be used.
  */
-
-// Enable caps word
-void enable_caps_word(void) {
-	caps_word_off();
-	my_caps_word_enabled = true;
-}
-
-// Disable caps word
-void disable_caps_word(void) {
-	caps_word_off();
-	set_caps_word_state_off();
-}
-
-void set_caps_word_state_off(void) {
-	my_caps_word_enabled = false;
-}
-
-bool is_caps_word_active(void) {
-	return my_caps_word_enabled;
-}
 
 #ifndef DEFAULT_XCASE_SEPARATOR
 #define DEFAULT_XCASE_SEPARATOR KC_UNDS
@@ -240,24 +221,4 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
 		return true;
 	}
 	return true;
-}
-
-bool caps_word_press_user(uint16_t keycode) {
-	switch (keycode) {
-		// Keycodes that continue Caps Word, with shift applied.
-		case KC_A ... KC_Z:
-		case KC_MINS:
-			add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to the next key.
-			return true;
-
-		// Keycodes that continue Caps Word, without shifting.
-		case KC_1 ... KC_0:
-		case KC_BSPC:
-		case KC_DEL:
-		case KC_UNDS:
-			return true;
-
-		default:
-			return false; // Deactivate Caps Word.
-	}
 }

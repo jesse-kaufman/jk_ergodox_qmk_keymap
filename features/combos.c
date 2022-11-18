@@ -25,7 +25,6 @@ enum combos {
 	COMBO_END_KEY,
 	COMBO_PAUSE,
 	COMBO_SHIFT,
-	COMBO_CAPS_WORD,
 
 	COMBO_COUNT
 };
@@ -33,7 +32,6 @@ enum combos {
 uint16_t COMBO_LEN = COMBO_COUNT;
 
 const uint16_t PROGMEM combo_shift[] = { KC_H, _COMMA, COMBO_END };
-const uint16_t PROGMEM combo_caps_word[] = { KC_L, KC_U, COMBO_END };
 
 const uint16_t PROGMEM combo_backspace[] = { KC_N, _KC_E, COMBO_END };
 const uint16_t PROGMEM combo_esc[] = { KC_F, KC_W, COMBO_END };
@@ -80,7 +78,6 @@ combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_END_KEY] = COMBO_ACTION(combo_end_key),
 	[COMBO_PAUSE] = COMBO_ACTION(combo_pause),
 	[COMBO_SHIFT] = COMBO_ACTION(combo_shift),
-	[COMBO_CAPS_WORD] = COMBO_ACTION(combo_caps_word),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -88,8 +85,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 	if (combo_index != COMBO_ESC && leading) {
 		return;
 	}
-
-	const uint8_t layer = biton32(layer_state);
 
 	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_SHIFT) {
 		caps_word_off();
@@ -184,35 +179,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				tap_code(KC_END);
 				break;
 		}
-
-	}
-	else {
-		switch (combo_index) {
-
-			case COMBO_CAPS_WORD:
-				clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-				if (layer == _SYM) {
-					if (get_xcase_state()) {
-						disable_xcase();
-						my_indicate_xcase_off();
-					}
-					else {
-						enable_xcase();
-						my_indicate_xcase_on();
-					}
-				}
-				else {
-					if (!is_caps_word_active()) {
-						enable_caps_word();
-
-					}
-					else {
-						disable_caps_word();
-
-					}
-				}
-				break;
-		}
 	}
 }
 
@@ -254,13 +220,12 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 
 		// EASILY-TRIGGERED COMBOS
 		case COMBO_DQUOTE:
-		case COMBO_TAB:
 		case COMBO_BACKSPACE:
-			return 20;
+			return 19;
 
 		// DEFAULTS
+		case COMBO_TAB:
 		case COMBO_SHIFT:
-		case COMBO_CAPS_WORD:
 		case COMBO_PAUSE:
 		case COMBO_RESET_ZOOM:
 		case COMBO_HOME:

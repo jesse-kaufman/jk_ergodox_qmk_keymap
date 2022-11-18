@@ -6,6 +6,7 @@
 #include "../definitions/layers.h"
 #include "lighting.h"
 #include "casemodes.h"
+#include "leader.h"
 
 #define LED_SUCCESS_INDICATOR_ON_TIME 80
 #define LED_SUCCESS_INDICATOR_OFF_TIME 40
@@ -54,18 +55,53 @@ void my_flash_twice(void) {
 }
 
 
-void my_indicate_modifier(void) {
+void my_indicate_leader(void) {
 	RGB rgb = {
-		.r = 255,
-		.g = 55,
-		.b = 55
+		.r = 155,
+		.g = 5,
+		.b = 5
 	};
 
+	//
 	// left hand
-	rgb_matrix_set_color( 44, rgb.r, rgb.g, rgb.b );
+	//
+
+	// bottom row (0)
+	// rgb_matrix_set_color( 44, rgb.r, rgb.g, rgb.b );
 	rgb_matrix_set_color( 45, rgb.r, rgb.g, rgb.b );
 	rgb_matrix_set_color( 46, rgb.r, rgb.g, rgb.b );
 	rgb_matrix_set_color( 47, rgb.r, rgb.g, rgb.b );
+
+
+	// first alpha row [second from the bottom] (1)
+	// rgb_matrix_set_color( 43, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 42, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 41, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 40, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 39, rgb.r, rgb.g, rgb.b );
+
+	// second alpha row [third row from bottom] (2)
+	rgb_matrix_set_color( 34, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 35, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 36, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 37, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 38, rgb.r, rgb.g, rgb.b );
+
+	// third alpha row [fourth row from bottom] (3)
+	// rgb_matrix_set_color( 33, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 32, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 31, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 30, rgb.r, rgb.g, rgb.b );
+	// rgb_matrix_set_color( 29, rgb.r, rgb.g, rgb.b );
+
+	// top row (4)
+	rgb_matrix_set_color( 24, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 25, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 26, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 27, rgb.r, rgb.g, rgb.b );
+	rgb_matrix_set_color( 28, rgb.r, rgb.g, rgb.b );
+
+
 
 	// right hand
 	rgb_matrix_set_color( 20, rgb.r, rgb.g, rgb.b );
@@ -112,28 +148,10 @@ void my_indicate_xcase_off(void) {
 		my_indicate_caps_word_on();
 	}
 
-	if (layer_state_is(_BASE)) {
+	if (biton32(layer_state) == _BASE) {
 		ergodox_right_led_1_off();
 	}
 }
-
-// void my_indicate_shift_modifier_on(void) {
-// 	if (is_caps_word_on()) {
-// 		my_indicate_caps_word_on();
-// 	}
-// 	else {
-// 		ergodox_right_led_3_set(LED_BRIGHTNESS_LO);
-// 		ergodox_right_led_3_on();
-// 	}
-// }
-
-
-// void my_indicate_shift_modifier_off(void) {
-// 	ergodox_right_led_3_off();
-// }
-
-
-
 
 
 void set_layer_color(int layer) {
@@ -154,25 +172,10 @@ void set_layer_color(int layer) {
 
 
 void rgb_matrix_indicators_user(void) {
-
-	uint8_t mods = get_oneshot_mods() | get_mods();
-
 	set_layer_color(biton32(layer_state));
 
-	if (mods) {
-		// if (mods & MOD_MASK_SHIFT)  {
-		// 	my_indicate_shift_modifier_on();
-		// }
-
-		if (mods & MOD_MASK_CAG)  {
-			my_indicate_modifier();
-		}
-	}
-	else if (!is_caps_word_on()) {
-		my_indicate_caps_word_off();
-	}
-	else if (!get_xcase_state()) {
-		my_indicate_xcase_off();
+	if (is_leader_active()) {
+		my_indicate_leader();
 	}
 }
 
@@ -189,11 +192,11 @@ void oneshot_mods_changed_user(uint8_t mods) {
 }
 
 void caps_word_set_user(bool active) {
-    if (active) {
-        my_indicate_caps_word_on();
-    } else {
+	if (active) {
+		my_indicate_caps_word_on();
+	} else {
 		my_indicate_caps_word_off();
-    }
+	}
 }
 
 void oneshot_layer_changed_user(uint8_t layer) {
@@ -208,17 +211,22 @@ void oneshot_layer_changed_user(uint8_t layer) {
 
 uint8_t layer_state_set_user(uint8_t state) {
 
-	if (get_highest_layer(state) == _BASE) {
-		ergodox_right_led_1_off();
-	}
-	else {
-		if (!is_oneshot_layer_active()) {
-			ergodox_right_led_1_set(LED_BRIGHTNESS_HI);
-		}
-		else {
-			ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
-		}
-		ergodox_right_led_1_on();
+	switch(biton32(state)) {
+		case _BASE:
+//	SEND_STRING(".");
+
+			ergodox_right_led_1_off();
+			break;
+
+		default:
+		//SEND_STRING("+");
+			if (!is_oneshot_layer_active()) {
+				ergodox_right_led_1_set(LED_BRIGHTNESS_HI);
+			}
+			else {
+				ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
+			}
+			ergodox_right_led_1_on();
 	}
 
 	return state;
