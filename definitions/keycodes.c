@@ -455,12 +455,12 @@ void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case _SYM_KEY:
-
-			return TAPPING_TERM-150;
+			return 100;
 
 		case _SPACE:
 			return TAPPING_TERM;
 
+		case _FN_KEY:
 		case _KC_E:  // apostrophe when held
 		case _KC_T:  // FN layer
 		case _KC_S:  // NUM layer
