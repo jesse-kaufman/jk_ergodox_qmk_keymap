@@ -437,30 +437,6 @@ void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event) {
 }
 
 
-void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode) {
-
-	if (!record->event.pressed && is_oneshot_layer_active()) {
-		switch (keycode) {
-			case KC_LSFT:
-			case KC_LCMD:
-			case KC_LCTL:
-			case KC_LOPT:
-			case KC_RSFT:
-			case KC_RCMD:
-			case KC_RCTL:
-			case KC_ROPT:
-				break;
-
-			case _SYM_KEY:
-				break;
-
-			default:
-				clear_oneshot_layer_state(ONESHOT_PRESSED);
-				MF_RESET_LAYER();
-				break;
-		}
-	}
-}
 
 
 
@@ -543,5 +519,33 @@ void mf_indicate_success(uint16_t *keycode) {
 			my_flash_twice();
 			break;
 
+	}
+}
+void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, struct mf_key_event_config *event) {
+
+	if (!record->event.pressed && is_oneshot_layer_active()) {
+
+		if (event) {
+			switch (event->keycode) {
+				case KC_SPACE:
+					return;
+			}
+		}
+
+		switch (*keycode_pressed) {
+			case KC_LSFT:
+			case KC_LCMD:
+			case KC_LCTL:
+			case KC_LOPT:
+			case KC_RSFT:
+			case KC_RCMD:
+			case KC_RCTL:
+			case KC_ROPT:
+			case _SYM_KEY:
+				return;
+		}
+
+		clear_oneshot_layer_state(ONESHOT_PRESSED);
+		MF_RESET_LAYER();
 	}
 }
