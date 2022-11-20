@@ -24,14 +24,11 @@ enum combos {
 	COMBO_HOME,
 	COMBO_END_KEY,
 	COMBO_PAUSE,
-	COMBO_SHIFT,
 
 	COMBO_COUNT
 };
 
 uint16_t COMBO_LEN = COMBO_COUNT;
-
-const uint16_t PROGMEM combo_shift[] = { KC_H, _COMMA, COMBO_END };
 
 const uint16_t PROGMEM combo_backspace[] = { KC_N, _KC_E, COMBO_END };
 const uint16_t PROGMEM combo_esc[] = { KC_F, KC_W, COMBO_END };
@@ -77,7 +74,6 @@ combo_t key_combos[COMBO_COUNT] = {
 	[COMBO_HOME] = COMBO_ACTION(combo_home),
 	[COMBO_END_KEY] = COMBO_ACTION(combo_end_key),
 	[COMBO_PAUSE] = COMBO_ACTION(combo_pause),
-	[COMBO_SHIFT] = COMBO_ACTION(combo_shift),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -86,20 +82,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 		return;
 	}
 
-	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_SHIFT) {
+	if (combo_index != COMBO_BACKSPACE) {
 		caps_word_off();
 	}
 
-	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_ESC && combo_index != COMBO_TAB && combo_index != COMBO_PASTE && combo_index != COMBO_COPY && combo_index != COMBO_SAVE && combo_index != COMBO_SHIFT) {
+	if (combo_index != COMBO_BACKSPACE && combo_index != COMBO_ESC && combo_index != COMBO_TAB && combo_index != COMBO_PASTE && combo_index != COMBO_COPY && combo_index != COMBO_SAVE) {
 		my_clear_all_mods();
 	}
 
 	if (pressed) {
 		switch (combo_index) {
-			case COMBO_SHIFT:
-				register_code(KC_LSFT);
-				break;
-
 			case COMBO_BACKSPACE:
 				register_code(KC_BSPACE);
 				break;
@@ -192,10 +184,6 @@ bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key
 		case COMBO_TAB:
 			unregister_code(KC_TAB);
 			break;
-
-		case COMBO_SHIFT:
-			unregister_code(KC_LSFT);
-			break;
 	}
 	return false;
 }
@@ -209,23 +197,27 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_SAVE:
 		case COMBO_CUT:
 		case COMBO_SELECT_ALL:
-		case COMBO_COPY:
 		case COMBO_NEXT_DESKTOP:
 		case COMBO_PREV_DESKTOP:
 			return 200;
+
+		// EASILY-TRIGGERED COMMANDS
+		case COMBO_COPY:
+			return 150;
 
 		// BOOTLOADER
 		case COMBO_BOOTLOADER:
 			return 250;
 
-		// EASILY-TRIGGERED COMBOS
+		// EASILY-TRIGGERED TYPING COMBOS
 		case COMBO_DQUOTE:
-		case COMBO_BACKSPACE:
 			return 19;
 
-		// DEFAULTS
-		case COMBO_TAB:
-		case COMBO_SHIFT:
+		// EVEN MORE EASILY-TRIGGERED TYPING COMBOS
+		case COMBO_BACKSPACE:
+			return 18;
+
+		// DEFAULT
 		case COMBO_PAUSE:
 		case COMBO_RESET_ZOOM:
 		case COMBO_HOME:
