@@ -40,41 +40,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /*** PER-KEY HELPER FUNCTIONS ***/
 /***                          ***/
 
-/*
- * FN KEY
- */
-void mf_on_fn_key_tap(uint16_t keycode, keyrecord_t* record) {
-	switch (biton32(layer_state)) {
-		case _FN:
-		case _MOUSE:
-			layer_invert(_MOUSE);
-			break;
-
-		default:
-			layer_move(_FN);
-			break;
-	}
-}
-void mf_on_fn_key_hold(uint16_t keycode, keyrecord_t* record) {
-	switch (biton32(layer_state)) {
-		case _FN:
-		case _MOUSE:
-			layer_move(_BASE);
-			break;
-
-		default:
-			layer_on(_FN);
-			break;
-	}
-}
-void mf_on_fn_key_hold_release(uint16_t keycode, keyrecord_t* record) {
-	// if (record->pressed)
-	switch (biton32(layer_state)) {
-		case _FN:
-			layer_off(_FN);
-			break;
-	}
-}
 
 
 /*
@@ -294,10 +259,6 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_NO_REPEAT_HOLD(KC_NO, LGUI(KC_M));
 			break;
 
-		case _FN_KEY:
-			MF_FN_ADVANCED(mf_on_fn_key_tap, MF_NOFN, mf_on_fn_key_hold, mf_on_fn_key_hold_release, MF_NOFN, MF_NOFN);
-			break;
-
 		case _SYM_KEY:
 			MF_FN_ADVANCED(MF_NOFN, MF_NOFN, mf_on_sym_key_hold, MF_NOFN, mf_on_sym_key_down, mf_on_sym_key_up);
 			break;
@@ -493,13 +454,10 @@ void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode) {
 // set tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
-		case _FN_KEY:
 		case _SYM_KEY:
 
 			return TAPPING_TERM-150;
 
-
-		case _LBRACKET:
 		case _SPACE:
 			return TAPPING_TERM;
 
@@ -509,7 +467,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _KC_K:  // CODE layer
 			return TAPPING_TERM-40;
 
-		case KC_LSFT:
 		case _TAB_MGMT:
 			return TAPPING_TERM+50;
 
