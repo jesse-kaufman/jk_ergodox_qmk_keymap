@@ -292,7 +292,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			break;
 
 		case _SYM_KEY:
-			MF_FN_ADVANCED(MF_NOFN, MF_NOFN, MF_NOFN, MF_NOFN, mf_on_sym_key_down, mf_on_sym_key_up);
+			MF_FN_ADVANCED(mf_on_sym_key_down, mf_on_sym_key_up);
 			break;
 	}
 
@@ -371,10 +371,7 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t* record, mf_key_config*
 
 
 void mf_do_action(keyrecord_t* record, struct mf_key_event_config* event) {
-	if (event->fn_action) {
-		(*event->fn_action)(event->keycode, record);
-	}
-	else if (event->keycode) {
+	if (event->keycode) {
 		// handle caps word
 		mf_handle_caps_word(event->keycode);
 		mf_handle_xcase(event->keycode, record);
@@ -411,16 +408,9 @@ void mf_handle_xcase(uint16_t keycode, keyrecord_t* record) {
 
 
 void mf_do_release(uint16_t keycode, keyrecord_t* record, struct mf_key_event_config* event) {
-	if (event->fn_release) {
-		(*event->fn_release)(event->keycode, record);
-	}
-	else if (event->do_register && event->keycode) {
+	if (event->do_register && event->keycode) {
 		// unregister the keycode
 		unregister_code16(event->keycode);
-	}
-
-	if (event->fn_action) {
-		mf_key_down = false;
 	}
 
 	mf_check_disable_oneshot(record, keycode);

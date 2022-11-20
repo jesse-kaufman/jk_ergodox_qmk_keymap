@@ -128,8 +128,6 @@ struct mf_key_event_config {
 	uint16_t interrupt_keycode;
 	const char *string;
 	bool do_register;
-	void (*fn_action)(uint16_t, keyrecord_t*);
-	void (*fn_release)(uint16_t, keyrecord_t*);
 };
 
 
@@ -180,7 +178,7 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
 	; MF_STR_ADVANCED(str, "");
 
 #define MF_STR_ADVANCED(tap_str, hold_str) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+	; mf_handle_key_event(&keycode, record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = MF_NOKEY  }, \
 		.hold = { .string = hold_str, .keycode = MF_NOKEY }, \
 	}, MF_NOFN, MF_NOFN); \
@@ -190,14 +188,11 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
 /*
  * TAP/HOLD FUNCTION MACROS
  */
-#define MF_FN(tap_fn, hold_fn) \
-	; MF_FN_ADVANCED(tap_fn, MF_NOFN, hold_fn, MF_NOFN, MF_NOFN, MF_NOFN );
+#define MF_FN(fn_down, fn_up) \
+	; MF_FN_ADVANCED(fn_down, fn_up);
 
-#define MF_FN_ADVANCED(tap_fn, tap_release_fn, hold_fn, hold_release_fn, down_fn, up_fn ) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
-		.tap = { .fn_action = tap_fn, .fn_release = tap_release_fn }, \
-		.hold = { .fn_action = hold_fn, .fn_release = hold_release_fn }, \
-	}, down_fn, up_fn); \
+#define MF_FN_ADVANCED(fn_down, fn_up) \
+	; mf_handle_key_event(&keycode, record, &(mf_key_config) {}, fn_down, fn_up); \
 	return false;
 
 
@@ -205,7 +200,7 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
  * MIXED FUNCTION MACROS
  */
 #define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+	; mf_handle_key_event(&keycode, record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = tap_kc  }, \
 		.hold = { .string = hold_str, .keycode = hold_kc }, \
 	}, MF_NOFN, MF_NOFN); \
