@@ -133,7 +133,6 @@ typedef struct mf_key_config {
 	struct mf_key_event_config hold;
 } mf_key_config;
 
-void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode);
 void mf_disable_oneshot_layer(void);
 bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 

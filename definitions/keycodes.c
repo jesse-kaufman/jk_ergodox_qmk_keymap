@@ -9,13 +9,15 @@ uint8_t mf_prev_layer = 0;
 bool mf_key_down = false;
 
 
-void mf_handle_key_event(uint16_t keycode, keyrecord_t* record, mf_key_config* key, void (*fn_down)(uint16_t, keyrecord_t*), void (*fn_up)(uint16_t, keyrecord_t*));
-void mf_do_action(keyrecord_t* record, struct mf_key_event_config* event);
-void mf_do_release(uint16_t keycode, keyrecord_t* record, struct mf_key_event_config* event);
-void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
+void mf_handle_key_event(uint16_t keycode, keyrecord_t *record, mf_key_config *key, void (*fn_down)(uint16_t *, keyrecord_t *), void (*fn_up)(uint16_t *, keyrecord_t *));
+void mf_do_action(keyrecord_t *record, struct mf_key_event_config *event);
+void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
+void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event);
 void mf_handle_caps_word(uint16_t keycode);
 void mf_handle_xcase(uint16_t keycode, keyrecord_t *record);
-void mf_indicate_success(uint16_t* keycode);
+void mf_indicate_success(uint16_t *keycode);
+void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode, struct mf_key_event_config *event);
+
 
 void my_clear_all_mods(void) {
 	clear_mods();
@@ -45,7 +47,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /*
  * SYM KEY
  */
-void mf_on_sym_key_down(uint16_t keycode, keyrecord_t* record) {
+void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 	mf_key_down = true;
 
 	if (record->tap.count > 0) {
@@ -100,7 +102,7 @@ void mf_on_sym_key_down(uint16_t keycode, keyrecord_t* record) {
 		}
 	}
 }
-void mf_on_sym_key_up(uint16_t keycode, keyrecord_t* record) {
+void mf_on_sym_key_up(uint16_t *keycode, keyrecord_t *record) {
 
 	// assume !record->event.pressed
 
@@ -294,7 +296,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 	}
 
 	// run this here for all non-MF keycodes (also runs in mf_handle_key_event())
-	mf_check_disable_oneshot(record, keycode);
+	mf_check_disable_oneshot(record, &keycode, NULL);
 
 	return true;
 }
@@ -306,11 +308,11 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 /***						***/
 
 // function to handle multi-function keys
-void (mf_handle_key_event)(uint16_t keycode, keyrecord_t* record, mf_key_config* key, void (*fn_down)(uint16_t, keyrecord_t*), void (*fn_up)(uint16_t, keyrecord_t*)) {
+void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config *key, void (*fn_down)(uint16_t *, keyrecord_t *), void (*fn_up)(uint16_t *, keyrecord_t *)) {
 
 	if (fn_down && record->event.pressed) {
 		// interrupt tap when key is pressed and still down
-		(*fn_down)(keycode, record);
+		(*fn_down)(&keycode, record);
 	}
 
 	if (record->tap.count > 0) {
@@ -362,12 +364,12 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t* record, mf_key_config*
 
 	if (fn_up && !record->event.pressed) {
 		// interrupt tap when key is pressed and still down
-		(*fn_up)(keycode, record);
+		(*fn_up)(&keycode, record);
 	}
 }
 
 
-void mf_do_action(keyrecord_t* record, struct mf_key_event_config* event) {
+void mf_do_action(keyrecord_t *record, struct mf_key_event_config *event) {
 	if (event->keycode) {
 		// handle caps word
 		mf_handle_caps_word(event->keycode);
@@ -399,22 +401,22 @@ void mf_handle_caps_word(uint16_t keycode) {
 	}
 }
 
-void mf_handle_xcase(uint16_t keycode, keyrecord_t* record) {
+void mf_handle_xcase(uint16_t keycode, keyrecord_t *record) {
 	process_case_modes(keycode, record);
 }
 
 
-void mf_do_release(uint16_t keycode, keyrecord_t* record, struct mf_key_event_config* event) {
+void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event) {
 	if (event->do_register && event->keycode) {
 		// unregister the keycode
 		unregister_code16(event->keycode);
 	}
 
-	mf_check_disable_oneshot(record, keycode);
+	mf_check_disable_oneshot(record, &keycode, event);
 }
 
 
-void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event) {
+void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event) {
 
 	if (event->keycode) {
 		// handle caps word
@@ -528,7 +530,7 @@ bool caps_word_press_user(uint16_t keycode) {
 }
 
 
-void mf_indicate_success(uint16_t* keycode) {
+void mf_indicate_success(uint16_t *keycode) {
 	switch (*keycode) {
 		case KC_MEDIA_NEXT_TRACK:
 		case KC_MEDIA_PREV_TRACK:
