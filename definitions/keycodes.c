@@ -120,10 +120,7 @@ void mf_on_sym_key_up(uint16_t keycode, keyrecord_t* record) {
 			break;
 
 		case _CODE:
-			if (record->tap.count == 2) {
-				SEND_STRING(".");
-			}
-			if (record->tap.count == 0 || record->tap.count == 2) {
+			if (record->tap.count == 0) {
 				if (mf_prev_layer) {
 					layer_move(mf_prev_layer);
 				}

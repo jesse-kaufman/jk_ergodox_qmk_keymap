@@ -3,9 +3,6 @@
 #include "layers.h"
 
 void my_clear_all_mods(void);
-void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode);
-void mf_disable_oneshot_layer(void);
-bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 
 
 // SHORTCUTS/READABILITY
@@ -136,7 +133,9 @@ typedef struct mf_key_config {
 	struct mf_key_event_config hold;
 } mf_key_config;
 
-typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
+void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode);
+void mf_disable_oneshot_layer(void);
+bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 
 
 /*
@@ -178,7 +177,7 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
 	; MF_STR_ADVANCED(str, "");
 
 #define MF_STR_ADVANCED(tap_str, hold_str) \
-	; mf_handle_key_event(&keycode, record, &(mf_key_config) { \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = MF_NOKEY  }, \
 		.hold = { .string = hold_str, .keycode = MF_NOKEY }, \
 	}, MF_NOFN, MF_NOFN); \
@@ -192,7 +191,7 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
 	; MF_FN_ADVANCED(fn_down, fn_up);
 
 #define MF_FN_ADVANCED(fn_down, fn_up) \
-	; mf_handle_key_event(&keycode, record, &(mf_key_config) {}, fn_down, fn_up); \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) {}, fn_down, fn_up); \
 	return false;
 
 
@@ -200,7 +199,7 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
  * MIXED FUNCTION MACROS
  */
 #define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str) \
-	; mf_handle_key_event(&keycode, record, &(mf_key_config) { \
+	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .string = tap_str, .keycode = tap_kc  }, \
 		.hold = { .string = hold_str, .keycode = hold_kc }, \
 	}, MF_NOFN, MF_NOFN); \
