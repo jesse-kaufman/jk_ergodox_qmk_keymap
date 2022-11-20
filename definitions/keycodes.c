@@ -48,56 +48,88 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void mf_on_sym_key_down(uint16_t keycode, keyrecord_t* record) {
 	mf_key_down = true;
 
-	switch (biton32(layer_state)) {
-		case _SYM:
-			clear_oneshot_layer_state(ONESHOT_PRESSED);
-			reset_oneshot_layer();
-			layer_off(_SYM);
-			layer_on(_CODE);
-			break;
+	if (record->tap.count > 0) {
+		// tap
 
-		default:
-			mf_prev_layer = biton32(layer_state);
-			layer_move(_SYM);
-			set_oneshot_layer(_SYM, ONESHOT_START);
-			break;
+		switch (biton32(layer_state)) {
+			case _SYM:
+				reset_oneshot_layer();
+				layer_move(_CODE);
+				set_oneshot_layer(_SYM, ONESHOT_START);
+				break;
+
+			case _CODE:
+				reset_oneshot_layer();
+				layer_off(_CODE);
+				MF_RESET_LAYER();
+				break;
+
+			default:
+				if (record->tap.count == 1) {
+					mf_prev_layer = biton32(layer_state);
+					layer_move(_SYM);
+					set_oneshot_layer(_SYM, ONESHOT_START);
+				}
+				else if (record->tap.count == 2) {
+					reset_oneshot_layer();
+					layer_move(_CODE);
+					set_oneshot_layer(_CODE, ONESHOT_START);
+				}
+				break;
+		}
 	}
-}
-void mf_on_sym_key_hold(uint16_t keycode, keyrecord_t* record) {
-	switch (biton32(layer_state)) {
-		case _CODE:
-			layer_off(_SYM);
-			clear_oneshot_layer_state(ONESHOT_PRESSED);
-			reset_oneshot_layer();
-			break;
+	else {
+		// hold
 
-		case _SYM:
-			clear_oneshot_layer_state(ONESHOT_PRESSED);
-			reset_oneshot_layer();
-			break;
+		reset_oneshot_layer();
 
-		default:
-			mf_prev_layer = biton32(layer_state);
-			layer_move(_SYM);
-			break;
+		switch (biton32(layer_state)) {
+			case _SYM:
+				layer_on(_CODE);
+				break;
+
+			case _CODE:
+				layer_off(_CODE);
+				MF_RESET_LAYER();
+				break;
+
+			default:
+				mf_prev_layer = biton32(layer_state);
+				layer_on(_SYM);
+				break;
+		}
 	}
 }
 void mf_on_sym_key_up(uint16_t keycode, keyrecord_t* record) {
+
+	// assume !record->event.pressed
+
+	// delay slightly
+	_delay_ms(10);
+
 	switch (biton32(layer_state)) {
 		case _SYM:
-		if (record->tap.count == 0 && !record->event.pressed) {
-			layer_off(_CODE);
-			layer_off(_SYM);
-			if (mf_prev_layer) {
-				layer_move(mf_prev_layer);
+			if (record->tap.count == 0) {
+				if (mf_prev_layer) {
+					layer_move(mf_prev_layer);
+				}
+				else {
+					layer_move(_BASE);
+				}
 			}
-		}
-		break;
+			break;
+
 		case _CODE:
-			layer_off(_CODE);
-			layer_off(_SYM);
-			if (mf_prev_layer) {
-				layer_move(mf_prev_layer);
+			if (record->tap.count == 2) {
+				SEND_STRING(".");
+			}
+			if (record->tap.count == 0 || record->tap.count == 2) {
+				if (mf_prev_layer) {
+					layer_move(mf_prev_layer);
+				}
+				else {
+					layer_move(_BASE);
+				}
 			}
 			break;
 	}
@@ -260,7 +292,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			break;
 
 		case _SYM_KEY:
-			MF_FN_ADVANCED(MF_NOFN, MF_NOFN, mf_on_sym_key_hold, MF_NOFN, mf_on_sym_key_down, mf_on_sym_key_up);
+			MF_FN_ADVANCED(MF_NOFN, MF_NOFN, MF_NOFN, MF_NOFN, mf_on_sym_key_down, mf_on_sym_key_up);
 			break;
 	}
 
@@ -277,7 +309,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 /***						***/
 
 // function to handle multi-function keys
-void mf_handle_key_event(uint16_t keycode, keyrecord_t* record, mf_key_config* key, void (*fn_down)(uint16_t, keyrecord_t*), void (*fn_up)(uint16_t, keyrecord_t*)) {
+void (mf_handle_key_event)(uint16_t keycode, keyrecord_t* record, mf_key_config* key, void (*fn_down)(uint16_t, keyrecord_t*), void (*fn_up)(uint16_t, keyrecord_t*)) {
 
 	if (fn_down && record->event.pressed) {
 		// interrupt tap when key is pressed and still down
