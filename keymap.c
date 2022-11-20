@@ -18,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_PREV_DESK,		___X___,		___X___,		SCMD(KC_4),		SCMD(KC_5),		LGUI(KC_S),		MEH(KC_F13),											_TAB_MGMT,	 	___X___,		___X___,		___X___,		___X___,		___X___,		_DESKTOP,
 		_FN_KEY,		KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,			_ACTION_KEY1,											_MINIMIZE,		KC_J,			KC_L,			KC_U,			KC_Y,			_PAREN,			TO(_NUM),
 		_APP_WINDOWS,	KC_A,			KC_R,			_KC_S,			_KC_T,			KC_G,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
-		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,			KC_LEAD,												CAPS_WORD,		_KC_K,			KC_H,			KC_COMMA,			_DOT,			KC_QUES,		KC_PGDOWN,
+		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,			KC_LEAD,												CAPS_WORD,		_KC_K,			KC_H,			KC_COMMA,		_DOT,			KC_QUES,		KC_PGDOWN,
 		_UNDO,			_REDO,			KC_LCTL,		KC_LOPT,		KC_LSFT,																												_SYM_KEY,		KC_RCMD,		KC_DOWN,		KC_UP,			_FN_KEY,
 																										_ZOOM_OUT,		_ZOOM_IN,				_VOL_DOWN,		_VOL_UP,
 																														KC_ESC,					_PLAY,
