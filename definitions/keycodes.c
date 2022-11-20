@@ -433,9 +433,7 @@ void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode) {
 
 			default:
 				clear_oneshot_layer_state(ONESHOT_PRESSED);
-				if (mf_prev_layer) {
-					layer_move(mf_prev_layer);
-				}
+				MF_RESET_LAYER();
 				break;
 		}
 	}
