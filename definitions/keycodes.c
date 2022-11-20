@@ -87,7 +87,7 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 
 		switch (biton32(layer_state)) {
 			case _SYM:
-				layer_on(_CODE);
+				layer_move(_CODE);
 				break;
 
 			case _CODE:
@@ -97,7 +97,7 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 
 			default:
 				mf_prev_layer = biton32(layer_state);
-				layer_on(_SYM);
+				layer_move(_SYM);
 				break;
 		}
 	}
