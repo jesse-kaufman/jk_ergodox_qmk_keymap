@@ -72,18 +72,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
 	),
-
-	// MOUSE layer
-	[_MOUSE] = LAYOUT_ergodox_pretty(
-		_______,		___X___,		___X___,		___X___,		___X___,		___X___,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
-		_______,		___X___,		___X___,		KC_MS_UP,		KC_MS_WH_DOWN,	___X___,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
-		_______,		___X___,		KC_MS_LEFT,		KC_MS_DOWN,		KC_MS_RIGHT,	KC_MS_BTN3,																				_______,		_______,		_______,		_______,		_______,		_______,
-		_______,		___X___,		___X___,		___X___,		KC_MS_WH_UP,	KC_MS_BTN2,		_______,												_______,		_______,		_______,		_______,		_______,		_______,		_______,
-		_______,		_______,		_______,		_______,		KC_MS_BTN1,																												_______,		_______,		_______,		_______,		_______,
-																										_ZOOM_OUT,		_ZOOM_IN,				_______,		_______,
-																														_______,				_______,
-																						_______,		_______,		_______,				_______,		_______,		_______
-	),
 };
 
 
@@ -179,18 +167,4 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
 				_C_FN,			_C_FN,			_C_FN,			_C_FN,			_C_FN,
 								_C_FN,			_C_FN,			_C_FN,			_C_FN
 	},
-	[_MOUSE] = {
-				// RIGHT HAND SIDE
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-								_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-
-				// LEFT HAND SIDE (MIRRORED)
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-				_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE,
-								_C_MOUSE,		_C_MOUSE,		_C_MOUSE,		_C_MOUSE },
 };
