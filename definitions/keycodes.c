@@ -10,7 +10,7 @@ bool mf_key_down = false;
 
 
 void mf_handle_key_event(uint16_t keycode, keyrecord_t* record, mf_key_config* key, void (*fn_down)(uint16_t, keyrecord_t*), void (*fn_up)(uint16_t, keyrecord_t*));
-void mf_do_tap(keyrecord_t* record, struct mf_key_event_config* event);
+void mf_do_action(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_release(uint16_t keycode, keyrecord_t* record, struct mf_key_event_config* event);
 void mf_do_interrupt(keyrecord_t* record, struct mf_key_event_config* event);
 void mf_handle_caps_word(uint16_t keycode);
@@ -338,7 +338,7 @@ void mf_handle_key_event(uint16_t keycode, keyrecord_t* record, mf_key_config* k
 		}
 		else if (record->event.pressed) {
 			// key down, press tap keycode
-			mf_do_tap(record,&key->tap);
+			mf_do_action(record,&key->tap);
 		}
 	}
 	else {
@@ -362,10 +362,10 @@ void mf_handle_key_event(uint16_t keycode, keyrecord_t* record, mf_key_config* k
 			     && (0 != strcmp(key->tap.string, "") || key->tap.keycode)) {
 
 				// key is a string key and hold string is not defined; send tap string
-				mf_do_tap(record,&key->tap);
+				mf_do_action(record,&key->tap);
 			}
 			else {
-				mf_do_tap(record,&key->hold);
+				mf_do_action(record,&key->hold);
 			}
 		}
 	}
@@ -377,7 +377,7 @@ void mf_handle_key_event(uint16_t keycode, keyrecord_t* record, mf_key_config* k
 }
 
 
-void mf_do_tap(keyrecord_t* record, struct mf_key_event_config* event) {
+void mf_do_action(keyrecord_t* record, struct mf_key_event_config* event) {
 	if (event->fn_action) {
 		(*event->fn_action)(event->keycode, record);
 	}
