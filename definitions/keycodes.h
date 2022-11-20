@@ -12,6 +12,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 #define KC_DASH   KC_MINUS
 
 // LAYER KEYCODES
+#define _FN_KEY      TT(_FN)
 #define _KC_T LT(_FN,KC_T)
 #define _KC_S LT(_NUM, KC_S)
 #define _KC_K LT(_CODE, KC_K)
@@ -45,18 +46,10 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 
 // define these first, to prevent collisions with custom_keycodes
 enum {
-	MF_APP_TABS = EZ_SAFE_RANGE,
-	MF_APP_WINDOWS,
-	MF_DESKTOP,
-	MF_PREV_DESK,
-	MF_ZOOM_OUT,
-	MF_ZOOM_IN,
-	MF_FN_X,
-	MF_FN_S,
-	MF_MINIMIZE,
-	MF_PAREN,
-	MF_CBRACKET,
-	MF_BRACKET,
+	MF_APP_CONTROL = EZ_SAFE_RANGE,
+	MF_ZOOM,
+	MF_FN_LAYER,
+	MF_BRACKETS,
 	MF_QUOTE,
 	MF_KEY_COUNT,
 	MF_CODE_ARROWS,
@@ -81,35 +74,33 @@ enum custom_keycodes {
 
 
 // CUSTOM MULTI-FUNCTION KEYS
-#define _SPACE       MT(0, KC_SPACE)
-#define _LTEQ        LT(9, KC_LABK)
+#define _SPACE       MT(0,  KC_SPACE)
+#define _LTEQ        LT(9,  KC_LABK)
 #define _GTEQ        LT(10, KC_RABK)
-#define _APP_TABS    LT(11, MF_APP_TABS)
-#define _APP_WINDOWS LT(12, MF_APP_WINDOWS)
-#define _DESKTOP     LT(13, MF_DESKTOP)
-#define _PREV_DESK   LT(14, MF_PREV_DESK)
+#define _MINIMIZE    LT(10, MF_APP_CONTROL)
+#define _APP_TABS    LT(11, MF_APP_CONTROL)
+#define _APP_WINDOWS LT(12, MF_APP_CONTROL)
+#define _DESKTOP     LT(13, MF_APP_CONTROL)
+#define _PREV_DESK   LT(14, MF_APP_CONTROL)
 #define _KC_E        LT(17, KC_E)
-#define _DOT         LT(8, KC_DOT)
+#define _DOT         LT(8,  KC_DOT)
 #define _COMMA       LT(18, KC_COMMA)
-#define _LBRACKET    LT(8, KC_LBRACKET)
-#define _LCURLBR     LT(9, KC_LCBR)
-#define _ZOOM_OUT    LT(9, MF_ZOOM_OUT)
-#define _ZOOM_IN     LT(9, MF_ZOOM_IN)
-#define _VOL_UP      LT(9, KC_AUDIO_VOL_UP)
-#define _VOL_DOWN    LT(9, KC_AUDIO_VOL_DOWN)
-#define _FN_X        LT(9, MF_FN_X)
-#define _FN_S        LT(9, MF_FN_S)
-#define _MINIMIZE    LT(9, MF_MINIMIZE)
-#define _PAREN       LT(9, MF_PAREN)
-#define _CBRACKET    LT(9, MF_CBRACKET)
-#define _BRACKET     LT(9, MF_BRACKET)
-#define _KC_HASH     LT(9, KC_HASH)
-#define _CODE_ARROWS LT(9, MF_CODE_ARROWS)
-#define _EQUAL       LT(9, KC_EQUAL)
-#define _DASH        LT(9, KC_DASH)
-#define _ACTION_KEY1 LT(9, KC_F20)
-#define _ACTION_KEY2 LT(9, KC_F19)
-#define _FN_KEY      LT(9, MF_LAYERS)
+#define _LCURLBR     LT(9,  KC_LCBR)
+#define _ZOOM_OUT    LT(9,  MF_ZOOM)
+#define _ZOOM_IN     LT(10, MF_ZOOM)
+#define _VOL_UP      LT(9,  KC_AUDIO_VOL_UP)
+#define _VOL_DOWN    LT(9,  KC_AUDIO_VOL_DOWN)
+#define _FN_X        LT(9,  MF_FN_LAYER)
+#define _FN_S        LT(10, MF_FN_LAYER)
+#define _PAREN       LT(9,  MF_BRACKETS)
+#define _CBRACKET    LT(10, MF_BRACKETS)
+#define _BRACKET     LT(11, MF_BRACKETS)
+#define _KC_HASH     LT(9,  KC_HASH)
+#define _CODE_ARROWS LT(9,  MF_CODE_ARROWS)
+#define _EQUAL       LT(9,  KC_EQUAL)
+#define _DASH        LT(9,  KC_DASH)
+#define _ACTION_KEY1 LT(9,  KC_F20)
+#define _ACTION_KEY2 LT(9,  KC_F19)
 #define _SYM_KEY     LT(10, MF_LAYERS)
 
 
@@ -202,7 +193,7 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
 #define MF_FN(tap_fn, hold_fn) \
 	; MF_FN_ADVANCED(tap_fn, MF_NOFN, hold_fn, MF_NOFN, MF_NOFN, MF_NOFN );
 
-	#define MF_FN_ADVANCED(tap_fn, tap_release_fn, hold_fn, hold_release_fn, down_fn, up_fn ) \
+#define MF_FN_ADVANCED(tap_fn, tap_release_fn, hold_fn, hold_release_fn, down_fn, up_fn ) \
 	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
 		.tap = { .fn_action = tap_fn, .fn_release = tap_release_fn }, \
 		.hold = { .fn_action = hold_fn, .fn_release = hold_release_fn }, \
@@ -219,3 +210,11 @@ typedef void (*mf_callback_func_t)(uint16_t, keyrecord_t*);
 		.hold = { .string = hold_str, .keycode = hold_kc }, \
 	}, MF_NOFN, MF_NOFN); \
 	return false;
+
+#define MF_RESET_LAYER() \
+	if (mf_prev_layer) { \
+		layer_move(mf_prev_layer); \
+	} \
+	else { \
+		layer_move(_BASE); \
+	}
