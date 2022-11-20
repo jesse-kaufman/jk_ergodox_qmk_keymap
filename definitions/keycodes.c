@@ -428,6 +428,8 @@ void mf_check_disable_oneshot(keyrecord_t* record, uint16_t keycode) {
 			case KC_RCMD:
 			case KC_RCTL:
 			case KC_ROPT:
+				break;
+
 			case _SYM_KEY:
 				break;
 
