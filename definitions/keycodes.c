@@ -7,12 +7,13 @@
 
 uint8_t mf_prev_layer = 0;
 bool mf_key_down = false;
+static uint16_t mf_key_timer;
 
 
 void mf_handle_key_event(uint16_t keycode, keyrecord_t *record, mf_key_config *key, void (*fn_down)(uint16_t *, keyrecord_t *), void (*fn_up)(uint16_t *, keyrecord_t *));
 void mf_do_action(keyrecord_t *record, struct mf_key_event_config *event);
 void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
-void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event);
+void mf_do_interrupt(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_handle_caps_word(uint16_t keycode);
 void mf_handle_xcase(uint16_t keycode, keyrecord_t *record);
 void mf_indicate_success(uint16_t *keycode);
@@ -38,6 +39,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+
+
+
 /***                          ***/
 /*** PER-KEY HELPER FUNCTIONS ***/
 /***                          ***/
@@ -49,20 +53,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  */
 void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 	mf_key_down = true;
+	mf_key_timer = timer_read();
 
 	if (record->tap.count > 0) {
-		// tap
+		// tapped at least once, then pressed (unknown at this point if it's a hold or tap)
 
 		switch (biton32(layer_state)) {
 			case _SYM:
+				if (record->tap.count == 2) {
+
+				}
 				reset_oneshot_layer();
 				layer_move(_CODE);
-				set_oneshot_layer(_SYM, ONESHOT_START);
+				// set_oneshot_layer(_CODE, ONESHOT_START);
 				break;
 
 			case _CODE:
 				reset_oneshot_layer();
-				layer_off(_CODE);
 				MF_RESET_LAYER();
 				break;
 
@@ -70,18 +77,12 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 				if (record->tap.count == 1) {
 					mf_prev_layer = biton32(layer_state);
 					layer_move(_SYM);
-					set_oneshot_layer(_SYM, ONESHOT_START);
-				}
-				else if (record->tap.count == 2) {
-					reset_oneshot_layer();
-					layer_move(_CODE);
-					set_oneshot_layer(_CODE, ONESHOT_START);
 				}
 				break;
 		}
 	}
 	else {
-		// hold
+		// single hold
 
 		reset_oneshot_layer();
 
@@ -91,7 +92,6 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 				break;
 
 			case _CODE:
-				layer_off(_CODE);
 				MF_RESET_LAYER();
 				break;
 
@@ -106,30 +106,26 @@ void mf_on_sym_key_up(uint16_t *keycode, keyrecord_t *record) {
 
 	// assume !record->event.pressed
 
-	// delay slightly
-	_delay_ms(10);
-
 	switch (biton32(layer_state)) {
+		case _CODE:
 		case _SYM:
-			if (record->tap.count == 0) {
-				if (mf_prev_layer) {
-					layer_move(mf_prev_layer);
-				}
-				else {
-					layer_move(_BASE);
-				}
+			if (timer_elapsed(mf_key_timer) < get_tapping_term(*keycode, record)) {
+				// handle releases before tapping term for SYM key (i.e.: taps)
+				set_oneshot_layer(biton32(layer_state), ONESHOT_START);
+				return;
 			}
+
+			if (!record->tap.interrupted) {
+				// delay slightly
+				_delay_ms(50);
+			}
+
+			MF_RESET_LAYER();
 			break;
 
-		case _CODE:
-			if (record->tap.count == 0) {
-				if (mf_prev_layer) {
-					layer_move(mf_prev_layer);
-				}
-				else {
-					layer_move(_BASE);
-				}
-			}
+		case _BASE:
+			reset_oneshot_layer();
+			MF_RESET_LAYER();
 			break;
 	}
 }
@@ -321,7 +317,7 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config 
 		if (record->tap.interrupted) {
 			if (record->event.pressed) {
 				// interrupt tap when key is pressed and still down
-				mf_do_interrupt(record,&key->tap);
+				mf_do_interrupt(keycode, record, &key->tap);
 			}
 		}
 		else if (!record->event.pressed) {
@@ -330,7 +326,7 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config 
 		}
 		else if (record->event.pressed) {
 			// key down, press tap keycode
-			mf_do_action(record,&key->tap);
+			mf_do_action(record, &key->tap);
 		}
 	}
 	else {
@@ -339,7 +335,7 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config 
 		if (record->tap.interrupted) {
 			if (record->event.pressed) {
 				// hold interrupted
-				mf_do_interrupt(record,&key->hold);
+				mf_do_interrupt(keycode, record, &key->hold);
 			}
 		}
 		else if (!record->event.pressed) {
@@ -416,7 +412,7 @@ void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_co
 }
 
 
-void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event) {
+void mf_do_interrupt(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event) {
 
 	if (event->keycode) {
 		// handle caps word
@@ -434,13 +430,9 @@ void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event) {
 		my_clear_all_mods();
 		send_string(event->string);
 	}
+
+	mf_check_disable_oneshot(record, &keycode, event);
 }
-
-
-
-
-
-
 
 
 
@@ -452,7 +444,7 @@ void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case _SYM_KEY:
-			return 110;
+			return 130;
 
 		case _SPACE:
 			return TAPPING_TERM;
@@ -546,6 +538,7 @@ void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, st
 		}
 
 		clear_oneshot_layer_state(ONESHOT_PRESSED);
+		reset_oneshot_layer();
 		MF_RESET_LAYER();
 	}
 }
