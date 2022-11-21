@@ -452,7 +452,7 @@ void mf_do_interrupt(keyrecord_t *record, struct mf_key_event_config *event) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case _SYM_KEY:
-			return 100;
+			return 110;
 
 		case _SPACE:
 			return TAPPING_TERM;
