@@ -193,7 +193,6 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 	switch (index) {
 		// COMMANDS
 		case COMBO_ESC:
-		case COMBO_PASTE:
 		case COMBO_SAVE:
 		case COMBO_CUT:
 		case COMBO_SELECT_ALL:
@@ -203,7 +202,8 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 
 		// EASILY-TRIGGERED COMMANDS
 		case COMBO_COPY:
-			return 150;
+		case COMBO_PASTE:
+			return 100;
 
 		// BOOTLOADER
 		case COMBO_BOOTLOADER:
@@ -214,6 +214,7 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 			return 19;
 
 		// EVEN MORE EASILY-TRIGGERED TYPING COMBOS
+		case COMBO_TAB:
 		case COMBO_BACKSPACE:
 			return 18;
 
