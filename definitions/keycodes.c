@@ -8,16 +8,17 @@
 uint8_t mf_prev_layer = 0;
 bool mf_key_down = false;
 static uint16_t mf_key_timer;
+bool mf_was_interrupted = false;
 
 
 void mf_handle_key_event(uint16_t keycode, keyrecord_t *record, mf_key_config *key, void (*fn_down)(uint16_t *, keyrecord_t *), void (*fn_up)(uint16_t *, keyrecord_t *));
-void mf_do_action(keyrecord_t *record, struct mf_key_event_config *event);
+void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_do_interrupt(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_handle_caps_word(uint16_t keycode);
 void mf_handle_xcase(uint16_t keycode, keyrecord_t *record);
 void mf_indicate_success(uint16_t *keycode);
-void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode, struct mf_key_event_config *event);
+void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, uint16_t *keycode_sent);
 
 
 void my_clear_all_mods(void) {
@@ -292,7 +293,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 	}
 
 	// run this here for all non-MF keycodes (also runs in mf_handle_key_event())
-	mf_check_disable_oneshot(record, &keycode, NULL);
+	mf_check_disable_oneshot(record, &keycode, KC_NO);
 
 	return true;
 }
@@ -323,10 +324,12 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config 
 		else if (!record->event.pressed) {
 			// key up, release tap keycode
 			mf_do_release(keycode, record, &key->tap);
+			// reset mf_was_interrupted
+			mf_was_interrupted = false;
 		}
 		else if (record->event.pressed) {
 			// key down, press tap keycode
-			mf_do_action(record, &key->tap);
+			mf_do_action(keycode, record, &key->tap);
 		}
 	}
 	else {
@@ -350,10 +353,10 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config 
 			     && (0 != strcmp(key->tap.string, "") || key->tap.keycode)) {
 
 				// key is a string key and hold string is not defined; send tap string
-				mf_do_action(record,&key->tap);
+				mf_do_action(keycode, record,&key->tap);
 			}
 			else {
-				mf_do_action(record,&key->hold);
+				mf_do_action(keycode, record,&key->hold);
 			}
 		}
 	}
@@ -365,7 +368,8 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config 
 }
 
 
-void mf_do_action(keyrecord_t *record, struct mf_key_event_config *event) {
+void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event) {
+
 	if (event->keycode) {
 		// handle caps word
 		mf_handle_caps_word(event->keycode);
@@ -388,6 +392,8 @@ void mf_do_action(keyrecord_t *record, struct mf_key_event_config *event) {
 		my_clear_all_mods();
 		send_string(event->string);
 	}
+
+	mf_check_disable_oneshot(record, &keycode, &event->keycode);
 }
 
 
@@ -408,12 +414,11 @@ void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_co
 		unregister_code16(event->keycode);
 	}
 
-	mf_check_disable_oneshot(record, &keycode, event);
+	mf_check_disable_oneshot(record, &keycode, &event->keycode);
 }
 
 
 void mf_do_interrupt(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event) {
-
 	if (event->keycode) {
 		// handle caps word
 		mf_handle_caps_word(event->keycode);
@@ -431,7 +436,8 @@ void mf_do_interrupt(uint16_t keycode, keyrecord_t *record, struct mf_key_event_
 		send_string(event->string);
 	}
 
-	mf_check_disable_oneshot(record, &keycode, event);
+	mf_was_interrupted = true;
+	mf_check_disable_oneshot(record, &keycode, &event->keycode);
 }
 
 
@@ -513,15 +519,20 @@ void mf_indicate_success(uint16_t *keycode) {
 
 	}
 }
-void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, struct mf_key_event_config *event) {
+void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, uint16_t *keycode_sent) {
 
-	if (!record->event.pressed && is_oneshot_layer_active()) {
-
-		if (event) {
-			switch (event->keycode) {
-				case KC_SPACE:
+	if (is_oneshot_layer_active()) {
+		switch (*keycode_sent) {
+			case KC_SPACE:
+			 	if (!mf_was_interrupted) {
 					return;
-			}
+				}
+				else {
+					clear_oneshot_layer_state(ONESHOT_PRESSED);
+					reset_oneshot_layer();
+					MF_RESET_LAYER();
+				}
+				break;
 		}
 
 		switch (*keycode_pressed) {
@@ -537,8 +548,10 @@ void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, st
 				return;
 		}
 
-		clear_oneshot_layer_state(ONESHOT_PRESSED);
-		reset_oneshot_layer();
-		MF_RESET_LAYER();
+		if (!record->event.pressed) {
+			clear_oneshot_layer_state(ONESHOT_PRESSED);
+			reset_oneshot_layer();
+			MF_RESET_LAYER();
+		}
 	}
 }
