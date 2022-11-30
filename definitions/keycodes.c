@@ -1,13 +1,9 @@
 #include "keycodes.h"
-#include "features/tapdance.h"
 #include "features/leader.h"
 #include "features/lighting.h"
-#include "features/casemodes.h"
 #include "string.h"
 
 uint8_t mf_prev_layer = 0;
-bool mf_key_down = false;
-static uint16_t mf_key_timer;
 bool mf_was_interrupted = false;
 
 
@@ -16,7 +12,6 @@ void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_con
 void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_do_interrupt(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_handle_caps_word(uint16_t keycode);
-void mf_handle_xcase(uint16_t keycode, keyrecord_t *record);
 void mf_indicate_success(uint16_t *keycode);
 void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, uint16_t *keycode_sent);
 
@@ -26,11 +21,13 @@ void my_clear_all_mods(void) {
 	clear_weak_mods();
 	clear_oneshot_mods();
 	caps_word_off();
-	disable_xcase();
 }
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	if (record->event.pressed) {
+		mf_key_timer = timer_read();
+	}
 
 	if (!mf_process_key(keycode, record)) {
 		return false;
@@ -53,8 +50,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * SYM KEY
  */
 void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
-	mf_key_down = true;
-	mf_key_timer = timer_read();
 
 	if (record->tap.count > 0) {
 		// tapped at least once, then pressed (unknown at this point if it's a hold or tap)
@@ -153,6 +148,10 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 
 		case _ACTION_KEY2:
 			MF_TAP_HOLD_ONCE(HYPR(KC_F19), MEH(KC_F19));
+			break;
+
+		case _TAB_CLOSE_UN:
+			MF_TAP_HOLD_ONCE(LGUI(KC_W),LGUI(LSFT(KC_T)));
 			break;
 
 		case _CUR_DIR:
@@ -258,6 +257,9 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_MINUS),HYPR(KC_Z));
 			break;
 
+		case _SCRNSHT1:
+			MF_TAP_HOLD_ONCE(SCMD(KC_4),SCMD(KC_3));
+
 		case _ZOOM_IN:
 			my_clear_all_mods();
 			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_PLUS),MEH(KC_1));
@@ -282,9 +284,9 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			MF_TAP_NO_REPEAT_HOLD(MEH(KC_X), LGUI(KC_Q));
 			break;
 
-		case _MINIMIZE:
+		case _NEW_MIN:
 			my_clear_all_mods();
-			MF_TAP_NO_REPEAT_HOLD(KC_NO, LGUI(KC_M));
+			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_T), LGUI(KC_M));
 			break;
 
 		case _SYM_KEY:
@@ -373,7 +375,6 @@ void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_con
 	if (event->keycode) {
 		// handle caps word
 		mf_handle_caps_word(event->keycode);
-		mf_handle_xcase(event->keycode, record);
 
 		if (event->do_register) {
 			mf_indicate_success(&event->keycode);
@@ -401,10 +402,6 @@ void mf_handle_caps_word(uint16_t keycode) {
 	if (is_caps_word_on() && !caps_word_press_user(keycode)) {
 		caps_word_off();
 	}
-}
-
-void mf_handle_xcase(uint16_t keycode, keyrecord_t *record) {
-	process_case_modes(keycode, record);
 }
 
 
@@ -462,7 +459,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _KC_K:  // CODE layer
 			return TAPPING_TERM-40;
 
-		case _TAB_MGMT:
+		case _TAB_CLOSE_UN:
 			return TAPPING_TERM+50;
 
 		default:
@@ -524,7 +521,7 @@ void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, ui
 	if (is_oneshot_layer_active()) {
 		switch (*keycode_sent) {
 			case KC_SPACE:
-			 	if (!mf_was_interrupted) {
+				if (!mf_was_interrupted) {
 					return;
 				}
 				else {

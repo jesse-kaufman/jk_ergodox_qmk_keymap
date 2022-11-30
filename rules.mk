@@ -1,7 +1,7 @@
 # Set any rules.mk overrides for your specific keymap here.
 # See rules at https://docs.qmk.fm/#/config_options?id=the-rulesmk-file
 LTO_ENABLE = yes
-TAP_DANCE_ENABLE = yes
+TAP_DANCE_ENABLE = no
 CAPS_WORD_ENABLE = yes
 LEADER_ENABLE = yes
 COMBO_ENABLE = yes
@@ -27,6 +27,6 @@ SRC = matrix.c
 SRC += definitions/keycodes.c
 SRC += features/lighting.c
 SRC += features/leader.c
-SRC += features/tapdance.c
+# SRC += features/tapdance.c
 SRC += features/combos.c
-SRC += features/casemodes.c
+# SRC += features/casemodes.c

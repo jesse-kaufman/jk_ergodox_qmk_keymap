@@ -8,6 +8,3 @@ void my_flash_twice(void);
 // void my_indicate_shift_modifier_off(void);
 void my_indicate_caps_word_on(void);
 void my_indicate_caps_word_off(void);
-void my_indicate_xcase_on(void);
-void my_indicate_xcase_off(void);
-void my_indicate_xcase_waiting(void);

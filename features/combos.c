@@ -1,9 +1,7 @@
 #ifdef COMBO_ENABLE
 
 #include "definitions/keycodes.h"
-#include "tapdance.h"
 #include "lighting.h"
-#include "casemodes.h"
 #include "leader.h"
 
 enum combos {
@@ -27,6 +25,7 @@ enum combos {
 
 	COMBO_COUNT
 };
+uint16_t combo_key_timer;
 
 uint16_t COMBO_LEN = COMBO_COUNT;
 
@@ -53,7 +52,7 @@ const uint16_t PROGMEM combo_end_key[] = { KC_PGDOWN, KC_QUES, COMBO_END };
 
 const uint16_t PROGMEM combo_next_desktop[] = { KC_N, _KC_E, KC_I, COMBO_END };
 const uint16_t PROGMEM combo_prev_desktop[] = { KC_R, _KC_S, _KC_T, COMBO_END };
-const uint16_t PROGMEM combo_bootloader[] = { _PREV_DESK, KC_Z, COMBO_END };
+const uint16_t PROGMEM combo_bootloader[] = { MEH(KC_F13), KC_Z, COMBO_END };
 
 
 combo_t key_combos[COMBO_COUNT] = {
@@ -77,6 +76,10 @@ combo_t key_combos[COMBO_COUNT] = {
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
+	if (pressed) {
+		combo_key_timer = timer_read();
+	}
+
 	// only allow escape if leading
 	if (combo_index != COMBO_ESC && leading) {
 		return;
@@ -172,8 +175,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				break;
 		}
 	}
-}
 
+	if (timer_elapsed(combo_key_timer) > 500) {
+		switch (combo_index) {
+			case COMBO_DQUOTE:
+				my_indicate_success();
+				tap_code16(KC_DQUO);
+				tap_code16(KC_LEFT);
+				break;
+		}
+	}
+}
 
 bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key_index, uint16_t keycode) {
 	switch (combo_index) {
@@ -209,14 +221,14 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		case COMBO_BOOTLOADER:
 			return 250;
 
-		// EASILY-TRIGGERED TYPING COMBOS
 		case COMBO_DQUOTE:
-			return 19;
+			return 0;
 
-		// EVEN MORE EASILY-TRIGGERED TYPING COMBOS
+
+		// EASILY-TRIGGERED TYPING COMBOS
 		case COMBO_TAB:
 		case COMBO_BACKSPACE:
-			return 18;
+			return 8;
 
 		// DEFAULT
 		case COMBO_PAUSE:
@@ -245,6 +257,7 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
 		case COMBO_PAUSE:
 		case COMBO_HOME:
 		case COMBO_END_KEY:
+		case COMBO_DQUOTE:
 			return true;
 	}
 

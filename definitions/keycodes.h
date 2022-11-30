@@ -3,6 +3,7 @@
 #include "layers.h"
 
 void my_clear_all_mods(void);
+uint16_t mf_key_timer;
 
 
 // SHORTCUTS/READABILITY
@@ -34,23 +35,36 @@ void my_clear_all_mods(void);
 
 
 // OTHER KEYCODES
-#define _UNDO LGUI(KC_Z)
-#define _REDO LGUI(LSFT(KC_Z))
+#define _UNDO      LGUI(KC_Z)
+#define _REDO      LGUI(LSFT(KC_Z))
 #define _SCREEN_DN KC_BRIGHTNESS_DOWN
 #define _SCREEN_UP KC_BRIGHTNESS_UP
-#define _PLAY KC_MEDIA_PLAY_PAUSE
+#define _PLAY      KC_MEDIA_PLAY_PAUSE
+#define _SCRNSHT2  SCMD(KC_5)
 
 
 // define these first, to prevent collisions with custom_keycodes
 enum {
 	MF_APP_CONTROL = EZ_SAFE_RANGE,
-	MF_ZOOM,
-	MF_FN_LAYER,
-	MF_BRACKETS,
+	MF_ZOOM_IN,
+	MF_ZOOM_OUT,
+	MF_FN_S,
+	MF_FN_X,
+	MF_BRACKET,
 	MF_QUOTE,
 	MF_KEY_COUNT,
 	MF_CODE_ARROWS,
 	MF_LAYERS,
+	MF_SCRNSHT1,
+	MF_APP_TAPS,
+	MF_NEW_MIN,
+	MF_APP_WINDOWS,
+	MF_DESKTOP,
+	MF_PREV_DESK,
+	MF_TAB_CLOSE_UN,
+	MF_PAREN,
+	MF_SYM_KEY,
+	MF_CBRACKET,
 
 	MF_SAFE_RANGE,
 };
@@ -71,37 +85,36 @@ enum custom_keycodes {
 
 
 // CUSTOM MULTI-FUNCTION KEYS
-#define _SPACE       MT(0,  KC_SPACE)
-#define _LTEQ        LT(9,  KC_LABK)
-#define _GTEQ        LT(10, KC_RABK)
-#define _MINIMIZE    LT(10, MF_APP_CONTROL)
-#define _APP_TABS    LT(11, MF_APP_CONTROL)
-#define _APP_WINDOWS LT(12, MF_APP_CONTROL)
-#define _DESKTOP     LT(13, MF_APP_CONTROL)
-#define _PREV_DESK   LT(14, MF_APP_CONTROL)
-#define _KC_E        LT(17, KC_E)
-#define _DOT         LT(8,  KC_DOT)
-#define _COMMA       LT(18, KC_COMMA)
-#define _LCURLBR     LT(9,  KC_LCBR)
-#define _ZOOM_OUT    LT(9,  MF_ZOOM)
-#define _ZOOM_IN     LT(10, MF_ZOOM)
-#define _VOL_UP      LT(9,  KC_AUDIO_VOL_UP)
-#define _VOL_DOWN    LT(9,  KC_AUDIO_VOL_DOWN)
-#define _FN_X        LT(9,  MF_FN_LAYER)
-#define _FN_S        LT(10, MF_FN_LAYER)
-#define _PAREN       LT(9,  MF_BRACKETS)
-#define _CBRACKET    LT(10, MF_BRACKETS)
-#define _BRACKET     LT(11, MF_BRACKETS)
-#define _KC_HASH     LT(9,  KC_HASH)
-#define _CODE_ARROWS LT(9,  MF_CODE_ARROWS)
-#define _EQUAL       LT(9,  KC_EQUAL)
-#define _DASH        LT(9,  KC_DASH)
-#define _ACTION_KEY1 LT(9,  KC_F20)
-#define _ACTION_KEY2 LT(9,  KC_F19)
-#define _SYM_KEY     LT(10, MF_LAYERS)
-
-
-
+#define _SPACE        MT(0, KC_SPACE)
+#define _LTEQ         LT(7, KC_LABK)
+#define _GTEQ         LT(7, KC_RABK)
+#define _DOT          LT(8, KC_DOT)
+#define _NEW_MIN      LT(7, MF_NEW_MIN)
+#define _APP_TABS     LT(7, MF_APP_TAPS)
+#define _APP_WINDOWS  LT(7, MF_APP_WINDOWS)
+#define _DESKTOP      LT(7, MF_DESKTOP)
+#define _PREV_DESK    LT(7, MF_PREV_DESK)
+#define _SCRNSHT1     LT(7, MF_SCRNSHT1)
+#define _TAB_CLOSE_UN LT(7, MF_TAB_CLOSE_UN)
+#define _KC_E         LT(7, KC_E)
+#define _COMMA        LT(7, KC_COMMA)
+#define _LCURLBR      LT(7, KC_LCBR)
+#define _ZOOM_OUT     LT(7, MF_ZOOM_OUT)
+#define _ZOOM_IN      LT(7, MF_ZOOM_IN)
+#define _VOL_UP       LT(7, KC_AUDIO_VOL_UP)
+#define _VOL_DOWN     LT(7, KC_AUDIO_VOL_DOWN)
+#define _FN_X         LT(7, MF_FN_X)
+#define _FN_S         LT(7, MF_FN_S)
+#define _PAREN        LT(7, MF_PAREN)
+#define _CBRACKET     LT(7, MF_CBRACKET)
+#define _BRACKET      LT(7, MF_BRACKET)
+#define _KC_HASH      LT(7, KC_HASH)
+#define _CODE_ARROWS  LT(7, MF_CODE_ARROWS)
+#define _EQUAL        LT(7, KC_EQUAL)
+#define _DASH         LT(7, KC_DASH)
+#define _ACTION_KEY1  LT(7, KC_F20)
+#define _ACTION_KEY2  LT(7, KC_F17)
+#define _SYM_KEY      LT(7, MF_SYM_KEY)
 
 
 

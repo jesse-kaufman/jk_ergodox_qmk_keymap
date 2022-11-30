@@ -1,7 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 #include "definitions/keycodes.h"
-#include "features/tapdance.h"
 #include "features/leader.h"
 
 void matrix_scan_user(void) {
@@ -15,8 +14,8 @@ void matrix_scan_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// COLEMAK BASE layer
 	[_BASE] = LAYOUT_ergodox_pretty(
-		_PREV_DESK,		___X___,		___X___,		SCMD(KC_4),		SCMD(KC_5),		LGUI(KC_S),		MEH(KC_F13),											_TAB_MGMT,	 	___X___,		___X___,		___X___,		___X___,		___X___,		_DESKTOP,
-		_FN_KEY,		KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,			_ACTION_KEY1,											_MINIMIZE,		KC_J,			KC_L,			KC_U,			KC_Y,			_PAREN,			TO(_NUM),
+		MEH(KC_F13),		___X___,		___X___,		_SCRNSHT1,		_SCRNSHT2,		___X___,		_PREV_DESK,											_DESKTOP,	___X___,		___X___,		___X___,		___X___,		___X___,		_TAB_CLOSE_UN,
+		_FN_KEY,		KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,			_ACTION_KEY1,											_NEW_MIN,		KC_J,			KC_L,			KC_U,			KC_Y,			_PAREN,			TO(_NUM),
 		_APP_WINDOWS,	KC_A,			KC_R,			_KC_S,			_KC_T,			KC_G,																					KC_M,			KC_N,			_KC_E,			KC_I,			KC_O,			KC_PGUP,
 		_APP_TABS,		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,			KC_LEAD,												CAPS_WORD,		_KC_K,			KC_H,			KC_COMMA,		_DOT,			KC_QUES,		KC_PGDOWN,
 		_UNDO,			_REDO,			KC_LCTL,		KC_LOPT,		KC_LSFT,																												_SYM_KEY,		KC_RCMD,		KC_DOWN,		KC_UP,			_FN_KEY,
@@ -31,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		TO(_BASE),		KC_GRAVE,		KC_AT,			KC_DLR,			_KC_HASH,		KC_PERC,		_______,												_______,		___X___,		KC_AMPR,		KC_UNDS,		KC_PIPE,		_BRACKET,		TO(_NUM),
 		_______,		KC_TILD,		KC_ASTR,		_DASH,			_EQUAL,			KC_CIRC,																				___X___,		KC_LPRN,		KC_COLON,		KC_RPRN,		___X___,		_______,
 		_______,		___X___,		KC_SLASH,		KC_BSLASH,		KC_PLUS,		___X___,		_______,												_______,		___X___,		_LTEQ,			KC_SCOLON,		_GTEQ,			___X___,		_______,
-		_______, 		_______,		_______,		_______,		_______,																												_______,		_______,		_______,		_______,		TO(_BASE),
+		_______, 		_______,		_______,		_______,		_SYM_KEY,																												TO(_BASE),		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		KC_APP,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______
@@ -43,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		TO(_BASE),		___X___,		___X___,		_COMMENT,		_BEG_CBLOCK,	_END_CBLOCK,	_______,												_______,		___X___,		___X___,		KC_LCBR,		___X___,		_CBRACKET,		TO(_NUM),
 		_______,		___X___,		KC_ASTR,		_DASH,			_CODE_ARROWS,	_NIX_HOME,																				___X___,		KC_LBRACKET,	___X___,		KC_RBRACKET,	___X___,		_______,
 		_______,		___X___,		KC_SLASH,		___X___,		_UP_DIR,		_CUR_DIR,		_______,												_______,		___X___,		_HTML_OPEN,		KC_RCBR,		_HTML_CLOSE,	___X___,		_______,
-		_______,		_______,		_______,		_______,		_______,																												_______,		_______,		_______,		_______,		TO(_BASE),
+		_______,		_______,		_______,		_______,		_SYM_KEY,																												_______,		_______,		_______,		_______,		TO(_BASE),
 																										_______,		_______,				_______,		_______,
 																														_______,				_______,
 																						_______,		_______,		_______,				_______,		_______,		_______

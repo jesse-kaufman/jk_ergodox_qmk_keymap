@@ -5,7 +5,6 @@
 #include QMK_KEYBOARD_H
 #include "../definitions/layers.h"
 #include "lighting.h"
-#include "casemodes.h"
 #include "leader.h"
 
 #define LED_SUCCESS_INDICATOR_ON_TIME 80
@@ -120,37 +119,7 @@ void my_indicate_caps_word_on(void) {
 	ergodox_right_led_3_on();
 }
 void my_indicate_caps_word_off(void) {
-	if (get_xcase_state()) {
-		my_indicate_xcase_on();
-	}
-	else {
-		ergodox_right_led_3_off();
-	}
-}
-void my_indicate_xcase_on(void) {
-	ergodox_right_led_3_set(LED_BRIGHTNESS_MED);
-	ergodox_right_led_3_on();
-	if (get_xcase_state() == XCASE_WAIT) {
-		ergodox_right_led_1_set(LED_BRIGHTNESS_LO);
-		ergodox_right_led_3_set(LED_BRIGHTNESS_LO);
-	}
-	else {
-		ergodox_right_led_1_set(LED_BRIGHTNESS_MED_HI);
-		ergodox_right_led_3_set(LED_BRIGHTNESS_MED_HI);
-	}
-	ergodox_right_led_1_on();
-}
-void my_indicate_xcase_off(void) {
-	if (!is_caps_word_on()) {
-		ergodox_right_led_3_off();
-	}
-	else {
-		my_indicate_caps_word_on();
-	}
-
-	if (biton32(layer_state) == _BASE) {
-		ergodox_right_led_1_off();
-	}
+	ergodox_right_led_3_off();
 }
 
 
