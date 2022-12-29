@@ -25,8 +25,8 @@ enum combos {
 
 	COMBO_COUNT
 };
-uint16_t combo_key_timer;
 
+uint16_t combo_key_timer;
 uint16_t COMBO_LEN = COMBO_COUNT;
 
 const uint16_t PROGMEM combo_backspace[] = { KC_N, _KC_E, COMBO_END };
@@ -80,8 +80,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 		combo_key_timer = timer_read();
 	}
 
-	// only allow escape if leading
-	if (combo_index != COMBO_ESC && leading) {
+	if (leading) {
 		return;
 	}
 
@@ -117,27 +116,27 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 				break;
 
 			case COMBO_CUT:
-				tap_code16(LGUI(KC_X));
+				tap_code16(LCMD(KC_X));
 				my_indicate_success();
 				break;
 
 			case COMBO_COPY:
-				tap_code16(LGUI(KC_C));
+				tap_code16(LCMD(KC_C));
 				my_flash_twice();
 				break;
 
 			case COMBO_PASTE:
-				tap_code16(LGUI(KC_V));
+				tap_code16(LCMD(KC_V));
 				my_indicate_success();
 				break;
 
 			case COMBO_SAVE:
-				tap_code16(LGUI(KC_S));
+				tap_code16(LCMD(KC_S));
 				my_flash_twice();
 				break;
 
 			case COMBO_SELECT_ALL:
-				tap_code16(LGUI(KC_A));
+				tap_code16(LCMD(KC_A));
 				my_indicate_success();
 				break;
 
@@ -215,7 +214,7 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
 		// EASILY-TRIGGERED COMMANDS
 		case COMBO_COPY:
 		case COMBO_PASTE:
-			return 100;
+			return 80;
 
 		// BOOTLOADER
 		case COMBO_BOOTLOADER:
@@ -257,7 +256,6 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
 		case COMBO_PAUSE:
 		case COMBO_HOME:
 		case COMBO_END_KEY:
-		case COMBO_DQUOTE:
 			return true;
 	}
 

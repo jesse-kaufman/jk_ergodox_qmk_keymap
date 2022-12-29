@@ -25,17 +25,12 @@ void my_clear_all_mods(void) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	if (record->event.pressed) {
-		mf_key_timer = timer_read();
-	}
-
 	if (!mf_process_key(keycode, record)) {
 		return false;
 	}
 
 	return true;
 }
-
 
 
 
@@ -56,12 +51,8 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 
 		switch (biton32(layer_state)) {
 			case _SYM:
-				if (record->tap.count == 2) {
-
-				}
 				reset_oneshot_layer();
 				layer_move(_CODE);
-				// set_oneshot_layer(_CODE, ONESHOT_START);
 				break;
 
 			case _CODE:
@@ -106,14 +97,15 @@ void mf_on_sym_key_up(uint16_t *keycode, keyrecord_t *record) {
 		case _CODE:
 		case _SYM:
 			if (timer_elapsed(mf_key_timer) < get_tapping_term(*keycode, record)) {
-				// handle releases before tapping term for SYM key (i.e.: taps)
-				set_oneshot_layer(biton32(layer_state), ONESHOT_START);
+				if (record->tap.count == 1) {
+					// handle releases before tapping term for SYM key (i.e.: taps)
+					set_oneshot_layer(biton32(layer_state), ONESHOT_START);
+				}
+				else {
+					reset_oneshot_layer();
+					MF_RESET_LAYER();
+				}
 				return;
-			}
-
-			if (!record->tap.interrupted) {
-				// delay slightly
-				_delay_ms(50);
 			}
 
 			MF_RESET_LAYER();
@@ -141,6 +133,10 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 		return true;
 	}
 
+	if (record->event.pressed) {
+		mf_key_timer = timer_read();
+	}
+
 	switch (keycode) {
 		case _ACTION_KEY1:
 			MF_TAP_HOLD_ONCE(HYPR(KC_F20), MEH(KC_F20));
@@ -151,7 +147,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			break;
 
 		case _TAB_CLOSE_UN:
-			MF_TAP_HOLD_ONCE(LGUI(KC_W),LGUI(LSFT(KC_T)));
+			MF_TAP_HOLD_ONCE(LCMD(KC_W),LCMD(LSFT(KC_T)));
 			break;
 
 		case _CUR_DIR:
@@ -183,20 +179,24 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			break;
 
 		case _BEG_CBLOCK:
-			MF_STR_TAP("/*");
+			MF_STR_TAP("/**"SS_TAP (X_ENTER));
 			break;
 
 		case _END_CBLOCK:
 			MF_STR_TAP("*/");
 			break;
 
-		case _CODE_ARROWS:
-			MF_STR_TAP_HOLD("->", "=>");
+		case _SARROW:
+			MF_STR_TAP("->");
 			break;
 
-		case _DESKTOP:
+		case _DARROW:
+			MF_STR_TAP("=>");
+			break;
+
+		case _NEXT_DESK:
 			my_clear_all_mods();
-			MF_TAP_NO_REPEAT_HOLD(HYPR(KC_5), LCTL(KC_RIGHT));
+			MF_TAP_NO_REPEAT_HOLD(LCTL(KC_RIGHT), LCMD(KC_N));
 			break;
 
 		case _KC_E:
@@ -205,7 +205,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 
 		case _PREV_DESK:
 			my_clear_all_mods();
-			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_SPACE), LCTL(KC_LEFT));
+			MF_TAP_NO_REPEAT_HOLD(LCTL(KC_LEFT), KC_F11);
 			break;
 
 		case _HTML_OPEN:
@@ -229,11 +229,11 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			break;
 
 		case _APP_TABS:
-			MF_TAP_NO_REPEAT_HOLD(LCTL(KC_TAB), LGUI(LALT(KC_F19)));
+			MF_TAP_NO_REPEAT_HOLD(LCTL(KC_TAB), LCMD(LOPT(KC_F19)));
 			break;
 
 		case _SPACE:
-			MF_TAP_HOLD_ADVANCED(KC_SPACE, true, KC_SPACE, LGUI(KC_TAB), false, KC_SPACE);
+			MF_TAP_HOLD_ADVANCED(KC_SPACE, true, KC_SPACE, LCMD(KC_TAB), false, KC_SPACE);
 			break;
 
 		case _DOT:
@@ -241,11 +241,11 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			break;
 
 		case _EQUAL:
-			MF_TAP_HOLD_ONCE(KC_EQUAL, LALT(LSFT(KC_MINUS)));
+			MF_TAP_HOLD_ONCE(KC_EQUAL, LOPT(LSFT(KC_MINUS)));
 			break;
 
 		case _DASH:
-			MF_TAP_HOLD_ONCE(KC_MINUS, LALT(KC_MINUS));
+			MF_TAP_HOLD_ONCE(KC_MINUS, LOPT(KC_MINUS));
 			break;
 
 		case _KC_HASH:
@@ -254,7 +254,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 
 		case _ZOOM_OUT:
 			my_clear_all_mods();
-			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_MINUS),HYPR(KC_Z));
+			MF_TAP_NO_REPEAT_HOLD(LCMD(KC_MINUS),HYPR(KC_Z));
 			break;
 
 		case _SCRNSHT1:
@@ -262,7 +262,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 
 		case _ZOOM_IN:
 			my_clear_all_mods();
-			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_PLUS),MEH(KC_1));
+			MF_TAP_NO_REPEAT_HOLD(LCMD(KC_PLUS),MEH(KC_1));
 			break;
 
 		case _VOL_UP:
@@ -276,17 +276,29 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 			break;
 
 		case _FN_S:
-			MF_TAP_NO_REPEAT_HOLD(KC_0, LGUI(KC_S));
+			MF_TAP_NO_REPEAT_HOLD(KC_0, LCMD(KC_S));
 			break;
 
 		case _FN_X:
 			my_clear_all_mods();
-			MF_TAP_NO_REPEAT_HOLD(MEH(KC_X), LGUI(KC_Q));
+			MF_TAP_NO_REPEAT_HOLD(MEH(KC_X), LCMD(KC_Q));
 			break;
 
 		case _NEW_MIN:
 			my_clear_all_mods();
-			MF_TAP_NO_REPEAT_HOLD(LGUI(KC_T), LGUI(KC_M));
+			MF_TAP_NO_REPEAT_HOLD(LCMD(KC_T), LCMD(KC_M));
+			break;
+
+		case _KC_3:
+			MF_TAP_NO_REPEAT_HOLD(KC_3, KC_DOT);
+			break;
+
+		case _LPRN:
+			MF_TAP_NO_REPEAT_HOLD(KC_LPRN, KC_LBRACKET);
+			break;
+
+		case _RPRN:
+			MF_TAP_NO_REPEAT_HOLD(KC_RPRN, KC_RBRACKET);
 			break;
 
 		case _SYM_KEY:
@@ -310,7 +322,6 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config *key, void (*fn_down)(uint16_t *, keyrecord_t *), void (*fn_up)(uint16_t *, keyrecord_t *)) {
 
 	if (fn_down && record->event.pressed) {
-		// interrupt tap when key is pressed and still down
 		(*fn_down)(&keycode, record);
 	}
 
@@ -364,7 +375,6 @@ void (mf_handle_key_event)(uint16_t keycode, keyrecord_t *record, mf_key_config 
 	}
 
 	if (fn_up && !record->event.pressed) {
-		// interrupt tap when key is pressed and still down
 		(*fn_up)(&keycode, record);
 	}
 }
@@ -457,6 +467,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 		case _KC_T:  // FN layer
 		case _KC_S:  // NUM layer
 		case _KC_K:  // CODE layer
+		case _KC_V:  // CODE layer
 			return TAPPING_TERM-40;
 
 		case _TAB_CLOSE_UN:
@@ -505,12 +516,10 @@ void mf_indicate_success(uint16_t *keycode) {
 	switch (*keycode) {
 		case KC_MEDIA_NEXT_TRACK:
 		case KC_MEDIA_PREV_TRACK:
-		case LGUI(KC_Q):
-		case LGUI(KC_W):
 			my_indicate_success();
 			break;
 
-		case LGUI(KC_S):
+		case LCMD(KC_S):
 			my_flash_twice();
 			break;
 

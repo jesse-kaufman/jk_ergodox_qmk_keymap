@@ -10,7 +10,7 @@ void my_leader_matrix_scan_user(void) {
 		leader_start();
 
 		// SPOTLIGHT
-		MY_KEY_SEQ(KC_LEAD, 0, 0, 0, 0, LGUI(KC_SPACE));
+		MY_KEY_SEQ(KC_LEAD, 0, 0, 0, 0, LCMD(KC_SPACE));
 
 		// CLICKUP
 		MY_KEY_SEQ(KC_C, KC_U, 0, 0, 0, HYPR(KC_I));
@@ -64,7 +64,16 @@ void my_leader_matrix_scan_user(void) {
 		MY_KEY_SEQ(KC_F, KC_B, 0, 0, 0, HYPR(KC_F));
 
 		// ATOM
-		MY_KEY_SEQ(KC_A, KC_T, 0, 0, 0, HYPR(KC_H));
+		MY_KEY_SEQ(KC_A, KC_T, 0, 0, 0, HYPR(KC_K));
+
+		// OPEN WORK APPS
+		MY_KEY_SEQ(KC_W, KC_O, 0, 0, 0, HYPR(KC_W));
+
+		// OPEN WORK APPS
+		MY_KEY_SEQ(KC_W, KC_C, 0, 0, 0, HYPR(KC_X));
+
+		// SYSTEM SETTINGS
+		MY_KEY_SEQ(KC_S, KC_Y, KC_S, 0, 0, HYPR(KC_Q))
 
 		leader_end();
 	}
@@ -109,7 +118,7 @@ void leader_end(void) {
 			if (leader_sequence[seq]) {
 				if (is_leader_key_valid(leader_sequence[seq])) {
 					if (!spotlight_active) {
-						tap_code16(LGUI(KC_SPACE));
+						tap_code16(LCMD(KC_SPACE));
 						wait_ms(70);
 						spotlight_active = true;
 					}

@@ -14,12 +14,14 @@ uint16_t mf_key_timer;
 #define _KC_T LT(_FN,KC_T)
 #define _KC_S LT(_NUM, KC_S)
 #define _KC_K LT(_CODE, KC_K)
+#define _KC_V LT(_CODE, KC_V)
+
 
 // FANCY QUOTES KEYCODES
-#define _LDFQUO LALT(KC_LBRACKET)
-#define _RDFQUO LALT(LSFT(KC_LBRACKET))
-#define _LFQUO LALT(KC_RBRACKET)
-#define _RFQUO LALT(LSFT(KC_RBRACKET))
+#define _LDFQUO LOPT(KC_LBRACKET)
+#define _RDFQUO LOPT(LSFT(KC_LBRACKET))
+#define _LFQUO  LOPT(KC_RBRACKET)
+#define _RFQUO  LOPT(LSFT(KC_RBRACKET))
 
 // PROGRAMMING SHORTCUTS
 #define _MEH_LBRKT MEH(KC_LBRACKET)
@@ -35,8 +37,8 @@ uint16_t mf_key_timer;
 
 
 // OTHER KEYCODES
-#define _UNDO      LGUI(KC_Z)
-#define _REDO      LGUI(LSFT(KC_Z))
+#define _UNDO      LCMD(KC_Z)
+#define _REDO      LCMD(LSFT(KC_Z))
 #define _SCREEN_DN KC_BRIGHTNESS_DOWN
 #define _SCREEN_UP KC_BRIGHTNESS_UP
 #define _PLAY      KC_MEDIA_PLAY_PAUSE
@@ -53,13 +55,14 @@ enum {
 	MF_BRACKET,
 	MF_QUOTE,
 	MF_KEY_COUNT,
-	MF_CODE_ARROWS,
+	MF_SARROW,
+	MF_DARROW,
 	MF_LAYERS,
 	MF_SCRNSHT1,
 	MF_APP_TAPS,
 	MF_NEW_MIN,
 	MF_APP_WINDOWS,
-	MF_DESKTOP,
+	MF_NEXT_DESK,
 	MF_PREV_DESK,
 	MF_TAB_CLOSE_UN,
 	MF_PAREN,
@@ -87,12 +90,12 @@ enum custom_keycodes {
 // CUSTOM MULTI-FUNCTION KEYS
 #define _SPACE        MT(0, KC_SPACE)
 #define _LTEQ         LT(7, KC_LABK)
-#define _GTEQ         LT(7, KC_RABK)
-#define _DOT          LT(8, KC_DOT)
+#define _DOT          LT(7, KC_DOT)
+#define _GTEQ         LT(8, KC_RABK) // also KC_DOT
 #define _NEW_MIN      LT(7, MF_NEW_MIN)
 #define _APP_TABS     LT(7, MF_APP_TAPS)
 #define _APP_WINDOWS  LT(7, MF_APP_WINDOWS)
-#define _DESKTOP      LT(7, MF_DESKTOP)
+#define _NEXT_DESK    LT(7, MF_NEXT_DESK)
 #define _PREV_DESK    LT(7, MF_PREV_DESK)
 #define _SCRNSHT1     LT(7, MF_SCRNSHT1)
 #define _TAB_CLOSE_UN LT(7, MF_TAB_CLOSE_UN)
@@ -108,13 +111,18 @@ enum custom_keycodes {
 #define _PAREN        LT(7, MF_PAREN)
 #define _CBRACKET     LT(7, MF_CBRACKET)
 #define _BRACKET      LT(7, MF_BRACKET)
-#define _KC_HASH      LT(7, KC_HASH)
-#define _CODE_ARROWS  LT(7, MF_CODE_ARROWS)
+#define _SARROW       LT(7, MF_SARROW)
+#define _DARROW       LT(7, MF_DARROW)
 #define _EQUAL        LT(7, KC_EQUAL)
 #define _DASH         LT(7, KC_DASH)
 #define _ACTION_KEY1  LT(7, KC_F20)
 #define _ACTION_KEY2  LT(7, KC_F17)
 #define _SYM_KEY      LT(7, MF_SYM_KEY)
+#define _KC_3         LT(7, KC_3)
+#define _KC_HASH      LT(8, KC_HASH) // also KC_3
+#define _LPRN         LT(7, KC_LPRN)
+#define _RPRN         LT(7, KC_RPRN)
+
 
 
 
