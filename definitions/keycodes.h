@@ -1,21 +1,19 @@
 #pragma once
+#include "definitions/layers.h"
 #include QMK_KEYBOARD_H
-#include "layers.h"
 
 void my_clear_all_mods(void);
 uint16_t mf_key_timer;
-
 
 // SHORTCUTS/READABILITY
 #define KC_DASH   KC_MINUS
 
 // LAYER KEYCODES
 #define _FN_KEY      TT(_FN)
-#define _KC_T LT(_FN,KC_T)
+#define _KC_T LT(_FN, KC_T)
 #define _KC_S LT(_NUM, KC_S)
 #define _KC_K LT(_CODE, KC_K)
 #define _KC_V LT(_CODE, KC_V)
-
 
 // FANCY QUOTES KEYCODES
 #define _LDFQUO LOPT(KC_LBRACKET)
@@ -35,7 +33,6 @@ uint16_t mf_key_timer;
 // MOD TAPS
 #define _SHFT_ENTER MT(MOD_LSFT, KC_ENTER)
 
-
 // OTHER KEYCODES
 #define _UNDO      LCMD(KC_Z)
 #define _REDO      LCMD(LSFT(KC_Z))
@@ -44,57 +41,54 @@ uint16_t mf_key_timer;
 #define _PLAY      KC_MEDIA_PLAY_PAUSE
 #define _SCRNSHT2  SCMD(KC_5)
 
-
 // define these first, to prevent collisions with custom_keycodes
 enum {
-	MF_APP_CONTROL = EZ_SAFE_RANGE,
-	MF_ZOOM_IN,
-	MF_ZOOM_OUT,
-	MF_FN_S,
-	MF_FN_X,
-	MF_BRACKET,
-	MF_QUOTE,
-	MF_KEY_COUNT,
-	MF_SARROW,
-	MF_DARROW,
-	MF_LAYERS,
-	MF_SCRNSHT1,
-	MF_APP_TAPS,
-	MF_NEW_MIN,
-	MF_APP_WINDOWS,
-	MF_NEXT_DESK,
-	MF_PREV_DESK,
-	MF_TAB_CLOSE_UN,
-	MF_PAREN,
-	MF_SYM_KEY,
-	MF_CBRACKET,
+    MF_APP_CONTROL = EZ_SAFE_RANGE,
+    MF_ZOOM_IN,
+    MF_ZOOM_OUT,
+    MF_FN_S,
+    MF_FN_X,
+    MF_BRACKET,
+    MF_QUOTE,
+    MF_KEY_COUNT,
+    MF_SARROW,
+    MF_DARROW,
+    MF_LAYERS,
+    MF_SCRNSHT1,
+    MF_APP_TAPS,
+    MF_NEW_MIN,
+    MF_APP_WINS,
+    MF_NEXT_DESK,
+    MF_PREV_DESK,
+    MF_TAB_CLOSE_UN,
+    MF_PAREN,
+    MF_SYM_KEY,
+    MF_CBRACKET,
 
-	MF_SAFE_RANGE,
+    MF_SAFE_RANGE,
 };
-
 
 enum custom_keycodes {
-	_NIX_HOME = MF_SAFE_RANGE,
-	_BEG_CBLOCK,
-	_END_CBLOCK,
-	_COMMENT,
-	_HTML_OPEN,
-	_HTML_CLOSE,
-	_CUR_DIR,
-	_UP_DIR,
+    _NIX_HOME = MF_SAFE_RANGE,
+    _BEG_CBLOCK,
+    _END_CBLOCK,
+    _COMMENT,
+    _HTML_OPEN,
+    _HTML_CLOSE,
+    _CUR_DIR,
+    _UP_DIR,
 
-	CUSTOM_KEYCODE_COUNT,
+    CUSTOM_KEYCODE_COUNT,
 };
-
 
 // CUSTOM MULTI-FUNCTION KEYS
 #define _SPACE        MT(0, KC_SPACE)
 #define _LTEQ         LT(7, KC_LABK)
 #define _DOT          LT(7, KC_DOT)
-#define _GTEQ         LT(8, KC_RABK) // also KC_DOT
+#define _GTEQ         LT(8, KC_RABK)  // also KC_DOT
 #define _NEW_MIN      LT(7, MF_NEW_MIN)
 #define _APP_TABS     LT(7, MF_APP_TAPS)
-#define _APP_WINDOWS  LT(7, MF_APP_WINDOWS)
+#define _APP_WINS     LT(7, MF_APP_WINS)
 #define _NEXT_DESK    LT(7, MF_NEXT_DESK)
 #define _PREV_DESK    LT(7, MF_PREV_DESK)
 #define _SCRNSHT1     LT(7, MF_SCRNSHT1)
@@ -115,17 +109,14 @@ enum custom_keycodes {
 #define _DARROW       LT(7, MF_DARROW)
 #define _EQUAL        LT(7, KC_EQUAL)
 #define _DASH         LT(7, KC_DASH)
-#define _ACTION_KEY1  LT(7, KC_F20)
-#define _ACTION_KEY2  LT(7, KC_F17)
+#define _ACTION1  LT(7, KC_F20)
+#define _ACTION2  LT(7, KC_F17)
 #define _SYM_KEY      LT(7, MF_SYM_KEY)
 #define _KC_3         LT(7, KC_3)
-#define _KC_HASH      LT(8, KC_HASH) // also KC_3
+#define _KC_HASH      LT(8, KC_HASH)  // also KC_3
 #define _LPRN         LT(7, KC_LPRN)
 #define _RPRN         LT(7, KC_RPRN)
-
-
-
-
+#define _BSLASH       LT(7, KC_BSLASH)
 
 /**
  * CUSTOM MULTI-FUNCTION KEY CONFIG
@@ -137,98 +128,93 @@ enum custom_keycodes {
 #define MF_DEF_REGISTER_DOUBLE_HOLD true
 #define MF_NOFN NULL
 
-
 /**
  * STRUCTS FOR MULTIFUNCTION KEYS
  */
 struct mf_key_event_config {
-	uint16_t keycode;
-	uint16_t interrupt_keycode;
-	const char *string;
-	bool do_register;
+    uint16_t keycode;
+    uint16_t interrupt_keycode;
+    const char *str;
+    bool do_register;
 };
 
-
 typedef struct mf_key_config {
-	struct mf_key_event_config tap;
-	struct mf_key_event_config hold;
+    struct mf_key_event_config tap;
+    struct mf_key_event_config hold;
 } mf_key_config;
 
 void mf_disable_oneshot_layer(void);
 bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 
-
 /*
  * TAP/HOLD KEYCODE MACROS
  */
-#define MF_TAP_HOLD( tap_kc, hold_kc ) \
-	; MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-	              hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY );
+#define MF_TAP_HOLD(tap_kc, hold_kc) \
+        ; MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
+    hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY);
 
-#define MF_TAP_NO_REPEAT_HOLD( tap_kc, hold_kc ) \
-	; MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-	              hold_kc, false, MF_NOKEY );
+#define MF_TAP_NO_REPEAT_HOLD(tap_kc, hold_kc) \
+        ; MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
+    hold_kc, false, MF_NOKEY);
 
-#define MF_TAP_HOLD_ONCE( tap_kc, hold_kc ) \
-	; MF_ADVANCED(tap_kc, false, MF_NOKEY, \
-	              hold_kc, false, MF_NOKEY );
+#define MF_TAP_HOLD_ONCE(tap_kc, hold_kc) \
+        ; MF_ADVANCED(tap_kc, false, MF_NOKEY, \
+    hold_kc, false, MF_NOKEY);
 
-#define MF_TAP_HOLD_ADVANCED( tap_kc, tap_do_register, tap_interrupt_kc, hold_kc, hold_do_register, hold_interrupt_kc ) \
-	; MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
-	              hold_kc, hold_do_register, hold_interrupt_kc );
-
+#define MF_TAP_HOLD_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
+        hold_kc, hold_do_register, hold_interrupt_kc) \
+        ; MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
+    hold_kc, hold_do_register, hold_interrupt_kc);
 
 #define MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
-	                hold_kc, hold_do_register, hold_interrupt_kc) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
-		.tap = { .keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register }, \
-		.hold = { .keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register }, \
-	}, MF_NOFN, MF_NOFN); \
-	return false;
-
+                    hold_kc, hold_do_register, hold_interrupt_kc) \
+        ; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+        .tap = {.keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register}, \
+        .hold = {.keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register}, \
+    }, MF_NOFN, MF_NOFN); \
+        return false;
 
 /*
  * TAP/HOLD STRING MACROS
  */
- #define MF_STR_TAP_HOLD(tap_str, hold_str) \
-	; MF_STR_ADVANCED(tap_str, hold_str);
+#define MF_STR_TAP_HOLD(tap_str, hold_str) \
+        ; MF_STR_ADVANCED(tap_str, hold_str);
 
- #define MF_STR_TAP(str) \
-	; MF_STR_ADVANCED(str, "");
+#define MF_STR_TAP(str) \
+        ; MF_STR_ADVANCED(str, "");
 
 #define MF_STR_ADVANCED(tap_str, hold_str) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
-		.tap = { .string = tap_str, .keycode = MF_NOKEY  }, \
-		.hold = { .string = hold_str, .keycode = MF_NOKEY }, \
-	}, MF_NOFN, MF_NOFN); \
-	return false;
-
+        ; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+        .tap = {.str = tap_str, .keycode = MF_NOKEY}, \
+        .hold = {.str = hold_str, .keycode = MF_NOKEY}, \
+    }, MF_NOFN, MF_NOFN); \
+        return false;
 
 /*
  * TAP/HOLD FUNCTION MACROS
  */
 #define MF_FN(fn_down, fn_up) \
-	; MF_FN_ADVANCED(fn_down, fn_up);
+        ; MF_FN_ADVANCED(fn_down, fn_up);
 
 #define MF_FN_ADVANCED(fn_down, fn_up) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) {}, fn_down, fn_up); \
-	return false;
-
+        ; mf_handle_key_event(keycode, record, &(mf_key_config) {}, \
+                fn_down, fn_up); \
+        return false;
 
 /*
  * MIXED FUNCTION MACROS
  */
 #define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str) \
-	; mf_handle_key_event(keycode, record, &(mf_key_config) { \
-		.tap = { .string = tap_str, .keycode = tap_kc  }, \
-		.hold = { .string = hold_str, .keycode = hold_kc }, \
-	}, MF_NOFN, MF_NOFN); \
-	return false;
+        ; mf_handle_key_event(keycode, record, &(mf_key_config) { \
+        .tap = {.str = tap_str, .keycode = tap_kc}, \
+        .hold = {.str = hold_str, .keycode = hold_kc}, \
+    }, MF_NOFN, MF_NOFN); \
+        return false;
 
 #define MF_RESET_LAYER() \
-	if (mf_prev_layer) { \
-		layer_move(mf_prev_layer); \
-	} \
-	else { \
-		layer_move(_BASE); \
-	}
+        if (mf_prev_layer) { \
+            layer_move(mf_prev_layer); \
+        } \
+        else { \
+            layer_move(_BASE); \
+        }
