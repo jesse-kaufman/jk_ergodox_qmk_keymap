@@ -55,7 +55,7 @@ const uint16_t PROGMEM combo_home[] = {KC_PGUP, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_end_key[] = {KC_PGDOWN, KC_QUES, COMBO_END};
 
 const uint16_t PROGMEM combo_next_desktop[] = {KC_N, _KC_E, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_last_app[] = {KC_A, KC_R, _KC_S, _KC_T, COMBO_END};
+const uint16_t PROGMEM combo_last_app[] = {KC_R, _KC_S, _KC_T, COMBO_END};
 const uint16_t PROGMEM combo_bootloader[] = {MEH(KC_F13), KC_Z, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
