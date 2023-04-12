@@ -15,7 +15,7 @@ enum combos {
     COMBO_PASTE,
     COMBO_SAVE,
     COMBO_SELECT_ALL,
-    /* COMBO_NEXT_DESKTOP, */
+    COMBO_LAST_APP_ALT,
     COMBO_LAST_APP,
     COMBO_DQUOTE,
     COMBO_BOOTLOADER,
@@ -54,7 +54,7 @@ const uint16_t PROGMEM combo_pause[] = {_PLAY, _VOL_DOWN, COMBO_END};
 const uint16_t PROGMEM combo_home[] = {KC_PGUP, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_end_key[] = {KC_PGDOWN, KC_QUES, COMBO_END};
 
-const uint16_t PROGMEM combo_next_desktop[] = {KC_N, _KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_last_app_alt[] = {KC_N, _KC_E, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_last_app[] = {KC_R, _KC_S, _KC_T, COMBO_END};
 const uint16_t PROGMEM combo_bootloader[] = {MEH(KC_F13), KC_Z, COMBO_END};
 
@@ -72,7 +72,7 @@ combo_t key_combos[COMBO_COUNT] = {
     [COMBO_DQUOTE] = COMBO_ACTION(combo_dquote),
     [COMBO_RESET_ZOOM] = COMBO_ACTION(combo_reset_zoom),
     [COMBO_MUTE] = COMBO_ACTION(combo_mute),
-    /* [COMBO_NEXT_DESKTOP] = COMBO_ACTION(combo_next_desktop), */
+    [COMBO_LAST_APP_ALT] = COMBO_ACTION(combo_last_app_alt),
     [COMBO_LAST_APP] = COMBO_ACTION(combo_last_app),
     [COMBO_BOOTLOADER] = COMBO_ACTION(combo_bootloader),
     [COMBO_HOME] = COMBO_ACTION(combo_home),
@@ -155,11 +155,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             my_indicate_success();
             break;
 
-        /* case COMBO_NEXT_DESKTOP: */
-        /*     tap_code16(LCTL(KC_RIGHT)); */
-        /*     my_indicate_success(); */
-        /*     break; */
-
+        case COMBO_LAST_APP_ALT:
         case COMBO_LAST_APP:
             tap_code16(LCMD(KC_TAB));
             my_indicate_success();
@@ -227,7 +223,7 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
     case COMBO_SAVE:
     case COMBO_CUT:
     case COMBO_SELECT_ALL:
-    /* case COMBO_NEXT_DESKTOP: */
+    case COMBO_LAST_APP_ALT:
     case COMBO_LAST_APP:
         return 200;
 
@@ -268,7 +264,7 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
     case COMBO_PASTE:
     case COMBO_SAVE:
     case COMBO_SELECT_ALL:
-    /* case COMBO_NEXT_DESKTOP: */
+    case COMBO_LAST_APP_ALT:
     case COMBO_LAST_APP:
     case COMBO_BOOTLOADER:
     case COMBO_RESET_ZOOM:
