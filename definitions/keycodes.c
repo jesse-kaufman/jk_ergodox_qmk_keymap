@@ -39,8 +39,10 @@ void my_clear_all_mods(void)
     caps_word_off();
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!mf_process_key(keycode, record)) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
+    if (!mf_process_key(keycode, record))
+    {
         return false;
     }
 
@@ -54,11 +56,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /*
  * SYM KEY
  */
-void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
-    if (record->tap.count > 0) {
+void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record)
+{
+    if (record->tap.count > 0)
+    {
         // tapped at least once, then pressed (unknown at this point if it's a hold or tap)
 
-        switch (biton32(layer_state)) {
+        switch (biton32(layer_state))
+        {
         case _SYM:
             reset_oneshot_layer();
             layer_move(_CODE);
@@ -70,18 +75,22 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
             break;
 
         default:
-            if (record->tap.count == 1) {
+            if (record->tap.count == 1)
+            {
                 mf_prev_layer = biton32(layer_state);
                 layer_move(_SYM);
             }
             break;
         }
-    } else {
+    }
+    else
+    {
         // single hold
 
         reset_oneshot_layer();
 
-        switch (biton32(layer_state)) {
+        switch (biton32(layer_state))
+        {
         case _SYM:
             layer_move(_CODE);
             break;
@@ -97,17 +106,23 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
         }
     }
 }
-void mf_on_sym_key_up(uint16_t *keycode, keyrecord_t *record) {
+void mf_on_sym_key_up(uint16_t *keycode, keyrecord_t *record)
+{
     // assume !record->event.pressed
 
-    switch (biton32(layer_state)) {
+    switch (biton32(layer_state))
+    {
     case _CODE:
     case _SYM:
-        if (timer_elapsed(mf_key_timer) < get_tapping_term(*keycode, record)) {
-            if (record->tap.count == 1) {
+        if (timer_elapsed(mf_key_timer) < get_tapping_term(*keycode, record))
+        {
+            if (record->tap.count == 1)
+            {
                 // handle releases before tapping term for SYM key (i.e.: taps)
                 set_oneshot_layer(biton32(layer_state), ONESHOT_START);
-            } else {
+            }
+            else
+            {
                 reset_oneshot_layer();
                 mf_reset_layer();
             }
@@ -131,17 +146,21 @@ void mf_on_sym_key_up(uint16_t *keycode, keyrecord_t *record) {
 /*
  * MAIN MF PROCESSING FUNCTION
  */
-bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
+bool mf_process_key(uint16_t keycode, keyrecord_t *record)
+{
     // skip all processing below if the leader key has been tapped
-    if (leading) {
+    if (leading)
+    {
         return true;
     }
 
-    if (record->event.pressed) {
+    if (record->event.pressed)
+    {
         mf_key_timer = timer_read();
     }
 
-    switch (keycode) {
+    switch (keycode)
+    {
     case _ACTION1:
         MF_TAP_HOLD_ONCE(HYPR(KC_F20), MEH(KC_F20));
         break;
@@ -246,8 +265,6 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case _SPACE:
-        /* MF_TAP_HOLD_ADVANCED( */
-        /*     KC_SPACE, true, KC_SPACE, LCMD(KC_TAB), false, KC_SPACE); */
         MF_TAP_HOLD_ADVANCED(
             KC_SPACE, true, KC_SPACE, KC_RSFT, true, KC_RSFT);
         break;
@@ -336,81 +353,107 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
 void(mf_handle_key_event)(
     uint16_t keycode, keyrecord_t *record, mf_key_config *key,
     void (*fn_down)(uint16_t *, keyrecord_t *),
-    void (*fn_up)(uint16_t *, keyrecord_t *)
-    ) {
+    void (*fn_up)(uint16_t *, keyrecord_t *))
+{
     //
     // function to handle multi-function keys
     //
-    if (fn_down && record->event.pressed) {
+    if (fn_down && record->event.pressed)
+    {
         (*fn_down)(&keycode, record);
     }
 
-    if (record->tap.count > 0) {
+    if (record->tap.count > 0)
+    {
         // key was tapped one or more times
 
-        if (record->tap.interrupted) {
-            if (record->event.pressed) {
+        if (record->tap.interrupted)
+        {
+            if (record->event.pressed)
+            {
                 // interrupt tap when key is pressed and still down
                 mf_do_interrupt(keycode, record, &key->tap);
             }
-        } else if (!record->event.pressed) {
+        }
+        else if (!record->event.pressed)
+        {
             // key up, release tap keycode
             mf_do_release(keycode, record, &key->tap);
             // reset mf_was_interrupted
             mf_was_interrupted = false;
-        } else if (record->event.pressed) {
+        }
+        else if (record->event.pressed)
+        {
             // key down, press tap keycode
             mf_do_action(keycode, record, &key->tap);
         }
-    } else {
+    }
+    else
+    {
         // key is being held or being released from a single hold
 
-        if (record->tap.interrupted) {
-            if (record->event.pressed) {
+        if (record->tap.interrupted)
+        {
+            if (record->event.pressed)
+            {
                 // hold interrupted
                 mf_do_interrupt(keycode, record, &key->hold);
             }
-        } else if (!record->event.pressed) {
+        }
+        else if (!record->event.pressed)
+        {
             // single hold up
             mf_do_release(keycode, record, &key->hold);
-        } else if (record->event.pressed) {
+        }
+        else if (record->event.pressed)
+        {
             // single hold down
 
             // if hold string is not set
             // and tap string or keycode is set, send that
-            if ((key->hold.str && (0 == strcmp(key->hold.str, "")))
-                && ((0 != strcmp(key->tap.str, "")) || key->tap.keycode)) {
+            if ((key->hold.str && (0 == strcmp(key->hold.str, ""))) && ((0 != strcmp(key->tap.str, "")) || key->tap.keycode))
+            {
                 // key is a string key and hold string
                 // is not defined; send tap string
                 mf_do_action(keycode, record, &key->tap);
-            } else {
+            }
+            else
+            {
                 mf_do_action(keycode, record, &key->hold);
             }
         }
     }
 
-    if (fn_up && !record->event.pressed) {
+    if (fn_up && !record->event.pressed)
+    {
         (*fn_up)(&keycode, record);
     }
 }
 
-void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event) {
-    if (event->keycode) {
+void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event)
+{
+    if (event->keycode)
+    {
         // handle caps word
         mf_handle_caps_word(event->keycode);
 
-        if (event->do_register) {
+        if (event->do_register)
+        {
             mf_indicate_success(&event->keycode);
 
             // register the keycode
             register_code16(event->keycode);
-        } else {
+        }
+        else
+        {
             mf_indicate_success(&event->keycode);
 
             // tap the keycode
             tap_code16(event->keycode);
         }
-    } else if (event->str && (0 != strcmp(event->str, ""))) {
+    }
+    else if (event->str && (0 != strcmp(event->str, "")))
+    {
         my_clear_all_mods();
         send_string(event->str);
     }
@@ -418,15 +461,19 @@ void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_con
     mf_check_disable_oneshot(record, &keycode, &event->keycode);
 }
 
-void mf_handle_caps_word(uint16_t keycode) {
-    if (is_caps_word_on() && !caps_word_press_user(keycode)) {
+void mf_handle_caps_word(uint16_t keycode)
+{
+    if (is_caps_word_on() && !caps_word_press_user(keycode))
+    {
         caps_word_off();
     }
 }
 
 void mf_do_release(uint16_t keycode, keyrecord_t *record,
-    struct mf_key_event_config *event) {
-    if (event->do_register && event->keycode) {
+                   struct mf_key_event_config *event)
+{
+    if (event->do_register && event->keycode)
+    {
         // unregister the keycode
         unregister_code16(event->keycode);
     }
@@ -435,18 +482,25 @@ void mf_do_release(uint16_t keycode, keyrecord_t *record,
 }
 
 void mf_do_interrupt(uint16_t keycode, keyrecord_t *record,
-    struct mf_key_event_config *event) {
-    if (event->keycode) {
+                     struct mf_key_event_config *event)
+{
+    if (event->keycode)
+    {
         // handle caps word
         mf_handle_caps_word(event->keycode);
 
         // send interrupt key tap if set, otherwise send the tap key
-        if (event->interrupt_keycode) {
+        if (event->interrupt_keycode)
+        {
             tap_code16(event->interrupt_keycode);
-        } else {
+        }
+        else
+        {
             tap_code16(event->keycode);
         }
-    } else if (event->str && (0 != strcmp(event->str, ""))) {
+    }
+    else if (event->str && (0 != strcmp(event->str, "")))
+    {
         my_clear_all_mods();
         send_string(event->str);
     }
@@ -460,8 +514,10 @@ void mf_do_interrupt(uint16_t keycode, keyrecord_t *record,
 /***                        ***/
 
 // set tapping term per key
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
+{
+    switch (keycode)
+    {
     case _SYM_KEY:
         return 140;
 
@@ -485,8 +541,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 // set force_hold per key
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record)
+{
+    switch (keycode)
+    {
     case _KC_E: // apostrophe when held
         return true;
 
@@ -495,15 +553,17 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool caps_word_press_user(uint16_t keycode) {
-    switch (keycode) {
+bool caps_word_press_user(uint16_t keycode)
+{
+    switch (keycode)
+    {
     // Keycodes that continue Caps Word, with shift applied.
-    case KC_A... KC_Z:
+    case KC_A ... KC_Z:
         add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to the next key.
         return true;
 
     // Keycodes that continue Caps Word, without shifting.
-    case KC_1... KC_0:
+    case KC_1 ... KC_0:
     case KC_BSPC:
     case KC_DEL:
     case KC_UNDS:
@@ -517,8 +577,10 @@ bool caps_word_press_user(uint16_t keycode) {
     }
 }
 
-void mf_indicate_success(uint16_t *keycode) {
-    switch (*keycode) {
+void mf_indicate_success(uint16_t *keycode)
+{
+    switch (*keycode)
+    {
     case KC_MEDIA_NEXT_TRACK:
     case KC_MEDIA_PREV_TRACK:
         my_indicate_success();
@@ -529,13 +591,19 @@ void mf_indicate_success(uint16_t *keycode) {
         break;
     }
 }
-void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, uint16_t *keycode_sent) {
-    if (is_oneshot_layer_active()) {
-        switch (*keycode_sent) {
+void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, uint16_t *keycode_sent)
+{
+    if (is_oneshot_layer_active())
+    {
+        switch (*keycode_sent)
+        {
         case KC_SPACE:
-            if (!mf_was_interrupted) {
+            if (!mf_was_interrupted)
+            {
                 return;
-            } else {
+            }
+            else
+            {
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
                 reset_oneshot_layer();
                 mf_reset_layer();
@@ -543,7 +611,8 @@ void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, ui
             break;
         }
 
-        switch (*keycode_pressed) {
+        switch (*keycode_pressed)
+        {
         case KC_LSFT:
         case KC_LCMD:
         case KC_LCTL:
@@ -556,7 +625,8 @@ void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, ui
             return;
         }
 
-        if (!record->event.pressed) {
+        if (!record->event.pressed)
+        {
             clear_oneshot_layer_state(ONESHOT_PRESSED);
             reset_oneshot_layer();
             mf_reset_layer();

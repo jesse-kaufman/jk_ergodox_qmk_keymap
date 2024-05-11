@@ -6,15 +6,12 @@
 
 enum combos {
     COMBO_BACKSPACE,
-    COMBO_BACKSPACE_ALT,
     COMBO_ESC,
     COMBO_TAB,
-    COMBO_TAB_ALT,
     COMBO_CUT,
     COMBO_COPY,
     COMBO_PASTE,
     COMBO_SAVE,
-    COMBO_SELECT_ALL,
     COMBO_LAST_APP_ALT,
     COMBO_LAST_APP,
     COMBO_DQUOTE,
@@ -32,18 +29,18 @@ uint16_t combo_key_timer;
 uint16_t COMBO_LEN = COMBO_COUNT;
 
 const uint16_t PROGMEM combo_backspace[] = {KC_N, _KC_E, COMBO_END};
-const uint16_t PROGMEM combo_backspace_alt[] = {_KC_K, KC_N, COMBO_END};
+/* const uint16_t PROGMEM combo_backspace_alt[] = {_KC_K, KC_N, COMBO_END}; */
 
 const uint16_t PROGMEM combo_esc[] = {KC_F, KC_W, COMBO_END};
 const uint16_t PROGMEM combo_tab[] = {_KC_S, _KC_T, COMBO_END};
-const uint16_t PROGMEM combo_tab_alt[] = {_KC_T, KC_G, COMBO_END};
+/* const uint16_t PROGMEM combo_tab_alt[] = {_KC_T, KC_G, COMBO_END}; */
 
 const uint16_t PROGMEM combo_cut[] = {KC_X, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_copy[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_paste[] = {KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_save[] = {KC_F, KC_P, COMBO_END};
 
-const uint16_t PROGMEM combo_select_all[] = {KC_Z, KC_X, KC_C, KC_D, COMBO_END};
+/* const uint16_t PROGMEM combo_select_all[] = {KC_Z, KC_X, KC_C, KC_D, COMBO_END}; */
 
 const uint16_t PROGMEM combo_dquote[] = {_KC_E, KC_I, COMBO_END};
 
@@ -60,15 +57,12 @@ const uint16_t PROGMEM combo_bootloader[] = {MEH(KC_F13), KC_Z, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     [COMBO_BACKSPACE] = COMBO_ACTION(combo_backspace),
-    /* [COMBO_BACKSPACE_ALT] = COMBO_ACTION(combo_backspace_alt), */
     [COMBO_ESC] = COMBO_ACTION(combo_esc),
     [COMBO_TAB] = COMBO_ACTION(combo_tab),
-    /* [COMBO_TAB_ALT] = COMBO_ACTION(combo_tab_alt), */
     [COMBO_CUT] = COMBO_ACTION(combo_cut),
     [COMBO_COPY] = COMBO_ACTION(combo_copy),
     [COMBO_PASTE] = COMBO_ACTION(combo_paste),
     [COMBO_SAVE] = COMBO_ACTION(combo_save),
-    [COMBO_SELECT_ALL] = COMBO_ACTION(combo_select_all),
     [COMBO_DQUOTE] = COMBO_ACTION(combo_dquote),
     [COMBO_RESET_ZOOM] = COMBO_ACTION(combo_reset_zoom),
     [COMBO_MUTE] = COMBO_ACTION(combo_mute),
@@ -89,16 +83,13 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         return;
     }
 
-    if ((combo_index != COMBO_BACKSPACE)
-        && (combo_index != COMBO_BACKSPACE_ALT)) {
+    if (combo_index != COMBO_BACKSPACE) {
         caps_word_off();
     }
 
     if ((combo_index != COMBO_BACKSPACE)
-        && (combo_index != COMBO_BACKSPACE_ALT)
         && (combo_index != COMBO_ESC)
         && (combo_index != COMBO_TAB)
-        && (combo_index != COMBO_TAB_ALT)
         && (combo_index != COMBO_PASTE)
         && (combo_index != COMBO_COPY)
         && (combo_index != COMBO_SAVE)) {
@@ -107,7 +98,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
     if (pressed) {
         switch (combo_index) {
-        case COMBO_BACKSPACE_ALT:
         case COMBO_BACKSPACE:
             register_code(KC_BSPACE);
             break;
@@ -116,7 +106,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             tap_code(KC_ESC);
             break;
 
-        case COMBO_TAB_ALT:
         case COMBO_TAB:
             register_code(KC_TAB);
             break;
@@ -148,11 +137,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case COMBO_SAVE:
             tap_code16(LCMD(KC_S));
             my_flash_twice();
-            break;
-
-        case COMBO_SELECT_ALL:
-            tap_code16(LCMD(KC_A));
-            my_indicate_success();
             break;
 
         case COMBO_LAST_APP_ALT:
@@ -203,12 +187,10 @@ bool process_combo_key_release(
     // process release
     //
     switch (combo_index) {
-    case COMBO_BACKSPACE_ALT:
     case COMBO_BACKSPACE:
         unregister_code(KC_BSPACE);
         break;
 
-    case COMBO_TAB_ALT:
     case COMBO_TAB:
         unregister_code(KC_TAB);
         break;
@@ -222,7 +204,6 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
     case COMBO_ESC:
     case COMBO_SAVE:
     case COMBO_CUT:
-    case COMBO_SELECT_ALL:
     case COMBO_LAST_APP_ALT:
     case COMBO_LAST_APP:
         return 200;
@@ -242,7 +223,7 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
     case COMBO_COPY:
     case COMBO_TAB:
     case COMBO_BACKSPACE:
-        return 5;
+        return 4;
 
     // DEFAULT
     case COMBO_PAUSE:
@@ -250,8 +231,6 @@ bool get_combo_term(uint16_t index, combo_t *combo) {
     case COMBO_HOME:
     case COMBO_END_KEY:
     case COMBO_MUTE:
-    case COMBO_BACKSPACE_ALT:
-    case COMBO_TAB_ALT:
     default:
         return 25;
     }
@@ -263,7 +242,6 @@ bool get_combo_must_hold(uint16_t index, combo_t *combo) {
     case COMBO_COPY:
     case COMBO_PASTE:
     case COMBO_SAVE:
-    case COMBO_SELECT_ALL:
     case COMBO_LAST_APP_ALT:
     case COMBO_LAST_APP:
     case COMBO_BOOTLOADER:

@@ -4,10 +4,12 @@
 
 LEADER_EXTERNS();
 
-void my_leader_matrix_scan_user(void) {
-	LEADER_DICTIONARY() {
-		did_leader_succeed = leading = false;
-		leader_start();
+void my_leader_matrix_scan_user(void)
+{
+    LEADER_DICTIONARY()
+    {
+        did_leader_succeed = leading = false;
+        leader_start();
 
         // SPOTLIGHT
         my_key_seq(KC_LEAD, 0, 0, 0, 0, LCMD(KC_SPACE));
@@ -75,8 +77,8 @@ void my_leader_matrix_scan_user(void) {
         // SYSTEM SETTINGS
         my_key_seq(KC_S, KC_Y, KC_S, 0, 0, HYPR(KC_Q));
 
-		leader_end();
-	}
+        leader_end();
+    }
 }
 
 void my_key_seq(uint16_t kc1, uint16_t kc2, uint16_t kc3, uint16_t kc4, uint16_t kc5, uint16_t tap_kc)
@@ -130,49 +132,60 @@ void leader_start(void)
     ergodox_led_all_on();
 }
 
-bool is_leader_active(void) {
-	return leading;
+bool is_leader_active(void)
+{
+    return leading;
 }
 
-bool is_leader_key_valid(uint16_t keycode) {
-	if (keycode >= KC_A && keycode <= KC_Z) {
-		return true;
-	}
-	else {
-		return false;
-	}
+bool is_leader_key_valid(uint16_t keycode)
+{
+    if (keycode >= KC_A && keycode <= KC_Z)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
+void leader_end(void)
+{
+    uint8_t seq = 0;
+    bool spotlight_active = false;
 
-void leader_end(void) {
-	uint8_t seq = 0;
-	bool spotlight_active = false;
+    if (did_leader_succeed)
+    {
+        // If any sequence was matched, did_leader_succeed will have
+        // been set to true up in the matrix_scan_user function.
+        // Put your code for a matched leader key sequence here.
+        my_indicate_success();
+    }
+    else
+    {
+        // If no sequence was matched, did_leader_succeed will not
+        // have been set to true anywhere, so we'll end up here.
+        // Put your code for an unmatched leader key sequence here.
+        // send hotkey sequence
 
-	if (did_leader_succeed) {
-		// If any sequence was matched, did_leader_succeed will have
-		// been set to true up in the matrix_scan_user function.
-		// Put your code for a matched leader key sequence here.
-		my_indicate_success();
-	} else {
-		// If no sequence was matched, did_leader_succeed will not
-		// have been set to true anywhere, so we'll end up here.
-		// Put your code for an unmatched leader key sequence here.
-		// send hotkey sequence
+        while (seq < 5)
+        {
+            if (leader_sequence[seq])
+            {
+                if (is_leader_key_valid(leader_sequence[seq]))
+                {
+                    if (!spotlight_active)
+                    {
+                        tap_code16(LCMD(KC_SPACE));
+                        wait_ms(70);
+                        spotlight_active = true;
+                    }
+                    tap_code16(leader_sequence[seq]);
+                }
+            }
+            seq++;
+        }
+    }
 
-		while (seq < 5) {
-			if (leader_sequence[seq]) {
-				if (is_leader_key_valid(leader_sequence[seq])) {
-					if (!spotlight_active) {
-						tap_code16(LCMD(KC_SPACE));
-						wait_ms(70);
-						spotlight_active = true;
-					}
-					tap_code16( leader_sequence[seq] );
-				}
-			}
-			seq++;
-		}
-	}
-
-	ergodox_led_all_off();
+    ergodox_led_all_off();
 }
