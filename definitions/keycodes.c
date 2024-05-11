@@ -194,18 +194,22 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record)
         break;
 
     case _PAREN:
+        my_clear_all_mods();
         MF_STR_TAP_HOLD("()" SS_TAP(X_LEFT), "''" SS_TAP(X_LEFT));
         break;
 
     case _CBRACKET:
+        my_clear_all_mods();
         MF_STR_TAP_HOLD("{}" SS_TAP(X_LEFT), "[]" SS_TAP(X_LEFT));
         break;
 
     case _BRACKET:
+        my_clear_all_mods();
         MF_STR_TAP_HOLD("[]" SS_TAP(X_LEFT), "{}" SS_TAP(X_LEFT));
         break;
 
     case _BEG_CBLOCK:
+        my_clear_all_mods();
         MF_STR_TAP_HOLD("/* ", "/**" SS_TAP(X_ENTER));
         break;
 
@@ -249,10 +253,12 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record)
         break;
 
     case _LTEQ:
+        my_clear_all_mods();
         MF_TAP_HOLD_MIXED(KC_LABK, "", MF_NOKEY, "<=");
         break;
 
     case _GTEQ:
+        my_clear_all_mods();
         MF_TAP_HOLD_MIXED(KC_RABK, "", MF_NOKEY, ">=");
         break;
 
@@ -270,18 +276,22 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record)
         break;
 
     case _DOT:
+        my_clear_all_mods();
         MF_TAP_NO_REPEAT_HOLD(KC_DOT, KC_EXLM);
         break;
 
     case _EQUAL:
+        my_clear_all_mods();
         MF_TAP_HOLD_ONCE(KC_EQUAL, LOPT(LSFT(KC_MINUS)));
         break;
 
     case _DASH:
+        my_clear_all_mods();
         MF_TAP_HOLD_ONCE(KC_MINUS, LOPT(KC_MINUS));
         break;
 
     case _KC_HASH:
+        my_clear_all_mods();
         MF_TAP_HOLD_MIXED(KC_HASH, "", MF_NOKEY, "#!");
         break;
 
@@ -292,6 +302,7 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record)
 
     case _SCRNSHT1:
         MF_TAP_HOLD_ONCE(SCMD(KC_4), SCMD(KC_3));
+        break;
 
     case _ZOOM_IN:
         my_clear_all_mods();
@@ -323,14 +334,17 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record)
         break;
 
     case _KC_3:
+        my_clear_all_mods();
         MF_TAP_NO_REPEAT_HOLD(KC_3, KC_DOT);
         break;
 
     case _LPRN:
+        my_clear_all_mods();
         MF_TAP_HOLD_MIXED(KC_LPRN, MF_NOKEY, MF_NOKEY, "()" SS_TAP(X_LEFT)); // NOLINT
         break;
 
     case _RPRN:
+        my_clear_all_mods();
         MF_TAP_NO_REPEAT_HOLD(KC_RPRN, KC_RBRACKET);
         break;
 
