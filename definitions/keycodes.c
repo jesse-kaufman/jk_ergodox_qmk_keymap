@@ -6,8 +6,7 @@
 uint8_t mf_prev_layer = 0;
 bool mf_was_interrupted = false;
 
-void mf_handle_key_event(uint16_t keycode, keyrecord_t *record, mf_key_config *key, void (*fn_down)(uint16_t *,
-    keyrecord_t *), void (*fn_up)(uint16_t *, keyrecord_t *));
+void mf_handle_key_event(uint16_t keycode, keyrecord_t *record, mf_key_config *key, void (*fn_down)(uint16_t *, keyrecord_t *), void (*fn_up)(uint16_t *, keyrecord_t *));
 void mf_do_action(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_do_release(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
 void mf_do_interrupt(uint16_t keycode, keyrecord_t *record, struct mf_key_event_config *event);
@@ -15,7 +14,25 @@ void mf_handle_caps_word(uint16_t keycode);
 void mf_indicate_success(uint16_t *keycode);
 void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, uint16_t *keycode_sent);
 
-void my_clear_all_mods(void) {
+void mf_reset_layer(void)
+{
+    if (mf_prev_layer)
+    {
+        layer_move(mf_prev_layer);
+    }
+    else
+    {
+        layer_move(_BASE);
+    }
+}
+
+bool mf_str_tap(uint16_t keycode, keyrecord_t *record, const char *str)
+{
+    MF_STR_ADVANCED(str, "");
+}
+
+void my_clear_all_mods(void)
+{
     clear_mods();
     clear_weak_mods();
     clear_oneshot_mods();
@@ -49,7 +66,7 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
 
         case _CODE:
             reset_oneshot_layer();
-            MF_RESET_LAYER();
+            mf_reset_layer();
             break;
 
         default:
@@ -70,7 +87,7 @@ void mf_on_sym_key_down(uint16_t *keycode, keyrecord_t *record) {
             break;
 
         case _CODE:
-            MF_RESET_LAYER();
+            mf_reset_layer();
             break;
 
         default:
@@ -92,17 +109,17 @@ void mf_on_sym_key_up(uint16_t *keycode, keyrecord_t *record) {
                 set_oneshot_layer(biton32(layer_state), ONESHOT_START);
             } else {
                 reset_oneshot_layer();
-                MF_RESET_LAYER();
+                mf_reset_layer();
             }
             return;
         }
 
-        MF_RESET_LAYER();
+        mf_reset_layer();
         break;
 
     case _BASE:
         reset_oneshot_layer();
-        MF_RESET_LAYER();
+        mf_reset_layer();
         break;
     }
 }
@@ -138,19 +155,23 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case _CUR_DIR:
-        MF_STR_TAP("./");
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "./");
         break;
 
     case _UP_DIR:
-        MF_STR_TAP("../");
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "../");
         break;
 
     case _NIX_HOME:
-        MF_STR_TAP("~/");
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "~/");
         break;
 
     case _COMMENT:
-        MF_STR_TAP("// ");
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "// ");
         break;
 
     case _PAREN:
@@ -170,15 +191,18 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case _END_CBLOCK:
-        MF_STR_TAP("*/");
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "*/");
         break;
 
     case _SARROW:
-        MF_STR_TAP("->");
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "->");
         break;
 
     case _DARROW:
-        MF_STR_TAP("=>");
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "=>");
         break;
 
     case _NEXT_DESK:
@@ -196,11 +220,13 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case _HTML_OPEN:
-        MF_STR_TAP("<>" SS_TAP(X_LEFT));
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "<>" SS_TAP(X_LEFT));
         break;
 
     case _HTML_CLOSE:
-        MF_STR_TAP("</>" SS_TAP(X_LEFT));
+        my_clear_all_mods();
+        mf_str_tap(keycode, record, "</>" SS_TAP(X_LEFT));
         break;
 
     case _LTEQ:
@@ -512,7 +538,7 @@ void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, ui
             } else {
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
                 reset_oneshot_layer();
-                MF_RESET_LAYER();
+                mf_reset_layer();
             }
             break;
         }
@@ -533,7 +559,7 @@ void mf_check_disable_oneshot(keyrecord_t *record, uint16_t *keycode_pressed, ui
         if (!record->event.pressed) {
             clear_oneshot_layer_state(ONESHOT_PRESSED);
             reset_oneshot_layer();
-            MF_RESET_LAYER();
+            mf_reset_layer();
         }
     }
 }

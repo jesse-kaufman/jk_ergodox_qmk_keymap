@@ -9,80 +9,125 @@ void my_leader_matrix_scan_user(void) {
 		did_leader_succeed = leading = false;
 		leader_start();
 
-		// SPOTLIGHT
-		MY_KEY_SEQ(KC_LEAD, 0, 0, 0, 0, LCMD(KC_SPACE));
+        // SPOTLIGHT
+        my_key_seq(KC_LEAD, 0, 0, 0, 0, LCMD(KC_SPACE));
 
-		// CLICKUP
-		MY_KEY_SEQ(KC_C, KC_U, 0, 0, 0, HYPR(KC_I));
+        // EDGE
+        my_key_seq(KC_E, 0, 0, 0, 0, HYPR(KC_I));
 
-		// TERMINAL
-		MY_KEY_SEQ(KC_T, 0, 0, 0, 0, HYPR(KC_T));
+        // TERMINAL
+        my_key_seq(KC_T, 0, 0, 0, 0, HYPR(KC_T));
 
-		// SAFARI
-		MY_KEY_SEQ(KC_S, 0, 0, 0, 0, HYPR(KC_S));
+        // SAFARI
+        my_key_seq(KC_S, 0, 0, 0, 0, HYPR(KC_S));
 
-		// SAFARI TECH EDITION
-		MY_KEY_SEQ(KC_S, KC_T, 0, 0, 0, HYPR(KC_E));
+        // SAFARI TECH EDITION
+        my_key_seq(KC_S, KC_T, 0, 0, 0, HYPR(KC_E));
 
-		// MS OUTLOOK
-		MY_KEY_SEQ(KC_M, KC_S, KC_O, 0, 0, HYPR(KC_O));
+        // MS OUTLOOK
+        my_key_seq(KC_M, KC_S, KC_O, 0, 0, HYPR(KC_O));
 
-		// MS TEAMS
-		MY_KEY_SEQ(KC_M, KC_S, KC_T, 0, 0, HYPR(KC_A));
+        // MS TEAMS
+        my_key_seq(KC_M, KC_S, KC_T, 0, 0, HYPR(KC_A));
 
-		// REMINDERS
-		MY_KEY_SEQ(KC_R, KC_E, 0, 0, 0, HYPR(KC_R));
+        // REMINDERS
+        my_key_seq(KC_R, KC_E, 0, 0, 0, HYPR(KC_R));
 
-		// PHOTOS
-		MY_KEY_SEQ(KC_P, KC_H, KC_O, 0, 0, HYPR(KC_P));
+        // PHOTOS
+        my_key_seq(KC_P, KC_H, KC_O, 0, 0, HYPR(KC_P));
 
-		// NOTES
-		MY_KEY_SEQ(KC_N, KC_O, 0, 0, 0, HYPR(KC_N));
+        // NOTES
+        my_key_seq(KC_N, KC_O, 0, 0, 0, HYPR(KC_N));
 
-		// MUSIC
-		MY_KEY_SEQ(KC_MEDIA_PLAY_PAUSE, 0, 0, 0, 0, HYPR(KC_U));
+        // MUSIC
+        my_key_seq(KC_MEDIA_PLAY_PAUSE, 0, 0, 0, 0, HYPR(KC_U));
 
-		// MESSAGES
-		MY_KEY_SEQ(KC_M, KC_E, KC_S, 0, 0, HYPR(KC_B));
+        // MESSAGES
+        my_key_seq(KC_M, KC_E, KC_S, 0, 0, HYPR(KC_B));
 
-		// MAIL
-		MY_KEY_SEQ(KC_M, 0, 0, 0, 0, HYPR(KC_M));
+        // MAIL
+        my_key_seq(KC_M, 0, 0, 0, 0, HYPR(KC_M));
 
-		// LIGHTROOM
-		MY_KEY_SEQ(KC_L, KC_R, 0, 0, 0, HYPR(KC_L));
+        // LIGHTROOM
+        my_key_seq(KC_L, KC_R, 0, 0, 0, HYPR(KC_L));
 
-		// FINDER
-		MY_KEY_SEQ(KC_F, 0, 0, 0, 0, HYPR(KC_D));
+        // FINDER
+        my_key_seq(KC_F, 0, 0, 0, 0, HYPR(KC_D));
 
-		// CHROME
-		MY_KEY_SEQ(KC_C, KC_H, KC_R, 0, 0, HYPR(KC_G));
+        // CHROME
+        my_key_seq(KC_C, KC_H, KC_R, 0, 0, HYPR(KC_G));
 
-		// CALENDAR
-		MY_KEY_SEQ(KC_C, KC_A, KC_L, 0, 0, HYPR(KC_C));
+        // CALENDAR
+        my_key_seq(KC_C, KC_A, KC_L, 0, 0, HYPR(KC_C));
 
-		// FB MESSENGER
-		MY_KEY_SEQ(KC_F, KC_B, 0, 0, 0, HYPR(KC_F));
+        // FB MESSENGER
+        my_key_seq(KC_F, KC_B, 0, 0, 0, HYPR(KC_F));
 
-		// ATOM
-		MY_KEY_SEQ(KC_A, KC_T, 0, 0, 0, HYPR(KC_K));
+        // VISUAL STUDIO CODE
+        my_key_seq(KC_V, 0, 0, 0, 0, HYPR(KC_K));
 
-		// OPEN WORK APPS
-		MY_KEY_SEQ(KC_W, KC_O, 0, 0, 0, HYPR(KC_W));
+        // OPEN WORK APPS
+        my_key_seq(KC_W, KC_O, 0, 0, 0, HYPR(KC_W));
 
-		// OPEN WORK APPS
-		MY_KEY_SEQ(KC_W, KC_C, 0, 0, 0, HYPR(KC_X));
+        // CLOSE WORK APPS
+        my_key_seq(KC_W, KC_C, 0, 0, 0, HYPR(KC_X));
 
-		// SYSTEM SETTINGS
-		MY_KEY_SEQ(KC_S, KC_Y, KC_S, 0, 0, HYPR(KC_Q))
+        // SYSTEM SETTINGS
+        my_key_seq(KC_S, KC_Y, KC_S, 0, 0, HYPR(KC_Q));
 
 		leader_end();
 	}
 }
 
-void leader_start(void) {
-	my_clear_all_mods();
-	ergodox_led_all_set(LED_BRIGHTNESS_LO);
-	ergodox_led_all_on();
+void my_key_seq(uint16_t kc1, uint16_t kc2, uint16_t kc3, uint16_t kc4, uint16_t kc5, uint16_t tap_kc)
+{
+    if (kc5)
+    {
+        SEQ_FIVE_KEYS(kc1, kc2, kc3, kc4, kc5)
+        {
+            tap_code16(tap_kc);
+            did_leader_succeed = true;
+        }
+    }
+    else if (kc4)
+    {
+        SEQ_FOUR_KEYS(kc1, kc2, kc3, kc4)
+        {
+            tap_code16(tap_kc);
+            did_leader_succeed = true;
+        }
+    }
+    else if (kc3)
+    {
+        SEQ_THREE_KEYS(kc1, kc2, kc3)
+        {
+            tap_code16(tap_kc);
+            did_leader_succeed = true;
+        }
+    }
+    else if (kc2)
+    {
+        SEQ_TWO_KEYS(kc1, kc2)
+        {
+            tap_code16(tap_kc);
+            did_leader_succeed = true;
+        }
+    }
+    else if (kc1)
+    {
+        SEQ_ONE_KEY(kc1)
+        {
+            tap_code16(tap_kc);
+            did_leader_succeed = true;
+        }
+    };
+}
+
+void leader_start(void)
+{
+    my_clear_all_mods();
+    ergodox_led_all_set(LED_BRIGHTNESS_LO);
+    ergodox_led_all_on();
 }
 
 bool is_leader_active(void) {

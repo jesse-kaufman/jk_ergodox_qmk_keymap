@@ -166,13 +166,15 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record);
         ; MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
     hold_kc, hold_do_register, hold_interrupt_kc);
 
-#define MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc, \
-                    hold_kc, hold_do_register, hold_interrupt_kc) \
-        ; mf_handle_key_event(keycode, record, &(mf_key_config) { \
-        .tap = {.keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register}, \
-        .hold = {.keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register}, \
-    }, MF_NOFN, MF_NOFN); \
-        return false;
+#define MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc,                                                                                      \
+                    hold_kc, hold_do_register, hold_interrupt_kc)                                                                                   \
+    ;                                                                                                                                               \
+    mf_handle_key_event(keycode, record, &(mf_key_config){                                                                                          \
+                                             .tap = {.keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register},     \
+                                             .hold = {.keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register}, \
+                                         },                                                                                                         \
+                        MF_NOFN, MF_NOFN);                                                                                                          \
+    return false;
 
 /*
  * TAP/HOLD STRING MACROS
@@ -183,12 +185,14 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 #define MF_STR_TAP(str) \
         ; MF_STR_ADVANCED(str, "");
 
-#define MF_STR_ADVANCED(tap_str, hold_str) \
-        ; mf_handle_key_event(keycode, record, &(mf_key_config) { \
-        .tap = {.str = tap_str, .keycode = MF_NOKEY}, \
-        .hold = {.str = hold_str, .keycode = MF_NOKEY}, \
-    }, MF_NOFN, MF_NOFN); \
-        return false;
+#define MF_STR_ADVANCED(tap_str, hold_str)                                                   \
+    ;                                                                                        \
+    mf_handle_key_event(keycode, record, &(mf_key_config){                                   \
+                                             .tap = {.str = tap_str, .keycode = MF_NOKEY},   \
+                                             .hold = {.str = hold_str, .keycode = MF_NOKEY}, \
+                                         },                                                  \
+                        MF_NOFN, MF_NOFN);                                                   \
+    return false;
 
 /*
  * TAP/HOLD FUNCTION MACROS
@@ -204,17 +208,11 @@ bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 /*
  * MIXED FUNCTION MACROS
  */
-#define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str) \
-        ; mf_handle_key_event(keycode, record, &(mf_key_config) { \
-        .tap = {.str = tap_str, .keycode = tap_kc}, \
-        .hold = {.str = hold_str, .keycode = hold_kc}, \
-    }, MF_NOFN, MF_NOFN); \
-        return false;
-
-#define MF_RESET_LAYER() \
-        if (mf_prev_layer) { \
-            layer_move(mf_prev_layer); \
-        } \
-        else { \
-            layer_move(_BASE); \
-        }
+#define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str)                               \
+    ;                                                                                       \
+    mf_handle_key_event(keycode, record, &(mf_key_config){                                  \
+                                             .tap = {.str = tap_str, .keycode = tap_kc},    \
+                                             .hold = {.str = hold_str, .keycode = hold_kc}, \
+                                         },                                                 \
+                        MF_NOFN, MF_NOFN);                                                  \
+    return false;
