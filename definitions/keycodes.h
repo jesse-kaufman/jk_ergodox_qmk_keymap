@@ -149,6 +149,8 @@ typedef struct mf_key_config
 
 void mf_disable_oneshot_layer(void);
 bool mf_process_key(uint16_t keycode, keyrecord_t *record);
+void mf_reset_layer(void);
+bool mf_str_tap(uint16_t keycode, keyrecord_t *record, const char *str);
 
 /*
  * TAP/HOLD KEYCODE MACROS
