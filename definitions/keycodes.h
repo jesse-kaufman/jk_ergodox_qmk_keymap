@@ -42,45 +42,43 @@ uint16_t mf_key_timer;
 #define _SCRNSHT2 SCMD(KC_5)
 
 // define these first, to prevent collisions with custom_keycodes
-enum
-{
-    MF_APP_CONTROL = EZ_SAFE_RANGE,
-    MF_ZOOM_IN,
-    MF_ZOOM_OUT,
-    MF_FN_S,
-    MF_FN_X,
-    MF_BRACKET,
-    MF_QUOTE,
-    MF_KEY_COUNT,
-    MF_SARROW,
-    MF_DARROW,
-    MF_LAYERS,
-    MF_SCRNSHT1,
-    MF_APP_TAPS,
-    MF_NEW_MIN,
-    MF_APP_WINS,
-    MF_NEXT_DESK,
-    MF_PREV_DESK,
-    MF_TAB_CLOSE_UN,
-    MF_PAREN,
-    MF_SYM_KEY,
-    MF_CBRACKET,
+enum {
+  MF_APP_CONTROL = EZ_SAFE_RANGE,
+  MF_ZOOM_IN,
+  MF_ZOOM_OUT,
+  MF_FN_S,
+  MF_FN_X,
+  MF_BRACKET,
+  MF_QUOTE,
+  MF_KEY_COUNT,
+  MF_SARROW,
+  MF_DARROW,
+  MF_LAYERS,
+  MF_SCRNSHT1,
+  MF_APP_TAPS,
+  MF_NEW_MIN,
+  MF_APP_WINS,
+  MF_NEXT_DESK,
+  MF_PREV_DESK,
+  MF_TAB_CLOSE_UN,
+  MF_PAREN,
+  MF_SYM_KEY,
+  MF_CBRACKET,
 
-    MF_SAFE_RANGE,
+  MF_SAFE_RANGE,
 };
 
-enum custom_keycodes
-{
-    _NIX_HOME = MF_SAFE_RANGE,
-    _BEG_CBLOCK,
-    _END_CBLOCK,
-    _COMMENT,
-    _HTML_OPEN,
-    _HTML_CLOSE,
-    _CUR_DIR,
-    _UP_DIR,
+enum custom_keycodes {
+  _NIX_HOME = MF_SAFE_RANGE,
+  _BEG_CBLOCK,
+  _END_CBLOCK,
+  _COMMENT,
+  _HTML_OPEN,
+  _HTML_CLOSE,
+  _CUR_DIR,
+  _UP_DIR,
 
-    CUSTOM_KEYCODE_COUNT,
+  CUSTOM_KEYCODE_COUNT,
 };
 
 // CUSTOM MULTI-FUNCTION KEYS
@@ -133,96 +131,83 @@ enum custom_keycodes
 /**
  * STRUCTS FOR MULTIFUNCTION KEYS
  */
-struct mf_key_event_config
-{
-    uint16_t keycode;
-    uint16_t interrupt_keycode;
-    const char *str;
-    bool do_register;
+struct mf_key_event_config {
+  uint16_t keycode;
+  uint16_t interrupt_keycode;
+  const char *str;
+  bool do_register;
 };
 
-typedef struct mf_key_config
-{
-    struct mf_key_event_config tap;
-    struct mf_key_event_config hold;
+typedef struct mf_key_config {
+  struct mf_key_event_config tap;
+  struct mf_key_event_config hold;
 } mf_key_config;
 
 void mf_disable_oneshot_layer(void);
 bool mf_process_key(uint16_t keycode, keyrecord_t *record);
 void mf_reset_layer(void);
-bool mf_str_tap(uint16_t keycode, keyrecord_t *record, const char *str);
 
-/*
- * TAP/HOLD KEYCODE MACROS
- */
-#define MF_TAP_HOLD(tap_kc, hold_kc)                   \
-    ;                                                  \
-    MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-                hold_kc, MF_DEF_REGISTER_HOLD, MF_NOKEY);
+void mf_str_advanced(uint16_t keycode, keyrecord_t *record, const char *tap_str,
+                     const char *hold_str);
 
-#define MF_TAP_NO_REPEAT_HOLD(tap_kc, hold_kc)         \
-    ;                                                  \
-    MF_ADVANCED(tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, \
-                hold_kc, false, MF_NOKEY);
-
-#define MF_TAP_HOLD_ONCE(tap_kc, hold_kc) \
-    ;                                     \
-    MF_ADVANCED(tap_kc, false, MF_NOKEY,  \
-                hold_kc, false, MF_NOKEY);
-
-#define MF_TAP_HOLD_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc,    \
-                             hold_kc, hold_do_register, hold_interrupt_kc) \
-    ;                                                                      \
-    MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc,                 \
-                hold_kc, hold_do_register, hold_interrupt_kc);
-
-#define MF_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc,                                                                                      \
-                    hold_kc, hold_do_register, hold_interrupt_kc)                                                                                   \
-    ;                                                                                                                                               \
-    mf_handle_key_event(keycode, record, &(mf_key_config){                                                                                          \
-                                             .tap = {.keycode = tap_kc, .interrupt_keycode = tap_interrupt_kc, .do_register = tap_do_register},     \
-                                             .hold = {.keycode = hold_kc, .interrupt_keycode = hold_interrupt_kc, .do_register = hold_do_register}, \
-                                         },                                                                                                         \
-                        MF_NOFN, MF_NOFN);                                                                                                          \
-    return false;
+void mf_advanced(uint16_t keycode, keyrecord_t *record, uint16_t tap_kc,
+                 bool tap_do_register, uint16_t tap_interrupt_kc,
+                 uint16_t hold_kc, bool hold_do_register,
+                 uint16_t hold_interrupt_kc);
 
 /*
  * TAP/HOLD STRING MACROS
  */
-#define MF_STR_TAP_HOLD(tap_str, hold_str) \
-    ;                                      \
-    MF_STR_ADVANCED(tap_str, hold_str);
+#define MF_STR_TAP(tap_str)                                                    \
+  ;                                                                            \
+  mf_str_advanced(keycode, record, tap_str, MF_NOKEY);
 
-#define MF_STR_ADVANCED(tap_str, hold_str)                                                   \
-    ;                                                                                        \
-    mf_handle_key_event(keycode, record, &(mf_key_config){                                   \
-                                             .tap = {.str = tap_str, .keycode = MF_NOKEY},   \
-                                             .hold = {.str = hold_str, .keycode = MF_NOKEY}, \
-                                         },                                                  \
-                        MF_NOFN, MF_NOFN);                                                   \
-    return false;
+#define MF_STR_TAP_HOLD(tap_str, hold_str)                                     \
+  ;                                                                            \
+  mf_str_advanced(keycode, record, tap_str, hold_str);
+
+/*
+ * TAP/HOLD KEYCODE MACROS
+ */
+
+#define MF_TAP_HOLD_ONCE(tap_kc, hold_kc)                                      \
+  ;                                                                            \
+  mf_advanced(keycode, record, tap_kc, false, MF_NOKEY, hold_kc, false,        \
+              MF_NOKEY);
+
+#define MF_TAP_NO_REPEAT_HOLD(tap_kc, hold_kc)                                 \
+  mf_advanced(keycode, record, tap_kc, MF_DEF_REGISTER_TAP, MF_NOKEY, hold_kc, \
+              false, MF_NOKEY);
+
+#define MF_TAP_HOLD_ADVANCED(tap_kc, tap_do_register, tap_interrupt_kc,        \
+                             hold_kc, hold_do_register, hold_interrupt_kc)     \
+  ;                                                                            \
+  mf_handle_key_event(keycode, record,                                         \
+                      &(mf_key_config){                                        \
+                          .tap = {.keycode = tap_kc,                           \
+                                  .interrupt_keycode = tap_interrupt_kc,       \
+                                  .do_register = tap_do_register},             \
+                          .hold = {.keycode = hold_kc,                         \
+                                   .interrupt_keycode = hold_interrupt_kc,     \
+                                   .do_register = hold_do_register},           \
+                      },                                                       \
+                      MF_NOFN, MF_NOFN);
 
 /*
  * TAP/HOLD FUNCTION MACROS
  */
-#define MF_FN(fn_down, fn_up) \
-    ;                         \
-    MF_FN_ADVANCED(fn_down, fn_up);
-
-#define MF_FN_ADVANCED(fn_down, fn_up)                       \
-    ;                                                        \
-    mf_handle_key_event(keycode, record, &(mf_key_config){}, \
-                        fn_down, fn_up);                     \
-    return false;
+#define MF_FN_ADVANCED(fn_down, fn_up)                                         \
+  ;                                                                            \
+  mf_handle_key_event(keycode, record, &(mf_key_config){}, fn_down, fn_up);
 
 /*
  * MIXED FUNCTION MACROS
  */
-#define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str)                               \
-    ;                                                                                       \
-    mf_handle_key_event(keycode, record, &(mf_key_config){                                  \
-                                             .tap = {.str = tap_str, .keycode = tap_kc},    \
-                                             .hold = {.str = hold_str, .keycode = hold_kc}, \
-                                         },                                                 \
-                        MF_NOFN, MF_NOFN);                                                  \
-    return false;
+#define MF_TAP_HOLD_MIXED(tap_kc, tap_str, hold_kc, hold_str)                  \
+  ;                                                                            \
+  mf_handle_key_event(keycode, record,                                         \
+                      &(mf_key_config){                                        \
+                          .tap = {.str = tap_str, .keycode = tap_kc},          \
+                          .hold = {.str = hold_str, .keycode = hold_kc},       \
+                      },                                                       \
+                      MF_NOFN, MF_NOFN);

@@ -2,7 +2,7 @@
 
 // LAYERS
 enum {
- 	_BASE,
+	_BASE,
 	_SYM,
 	_CODE,
 	_NUM,
